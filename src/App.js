@@ -11,12 +11,16 @@ function App() {
           <img src={confetti} alt="confettiwithlogo" id="confettiwithlogo" />
         </div>
 
-        <p>
-          <span class="lightGreen">Birthday </span>
-          <span class="darkGreen">Reminders</span> and
-          <span class="lightGreen"> Greeting </span>
-          <span class="darkGreen">Cards</span>
-        </p>
+        <div id="container">
+          <div id="center">
+            <p>
+              <span className="lightGreen">Birthday </span>&nbsp;
+              <span className="darkGreen">Reminders</span>&nbsp;and&nbsp;
+              <span className="lightGreen"> Greeting </span>&nbsp;
+              <span className="darkGreen">Cards.</span>
+            </p>
+          </div>
+        </div>
       </header>
     </div>
   );
