@@ -21,6 +21,9 @@ function App() {
             </p>
           </div>
         </div>
+        <div>
+          <button type="button">---></button>
+        </div>
       </header>
     </div>
   );
