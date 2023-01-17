@@ -33,6 +33,16 @@ p {
   animation: typing 1s steps(4, end);
 }
 
+p {
+  /* background: linear-gradient(90deg, #08c2cc 0%, #01a3a2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+ */
+  background: linear-gradient(90deg, #29d4dd 0%, #1fb29a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 @keyframes typing {
   from {
     width: 0;
@@ -42,17 +52,17 @@ p {
   }
 }
 
-.lightGreen {
+/* .lightGreen {
   color: #08c2cc;
 }
 
 .darkGreen {
   color: #01a3a2;
-}
+} */
 
 button {
   color: white;
-  background-color: #8fc7ff;
+  background-color: #0e5391;
   border: none;
   width: 35px;
   height: 35px;
@@ -66,13 +76,18 @@ button {
 }
 
 .fade-in_btn {
-  animation: fadeIn 3s;
+  animation: fadeIn 8s;
+  -webkit-animation: fadeIn 5s;
+  -moz-animation: fadeIn 5s;
+  -o-animation: fadeIn 5s;
+  -ms-animation: fadeIn 5s;
 }
 
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -86,6 +101,6 @@ button {
 }
 
 button:hover {
-  background-color: #01a3a2;
+  background-color: #29d4dd;
   transition: 0.5s;
 }
