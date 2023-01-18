@@ -2,7 +2,7 @@ import React from "react";
 import "./landingpage.css";
 import confetti from "../../assets/logowithconfetti.png";
 import title from "../../assets/CardGen.png";
-import backbutton from "../../assets/backbutton.png";
+import forwardbutton from "../../assets/forwardbutton.png";
 import { Link } from "react-router-dom";
 
 const Landingpage = () => {
@@ -10,26 +10,32 @@ const Landingpage = () => {
     <div className="landingpage_content">
       <header className="App-header">
         <Link to="/">
-          <img src={title} alt="title" id="title" />
+          <div className="title_img">
+            <img src={title} alt="title" id="title" />
+          </div>
         </Link>
-        <div className="mainImg">
+        <div className="main_img">
           <img src={confetti} alt="confettiwithlogo" id="confettiwithlogo" />
         </div>
 
         <div id="container">
           <div id="center">
-            <p>
+            <div className="animated_text">
               <span className="lightGreen">Birthday </span>&nbsp;
               <span className="darkGreen">Reminders</span>&nbsp;and&nbsp;
               <span className="lightGreen"> Greeting </span>&nbsp;
               <span className="darkGreen">Cards.</span>
-            </p>
+            </div>
           </div>
         </div>
         <div class="fade-in_btn">
           <Link to="/About">
-            <button>
-              <img src={backbutton} alt="backbutton" id="backbtn_img" />
+            <button type="button" className="basic_btn forward--btn">
+              <img
+                src={forwardbutton}
+                alt="forwardbutton"
+                id="forward_btn--img"
+              />
             </button>
           </Link>
         </div>

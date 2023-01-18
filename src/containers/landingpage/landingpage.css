@@ -1,19 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
 .App-header {
   background-color: #083b69;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  line-height: 70%;
 }
 
-.mainImg {
-  padding: 80px 0px 20px 0px;
+.title_img {
+  padding: 5%;
+  margin-top: 2%;
 }
 
+.main_img {
+  padding: auto;
+}
+
+/* animated text */
 #container {
   display: flex;
 }
@@ -22,22 +24,19 @@
   margin: auto;
 }
 
-p {
+.animated_text {
+  padding: 7% 0 5% 0;
   display: flex;
   font-weight: 700;
   font-size: 28px;
-  height: 30px;
+  height: 40px;
   overflow: hidden;
   white-space: nowrap;
   letter-spacing: 0.13em;
   animation: typing 1s steps(4, end);
 }
 
-p {
-  /* background: linear-gradient(90deg, #08c2cc 0%, #01a3a2 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
- */
+.animated_text {
   background: linear-gradient(90deg, #29d4dd 0%, #1fb29a 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -52,27 +51,32 @@ p {
   }
 }
 
-/* .lightGreen {
-  color: #08c2cc;
+/* forward button */
+.basic_btn:hover {
+  background-color: #29d4dd;
+  transition: 0.5s;
+  cursor: pointer;
 }
 
-.darkGreen {
-  color: #01a3a2;
-} */
-
-button {
+.forward--btn {
   color: white;
   background-color: #0e5391;
   border: none;
-  width: 35px;
+  width: 36px;
   height: 35px;
   border-radius: 25px;
   margin-top: 15px;
-  cursor: pointer;
   opacity: 1;
   position: fixed;
   top: 20px;
   right: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+#forward_btn--img {
+  height: 22px;
+  padding-top: 4px;
 }
 
 .fade-in_btn {
@@ -91,16 +95,4 @@ button {
   100% {
     opacity: 1;
   }
-}
-
-#backbtn_img {
-  height: 20px;
-  justify-content: center;
-  align-items: center;
-  padding-top: 3px;
-}
-
-button:hover {
-  background-color: #29d4dd;
-  transition: 0.5s;
 }
