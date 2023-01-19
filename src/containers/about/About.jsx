@@ -1,6 +1,9 @@
 import React from "react";
 import "./about.css";
+
 import logoandname from "../../assets/logoandname.png";
+
+import { Link } from "react-router-dom";
 
 const About = () => {
   return (
@@ -39,9 +42,11 @@ const About = () => {
           </p>
         </div>
       </div>
-      <button type="button" className="basic_btn get_started--btn">
-        Get Started
-      </button>
+      <Link to="/CreateAccount">
+        <button type="button" className="basic_btn get_started--btn">
+          Get Started
+        </button>
+      </Link>
     </body>
   );
 };

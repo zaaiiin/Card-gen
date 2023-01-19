@@ -1,8 +1,10 @@
 import React from "react";
 import "./landingpage.css";
+
 import confetti from "../../assets/logowithconfetti.png";
 import title from "../../assets/CardGen.png";
 import forwardbutton from "../../assets/forwardbutton.png";
+
 import { Link } from "react-router-dom";
 
 const Landingpage = () => {
