@@ -66,6 +66,7 @@ h2 {
 .info_box p {
   font-size: 20px;
   font-weight: 600;
+  margin-bottom: 8%;
 }
 
 p {
@@ -81,7 +82,7 @@ p {
 
 .get_started--btn {
   color: white;
-  background-color: #0e5391;
+  background-color: #ec7689;
   border: none;
   width: 250px;
   height: 60px;
@@ -90,6 +91,12 @@ p {
   opacity: 1;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 20px;
+  letter-spacing: 1px;
+}
+
+.get_started--btn:active {
+  color: black;
+  transition: 4s;
 }
