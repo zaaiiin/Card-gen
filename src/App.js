@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Landingpage, About } from "./containers";
+import { Landingpage, About, CreateAccount } from "./containers";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
@@ -12,7 +12,8 @@ function App() {
             <Route exact path="/">
               <Landingpage />
             </Route>
-            <Route path="/About" component={About} />
+            <Route path="/about" component={About} />
+            <Route path="/createaccount" component={CreateAccount} />
           </Switch>
         </div>
       </div>
