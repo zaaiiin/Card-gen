@@ -54,7 +54,7 @@
 /* forward button */
 .basic_btn:hover {
   background-color: #29d4dd;
-  transition: 0.5s;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
 
