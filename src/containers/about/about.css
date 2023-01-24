@@ -31,6 +31,7 @@ h1 {
   font-size: 20px;
   align-items: center;
   margin-top: 5%;
+  margin-bottom: 1%;
 }
 
 /* info boxes */
@@ -62,6 +63,7 @@ h2 {
   border: none;
   margin: 0;
   padding: 1em;
+  padding-bottom: 0.7em;
   color: #29d4dd;
 }
 
