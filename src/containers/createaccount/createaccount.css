@@ -1,98 +1,131 @@
 /* setting margin to 0 in body of app and the following code helps to set backgound to a specific colour */
-
-.box {
-  background-color: black;
-  margin: none;
-  padding: none;
-  width: 100%;
-  border: none;
+.homepage_header {
   display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 60px;
+  left: 60px;
+  justify-content: left;
+}
+
+.form_wrapper {
+  display: flex;
+  position: fixed;
+  flex-direction: column;
+  background-color: #083b69;
+  width: 100vw;
   height: 100vh;
-  color: white;
+  justify-content: center;
+  align-items: center;
 }
 
 .form_container {
+  min-height: 550px;
+  width: 30%;
+  box-shadow: rgb(8, 61, 107) 0px 2px 8px;
+  width: 400px;
+  border-radius: 8px;
+  background-color: white;
+  color: black;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  background-color: #0e5391;
-  margin-left: 50%;
+}
+
+.actionBtns {
+  width: 80%;
+  background-color: #29d4dd;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px;
+  margin: 2em;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  border-radius: 15px;
+}
+
+.actionBtn {
+  padding: 0.9em;
+  width: 50%;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: white;
+
+  border-radius: 50px;
+  font-weight: 800;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+.moveBtn {
+  position: absolute;
   width: 50%;
   height: 100%;
+  padding: 2px;
+  color: #29d4dd;
+  border: none;
+  border-radius: 10px;
+  background-color: rgb(243, 241, 241);
+  font-weight: 800;
+  font-size: 0.9em;
+  transform: translateX(0);
+  transition: all 0.2s ease-in-out;
+}
+.rightBtn {
+  color: #29d4dd;
+  transform: translateX(100%);
+  transition: all 0.2s ease-in-out;
+}
+
+.inputGroup {
+  width: 300px;
+  margin: 0.5em 0;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 1em 1.5em;
+  margin: 0.6em 0;
+  background-color: rgb(243, 241, 241);
+  color: rgba(0, 0, 0, 0.589);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px;
+  border-radius: 5px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.inputGroup input:focus {
+  outline: none;
+}
+
+.submitBtn {
+  width: 150px;
+  padding: 0.8em;
+  margin: 2.5em;
+  border: none;
+  border-radius: 15px;
+  color: white;
+  background-color: #083b69;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px;
+  font-weight: 600;
+  font-size: 0.9em;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.submitBtn:hover {
+  background-color: #29d4dd;
+  transition: all 0.3s ease-in-out;
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  color: black;
-  padding: 30px;
-  border-radius: 8px;
-  height: 70%;
-  width: 50%;
-  align-self: center;
-  margin-top: 16%;
+  display: none;
 }
 
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 200px;
-  height: 54px;
-  margin: auto;
+.signupForm {
+  display: block;
 }
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-/* The slider */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: #2196f3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196f3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+.loginForm {
+  display: block;
 }
