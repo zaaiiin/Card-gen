@@ -30,7 +30,7 @@ const Landingpage = () => {
             </div>
           </div>
         </div>
-        <div class="fade-in_btn">
+        <div className="fade-in_btn">
           <Link to="/About">
             <button type="button" className="basic_btn forward--btn">
               <img
