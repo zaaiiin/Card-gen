@@ -14,13 +14,13 @@
   flex-direction: column;
 
   width: 100vw;
-  height: 100vh;
+  height: 830px;
   justify-content: center;
   align-items: center;
 }
 
 .form_container {
-  height: 65%;
+  height: 550px;
   box-shadow: rgb(8, 61, 107) 0px 2px 8px;
   width: 400px;
   border-radius: 8px;
@@ -120,6 +120,7 @@
 
 .form {
   display: none;
+  height: 65%;
 }
 
 .signupForm {
@@ -133,5 +134,5 @@
 }
 
 .hide {
-  opacity: 0;
+  display: none;
 }
