@@ -20,7 +20,7 @@
 }
 
 .form_container {
-  height: 550px;
+  height: 650px;
   box-shadow: rgb(8, 61, 107) 0px 2px 8px;
   width: 400px;
   border-radius: 8px;
@@ -35,7 +35,8 @@
   width: 80%;
   background-color: #29d4dd;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px;
-  margin: 2em;
+  margin-top: 2em;
+  margin-bottom: 1em;
   display: flex;
   justify-content: space-between;
   position: relative;
@@ -77,14 +78,14 @@
 
 .inputGroup {
   width: 300px;
-  margin: 0.5em 0;
+  margin: 0em 0;
   background-color: white;
 }
 
 .inputGroup input {
   width: 100%;
-  padding: 1em 1.5em;
-  margin: 0.6em 0;
+  padding: 15px 20px;
+  margin-top: 40px;
   background-color: rgb(243, 241, 241);
   color: rgba(0, 0, 0, 0.589);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 5px;
@@ -101,7 +102,7 @@
 .submitBtn {
   width: 150px;
   padding: 0.8em;
-  margin: 2.5em;
+  margin-top: 4em;
   border: none;
   border-radius: 15px;
   color: white;
@@ -120,7 +121,7 @@
 
 .form {
   display: none;
-  height: 65%;
+  height: 0px;
 }
 
 .signupForm {
@@ -135,4 +136,20 @@
 
 .hide {
   display: none;
+}
+
+.inputGroup p {
+  position: absolute;
+  background-color: transparent;
+  text-align: right;
+  align-content: right;
+  padding-top: 5px;
+  color: hsl(0, 100%, 74%);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.error {
+  border-color: hsl(0, 100%, 74%);
+  opacity: 1;
 }
