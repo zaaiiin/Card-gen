@@ -43,7 +43,7 @@ const About = () => {
           </p>
         </div>
       </div>
-      <Link to="/CreateAccount">
+      <Link to="/Form">
         <button type="button" className="basic_btn get_started--btn">
           Get Started
         </button>
