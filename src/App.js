@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Landingpage, About, Form } from "./containers";
+import { Landingpage, About, Form, UpcomingEvents } from "./containers";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
             </Route>
             <Route path="/about" component={About} />
             <Route path="/form" component={Form} />
+            <Route path="/upcomingevents" component={UpcomingEvents} />
           </Switch>
         </div>
       </div>

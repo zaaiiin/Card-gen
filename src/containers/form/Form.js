@@ -1,8 +1,9 @@
 import React from "react";
 import "./form.css";
 import { useState, useEffect } from "react";
-// import { Link } from "react-router-dom";
-// import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import logoandname from "../../assets/logoandname.png";
 
@@ -70,10 +71,17 @@ const Form = () => {
 
   function emailValidation(emailaddress) {
     const regex =
+      //eslint-disable-next-line
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     return regex.test(String(emailaddress.toLowerCase()));
   }
+
+  // function addBorder() {
+  //   const fields = document.querySelectorAll(".field");
+  //   for (const field of fields) field.classList.add("error");
+  // }
+  // setFormErrors(addBorder);
 
   //4. form data validation
   const validate = (values) => {
@@ -114,7 +122,7 @@ const Form = () => {
   const [loginFormValues, setLoginFormValues] = useState(initialAccValues);
   const [loginFormErrors, setLoginFormErrors] = useState({});
   const [isLoginSubmit, setIsLoginSubmit] = useState(false);
-  // const [formValid, setFormValid] = useState(false);
+  const [formValid, setFormValid] = useState(false);
 
   const handleLoginChange = (e) => {
     const { name, value } = e.target;
@@ -124,6 +132,7 @@ const Form = () => {
   useEffect(() => {
     if (Object.keys(loginFormErrors).length === 0 && isLoginSubmit) {
     }
+
     //eslint-disable-next-line
   }, [loginFormErrors]);
 
@@ -137,13 +146,16 @@ const Form = () => {
     } else if (values.useremail !== "user@gmail.com") {
       errors.useremail = "Wrong email";
     }
-
     if (!values.userpassword) {
       errors.userpassword = "Password is required";
     } else if (values.userpassword !== "1111") {
       errors.userpassword = "Wrong password";
-    } else {
-      console.log("access is granted");
+    } else if (
+      values.userpassword === "1111" &&
+      values.useremail === "user@gmail.com"
+    ) {
+      console.log("access granted");
+      setFormValid(true);
     }
 
     return errors;
@@ -154,7 +166,20 @@ const Form = () => {
     e.preventDefault();
     setLoginFormErrors(validateLogin(loginFormValues));
     setIsLoginSubmit(true);
+    // isLoggedIn(errors);
   };
+
+  if (formValid) {
+    return <Redirect push to="/UpcomingEvents" />;
+  }
+
+  function loggedIn() {
+    if (formValid) {
+      <Link to="/UpcomingEvents" />;
+    } else {
+      console.log("access denied");
+    }
+  }
 
   return (
     <div className="form_wrapper">
@@ -171,7 +196,7 @@ const Form = () => {
         </div>
 
         <form
-          action="loggedin"
+          action="#"
           className="form signup signupForm"
           id="form"
           onSubmit={handleSubmit}
@@ -179,21 +204,21 @@ const Form = () => {
         >
           <div className="inputGroup">
             <input
-              className="form-control"
               type="text"
               placeholder="First Name"
               name="firstname"
               value={formValues.firstname}
               onChange={handleChange}
+              className="field"
             />
             <p>{formErrors.firstname}</p>
             <input
-              className="form-control"
               type="text"
               placeholder="Last Name"
               name="lastname"
               value={formValues.lastname}
               onChange={handleChange}
+              className="field"
             />
             <p>{formErrors.lastname}</p>
             <input
@@ -202,6 +227,7 @@ const Form = () => {
               name="emailaddress"
               value={formValues.emailaddress}
               onChange={handleChange}
+              className="field"
             />
             <p>{formErrors.emailaddress}</p>
             <input
@@ -211,6 +237,7 @@ const Form = () => {
               name="password"
               value={formValues.password}
               onChange={handleChange}
+              className="field"
             />
             <p>{formErrors.password}</p>
             <input
@@ -220,6 +247,7 @@ const Form = () => {
               name="confirmpassword"
               value={formValues.confirmpassword}
               onChange={handleChange}
+              className="field"
             />
             <p>{formErrors.confirmpassword}</p>
           </div>
@@ -241,7 +269,6 @@ const Form = () => {
               name="useremail"
               value={loginFormValues.useremail}
               onChange={handleLoginChange}
-              id="loginusername"
             />
             <p className="errorMsg">{loginFormErrors.useremail}</p>
             <input
@@ -251,17 +278,13 @@ const Form = () => {
               name="userpassword"
               value={loginFormValues.userpassword}
               onChange={handleLoginChange}
-              id="loginpassword"
             />
             <p className="errorMsg">{loginFormErrors.userpassword}</p>
-            <p className="welcomeMsg"></p>
           </div>
-          {/* 
-          <Link to="/UpcomingEvents"> */}
-          <button type="submit" className="submitLoginBtn">
+
+          <button type="submit" className="submitLoginBtn" onClick={loggedIn}>
             Login
           </button>
-          {/* </Link> */}
         </form>
       </div>
     </div>
