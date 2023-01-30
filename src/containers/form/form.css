@@ -95,10 +95,10 @@
   font-size: 0.9em;
 }
 
-.form-control .error input {
-  border-color: #dd2929;
-  border: 1px solid blueviolet !important;
-}
+/* .error {
+  border: 1px solid hsla(0, 100%, 74%, 0.521) !important;
+  position: relative;
+} */
 
 .inputGroup input:focus {
   outline: none;
