@@ -173,13 +173,14 @@ const Form = () => {
     return <Redirect push to="/UpcomingEvents" />;
   }
 
-  function loggedIn() {
-    if (formValid) {
-      <Link to="/UpcomingEvents" />;
-    } else {
-      console.log("access denied");
-    }
-  }
+  // const loggedIn = (e) => {
+  //   e.preventDefault();
+  //   if (formValid) {
+  //     <Link to="/UpcomingEvents" />;
+  //   } else {
+  //     console.log("access denied");
+  //   }
+  // };
 
   return (
     <div className="form_wrapper">
@@ -282,7 +283,7 @@ const Form = () => {
             <p className="errorMsg">{loginFormErrors.userpassword}</p>
           </div>
 
-          <button type="submit" className="submitLoginBtn" onClick={loggedIn}>
+          <button type="submit" className="submitLoginBtn">
             Login
           </button>
         </form>
