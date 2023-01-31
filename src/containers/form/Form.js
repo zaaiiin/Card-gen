@@ -2,7 +2,6 @@ import React from "react";
 import "./form.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 
 import logoandname from "../../assets/logoandname.png";
