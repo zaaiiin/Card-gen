@@ -10,7 +10,9 @@ const About = () => {
     <div className="about_wrapper">
       <div className="homepage_header">
         <div className="homepage_header--image">
-          <img src={logoandname} alt="logoandname" />
+          <Link to="/">
+            <img src={logoandname} alt="logoandname" />
+          </Link>
         </div>
       </div>
 

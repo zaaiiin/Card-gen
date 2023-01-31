@@ -186,7 +186,9 @@ const Form = () => {
     <div className="form_wrapper">
       <div className="homepage_header">
         <div className="homepage_header--image">
-          <img src={logoandname} alt="logoandname" />
+          <Link to="/">
+            <img src={logoandname} alt="logoandname" />
+          </Link>
         </div>
       </div>
       <div className="form_container">
