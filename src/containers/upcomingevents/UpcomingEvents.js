@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+// import React, { useEffect } from "react";
 import "./upcomingevents.css";
 import notif_icon from "../../assets/notif_icon.png";
 import profile_icon from "../../assets/profile_icon.png";
@@ -10,16 +10,16 @@ import { Link } from "react-router-dom";
 // const title = document.querySelector("events_dashboard--title");
 
 const UpcomingEvents = () => {
-  useEffect(() => {
-    const formGroup = document.querySelector(".formGroup");
-    // addevent_btn.addEventListener("click", () => {
-    //   modalAddForm.classList.add;
-    // });
+  // useEffect(() => {
+  //   const formGroup = document.querySelector(".formGroup");
+  //   // addevent_btn.addEventListener("click", () => {
+  //   //   modalAddForm.classList.add;
+  //   // });
 
-    formGroup.addEventListener("click", () => {
-      formGroup.classList.remove("hidden");
-    });
-  }, []);
+  //   formGroup.addEventListener("click", () => {
+  //     formGroup.classList.remove("hidden");
+  //   });
+  // }, []);
 
   return (
     <div className="upcomingevents_wrapper">
@@ -81,7 +81,7 @@ const UpcomingEvents = () => {
             <input type="checkbox" />
           </div>
 
-          <div className="form-control groupSelect">
+          {/* <div className="form-control groupSelect">
             <label>Group</label>
             <select
               id="formgroup"
@@ -91,9 +91,9 @@ const UpcomingEvents = () => {
             >
               <option value="family">Family</option>
               <option value="friends">Friends</option>
-              <option value="workmates">Workamtes</option>
+              <option value="workmates">Workmates</option>
             </select>
-          </div>
+          </div> */}
         </form>
       </div>
     </div>
