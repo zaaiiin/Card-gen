@@ -4,6 +4,9 @@ import notif_icon from "../../assets/notif_icon.png";
 import profile_icon from "../../assets/profile_icon.png";
 import logoandname from "../../assets/logoandname.png";
 import plussign from "../../assets/plussign.png";
+import balloon from "../../assets/balloon.png";
+import heart from "../../assets/heart.png";
+import otherevent from "../../assets/otherevent.png";
 import { Link } from "react-router-dom";
 
 const UpcomingEvents = () => {
@@ -77,23 +80,30 @@ const UpcomingEvents = () => {
           </div>
 
           <div className="form-control eventTypes">
+            {/* <img src={balloon} alt="balloon_icon" className="event_icon" /> */}
             Birthday
             <input type="checkbox" />
           </div>
 
           <div className="form-control eventTypes">
+            {/* <img src={heart} alt="heart_icon" className="event_icon" /> */}
             Anniversary
             <input type="checkbox" />
           </div>
 
           <div className="form-control eventTypes">
+            {/* <img
+              src={otherevent}
+              alt="otherevent_icon"
+              className="event_icon"
+            /> */}
             Other
             <input type="checkbox" />
           </div>
 
           <div className="submitevent_btn--container">
             <button type="submit" className="submitevent_btn">
-              Submit
+              Save
             </button>
           </div>
         </form>

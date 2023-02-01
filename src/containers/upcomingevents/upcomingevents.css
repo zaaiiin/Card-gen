@@ -212,6 +212,9 @@ input:focus {
   gap: 16em;
   place-content: center;
 }
+.event_icon {
+  align-items: left;
+}
 
 input[type="checkbox"] {
   width: 2rem;
