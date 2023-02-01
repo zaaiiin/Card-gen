@@ -6,21 +6,10 @@ import logoandname from "../../assets/logoandname.png";
 import plussign from "../../assets/plussign.png";
 import { Link } from "react-router-dom";
 
-// const addevent_btn = document.querySelector("addevent_btn");
-// const title = document.querySelector("events_dashboard--title");
+const pageBackground = document.querySelector("upcomingevents_wrapper");
+const addevent_btn = document.querySelector("addevent_btn");
 
 const UpcomingEvents = () => {
-  // useEffect(() => {
-  //   const formGroup = document.querySelector(".formGroup");
-  //   // addevent_btn.addEventListener("click", () => {
-  //   //   modalAddForm.classList.add;
-  //   // });
-
-  //   formGroup.addEventListener("click", () => {
-  //     formGroup.classList.remove("hidden");
-  //   });
-  // }, []);
-
   return (
     <div className="upcomingevents_wrapper">
       <div className="homepage_header">
@@ -60,6 +49,7 @@ const UpcomingEvents = () => {
         <form action="#" className="eventForm">
           <div className="form-control">
             <input type="text" placeholder="First Name" id="firstName" />
+            <div className="close"></div>
           </div>
 
           <div className="form-control">
@@ -79,6 +69,12 @@ const UpcomingEvents = () => {
           <div className="form-control eventTypes">
             Other
             <input type="checkbox" />
+          </div>
+
+          <div className="submitevent_btn--container">
+            <button type="submit" className="submitevent_btn">
+              Submit
+            </button>
           </div>
 
           {/* <div className="form-control groupSelect">

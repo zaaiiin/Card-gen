@@ -121,6 +121,7 @@
   flex-direction: column;
   width: 450px;
   border-radius: 5%;
+  position: relative;
 }
 
 form {
@@ -143,6 +144,39 @@ form {
 
 input:focus {
   outline: none;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 32px;
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+.close:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.close:before,
+.close:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 20px;
+  width: 2px;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+.close:before {
+  transform: rotate(45deg);
+}
+
+.close:after {
+  transform: rotate(-45deg);
 }
 
 #firstName,
@@ -216,3 +250,26 @@ input[type="checkbox"] {
   display: flex;
   flex-direction: row;
 } */
+
+.submitevent_btn {
+  color: white;
+  background-color: #ec7689;
+  border: none;
+  width: 150px;
+  height: 40px;
+  border-radius: 35px;
+  margin: 20px;
+  opacity: 1;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: 1px;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.submitevent_btn:hover {
+  background-color: #29d4dd;
+  transition: all 0.3s ease-in-out;
+}
