@@ -1,4 +1,4 @@
-// import React, { useEffect } from "react";
+import React, { useEffect } from "react";
 import "./upcomingevents.css";
 import notif_icon from "../../assets/notif_icon.png";
 import profile_icon from "../../assets/profile_icon.png";
@@ -6,10 +6,30 @@ import logoandname from "../../assets/logoandname.png";
 import plussign from "../../assets/plussign.png";
 import { Link } from "react-router-dom";
 
-const pageBackground = document.querySelector("upcomingevents_wrapper");
-const addevent_btn = document.querySelector("addevent_btn");
-
 const UpcomingEvents = () => {
+  useEffect(() => {
+    const close_btn = document.querySelector(".close_btn");
+    const addevent_btn = document.querySelector(".addevent_btn");
+    const modalevent_form = document.querySelector(".modaladd_form");
+    const overlay = document.querySelector(".overlay");
+
+    const openModalForm = () => {
+      modalevent_form.classList.remove("hidden");
+      overlay.classList.remove("hidden");
+    };
+
+    const closeModalForm = () => {
+      modalevent_form.classList.add("hidden");
+      overlay.classList.add("hidden");
+    };
+
+    addevent_btn.addEventListener("click", openModalForm);
+
+    close_btn.addEventListener("click", closeModalForm);
+
+    overlay.addEventListener("click", closeModalForm);
+  }, []);
+
   return (
     <div className="upcomingevents_wrapper">
       <div className="homepage_header">
@@ -49,7 +69,7 @@ const UpcomingEvents = () => {
         <form action="#" className="eventForm">
           <div className="form-control">
             <input type="text" placeholder="First Name" id="firstName" />
-            <div className="close"></div>
+            <div className="close_btn"></div>
           </div>
 
           <div className="form-control">
@@ -76,22 +96,9 @@ const UpcomingEvents = () => {
               Submit
             </button>
           </div>
-
-          {/* <div className="form-control groupSelect">
-            <label>Group</label>
-            <select
-              id="formgroup"
-              className="formGroup hidden"
-              name="groups"
-              size="3"
-            >
-              <option value="family">Family</option>
-              <option value="friends">Friends</option>
-              <option value="workmates">Workmates</option>
-            </select>
-          </div> */}
         </form>
       </div>
+      <div className="overlay hidden"></div>
     </div>
   );
 };
