@@ -359,7 +359,8 @@ label {
   border: transparent;
   font-size: 15px;
   font-family: "Lato", sans-serif;
-  font-weight: 700;
+  font-weight: 600;
   margin: 10px;
   justify-content: center;
+  letter-spacing: 0.5px;
 }
