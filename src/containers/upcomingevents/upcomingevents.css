@@ -117,6 +117,7 @@
   margin-right: auto;
   width: 450px;
   z-index: 10;
+  float: left;
 }
 
 .eventForm {
@@ -174,7 +175,7 @@ input:focus {
   position: absolute;
   left: 15px;
   content: " ";
-  height: 20px;
+  height: 15px;
   width: 2px;
   background-color: rgb(255, 255, 255);
   cursor: pointer;
@@ -202,7 +203,7 @@ input:focus {
 
 .eventTypes {
   background-color: #2c577e;
-  color: white;
+  color: rgba(207, 197, 197, 0.808);
   padding: 25px 30px;
   height: 75px;
   font-size: 1.3rem;
@@ -214,6 +215,19 @@ input:focus {
 }
 .event_icon {
   align-items: left;
+}
+
+.modaladd_form p {
+  position: absolute;
+  right: 27px;
+  top: 43px;
+  background-color: #2c577e;
+  text-align: right;
+  align-content: right;
+  color: hsl(0, 92%, 75%);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
 input[type="checkbox"] {
@@ -291,4 +305,61 @@ input[type="checkbox"] {
   backdrop-filter: blur(3px);
   z-index: 9;
   /* pointer-events: none; */
+}
+
+.dateModal {
+  position: fixed;
+  right: 220px;
+  top: 405px;
+  background-color: #72d1d6;
+  color: white;
+  height: 150px;
+  width: 260px;
+  border: #72d1d6;
+  border-radius: 3%;
+  margin: auto;
+  padding: 20px;
+  justify-content: left;
+  font-family: "Raleway", sans-serif;
+  z-index: 10;
+}
+label {
+  display: flex;
+  margin-left: 10px;
+  background-color: #72d1d6;
+  font-weight: 700;
+  width: 200px;
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+}
+
+[type="date"] {
+  background: #fff
+    url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)
+    97% 50% no-repeat;
+  font-weight: 600;
+  width: 200px;
+  padding: 5px;
+  margin: 20px 10px;
+  font-family: "Lato", sans-serif;
+}
+
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+#dateofbirth {
+  display: block;
+  border-radius: 3%;
+  border-color: white;
+  border: transparent;
+  font-size: 15px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  margin: 10px;
+  justify-content: center;
 }

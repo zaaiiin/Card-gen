@@ -152,6 +152,7 @@
   color: hsl(0, 100%, 74%);
   font-weight: 700;
   font-size: 14px;
+  letter-spacing: 0.5px;
 }
 
 .submitLoginBtn {
