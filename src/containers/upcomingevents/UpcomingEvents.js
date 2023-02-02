@@ -4,10 +4,11 @@ import notif_icon from "../../assets/notif_icon.png";
 import profile_icon from "../../assets/profile_icon.png";
 import logoandname from "../../assets/logoandname.png";
 import plussign from "../../assets/plussign.png";
-import balloon from "../../assets/balloon.png";
-import heart from "../../assets/heart.png";
-import otherevent from "../../assets/otherevent.png";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+// import balloon from "../../assets/balloon.png";
+// import heart from "../../assets/heart.png";
+// import otherevent from "../../assets/otherevent.png";
 
 const UpcomingEvents = () => {
   useEffect(() => {
@@ -24,6 +25,7 @@ const UpcomingEvents = () => {
     const closeModalForm = () => {
       modalevent_form.classList.add("hidden");
       overlay.classList.add("hidden");
+      dateModal.classList.add("hidden");
     };
 
     addevent_btn.addEventListener("click", openModalForm);
@@ -31,7 +33,77 @@ const UpcomingEvents = () => {
     close_btn.addEventListener("click", closeModalForm);
 
     overlay.addEventListener("click", closeModalForm);
+
+    const checkboxes = document.querySelectorAll("input[name=checkbox]");
+
+    for (let i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].addEventListener("change", changeCheckBoxState);
+    }
+
+    const dateModal = document.querySelector(".dateModal");
+
+    function changeCheckBoxState() {
+      if (this.checked) {
+        dateModal.classList.remove("hidden");
+      } else {
+        dateModal.classList.add("hidden");
+      }
+    }
   }, []);
+
+  const initialValues = {
+    firstname: "",
+    lastname: "",
+  };
+
+  const [formNames, setFormNames] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormNames({ ...formNames, [name]: value });
+    console.log(formNames);
+  };
+  // localStorage.firstname = formNames.firstname;
+  // localStorage.lastname = formNames.lastname;
+  // console.log(localStorage.firstname);
+
+  // localStorage.firstname = [formNames.firstname];
+  // localStorage.lastname = [formNames.lastname];
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      closeModalForm();
+    }
+    // eslint-disable-next-line
+  }, [formErrors]);
+
+  const modalevent_form = document.querySelector(".modaladd_form");
+  const overlay = document.querySelector(".overlay");
+  const dateModal = document.querySelector(".dateModal");
+
+  const closeModalForm = () => {
+    modalevent_form.classList.add("hidden");
+    overlay.classList.add("hidden");
+    dateModal.classList.add("hidden");
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setFormErrors(validate(formNames));
+    setIsSubmit(true);
+  };
+
+  const validate = (values) => {
+    const errors = {};
+
+    if (!values.firstname) {
+      errors.firstname = "First name is required";
+    }
+    return errors;
+  };
 
   return (
     <div className="upcomingevents_wrapper">
@@ -68,27 +140,48 @@ const UpcomingEvents = () => {
         </button>
       </div>
 
+      <div className="dateModal hidden">
+        <label>Date of Birth</label>
+        <input type="date" name="dateofbirth" id="dateofbirth"></input>
+      </div>
+
       <div className="modaladd_form hidden">
-        <form action="#" className="eventForm">
+        <form action="#" className="eventForm" onSubmit={handleSubmit}>
           <div className="form-control">
-            <input type="text" placeholder="First Name" id="firstName" />
+            <p>{formErrors.firstname}</p>
+            <input
+              type="text"
+              placeholder="First Name"
+              id="firstName"
+              name="firstname"
+              value={formNames.firstname}
+              onChange={handleChange}
+            />
+
             <div className="close_btn"></div>
           </div>
 
           <div className="form-control">
-            <input type="text" placeholder="Last Name" id="lastName" />
+            <input
+              type="text"
+              placeholder="Last Name"
+              id="lastName"
+              name="lastname"
+              value={formNames.lastname}
+              onChange={handleChange}
+            />
           </div>
 
           <div className="form-control eventTypes">
             {/* <img src={balloon} alt="balloon_icon" className="event_icon" /> */}
             Birthday
-            <input type="checkbox" />
+            <input type="checkbox" name="checkbox" />
           </div>
 
           <div className="form-control eventTypes">
             {/* <img src={heart} alt="heart_icon" className="event_icon" /> */}
             Anniversary
-            <input type="checkbox" />
+            <input type="checkbox" name="checkbox" />
           </div>
 
           <div className="form-control eventTypes">
