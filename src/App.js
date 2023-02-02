@@ -1,6 +1,12 @@
 import React from "react";
 import "./App.css";
-import { Landingpage, About, Form, UpcomingEvents } from "./containers";
+import {
+  Landingpage,
+  About,
+  Form,
+  UpcomingEvents,
+  Dashboard,
+} from "./containers";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
@@ -15,6 +21,7 @@ function App() {
             <Route path="/about" component={About} />
             <Route path="/form" component={Form} />
             <Route path="/upcomingevents" component={UpcomingEvents} />
+            <Route path="/dashboard" component={Dashboard} />
           </Switch>
         </div>
       </div>
