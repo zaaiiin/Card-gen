@@ -17,7 +17,6 @@ const UpcomingEvents = () => {
     const addevent_btn = document.querySelector(".addevent_btn");
     const modalevent_form = document.querySelector(".modaladd_form");
     const overlay = document.querySelector(".overlay");
-    // const submitevent_btn = document.querySelector(".submitevent_btn");
 
     const openModalForm = () => {
       modalevent_form.classList.remove("hidden");
@@ -31,12 +30,10 @@ const UpcomingEvents = () => {
     };
 
     addevent_btn.addEventListener("click", openModalForm);
-
     close_btn.addEventListener("click", closeModalForm);
-
     overlay.addEventListener("click", closeModalForm);
 
-    const checkboxes = document.querySelectorAll("input[name=checkbox]");
+    const checkboxes = document.querySelectorAll("input[type=checkbox]");
 
     for (let i = 0; i < checkboxes.length; i++) {
       checkboxes[i].addEventListener("change", changeCheckBoxState);
@@ -56,33 +53,22 @@ const UpcomingEvents = () => {
   const initialValues = {
     firstname: "",
     lastname: "",
-  };
-
-  const initialDates = {
     birthday: "",
     anniversary: "",
   };
 
-  const [formNames, setFormNames] = useState(initialValues);
-  const [formDates, setFormDates] = useState(initialDates);
+  const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
   const [submittedData, setSubmittedData] = useState([]);
 
   const handleChange = (e) => {
+    console.log(e.target);
     const { name, value } = e.target;
-    setFormNames({ ...formNames, [name]: value });
-    setFormDates({ ...formDates, [name]: value });
-    console.log(formDates);
-    console.log(formNames, submittedData);
-  };
+    setFormValues({ ...formValues, [name]: value });
 
-  useEffect(() => {
-    if (Object.keys(formErrors).length === 0 && isSubmit) {
-      closeModalForm();
-    }
-    // eslint-disable-next-line
-  }, [formErrors]);
+    console.log(formValues, submittedData);
+  };
 
   const modalevent_form = document.querySelector(".modaladd_form");
   const overlay = document.querySelector(".overlay");
@@ -94,15 +80,54 @@ const UpcomingEvents = () => {
     dateModal.classList.add("hidden");
   };
 
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      closeModalForm();
+    }
+    // eslint-disable-next-line
+  }, [formErrors, isSubmit]);
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   const errors = validate(formValues);
+  //   setFormErrors(errors);
+  //   if (Object.keys(formErrors).length > 0) {
+  //     return;
+  //   }
+
+  //   setIsSubmit(true);
+  //   setSubmittedData([...submittedData, { ...formValues }]);
+  //   console.log(submittedData);
+  //   setFormValues({
+  //     firstname: "",
+  //     lastname: "",
+  //     birthday: "",
+  //     anniversary: "",
+  //   });
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormErrors(validate(formNames));
-    setIsSubmit(true);
-    setSubmittedData([...submittedData, { ...formNames }, { ...formDates }]);
-    console.log(submittedData);
-    setFormNames({ firstname: "", lastname: "" });
-    setFormDates({ birthday: "", anniversary: "" });
+    const errors = validate(formValues);
+    setFormErrors(errors);
+    if (Object.keys(errors).length === 0) {
+      setSubmittedData([...submittedData, { ...formValues }]);
+      setFormValues({
+        firstname: "",
+        lastname: "",
+        birthday: "",
+        anniversary: "",
+      });
+      setIsSubmit(true);
+      uncheckAll();
+      closeModalForm();
+    }
   };
+
+  function uncheckAll() {
+    const checkboxes = document.querySelectorAll("input[type=checkbox]");
+    for (let i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].checked = false;
+    }
+  }
 
   const validate = (values) => {
     const errors = {};
@@ -166,7 +191,7 @@ const UpcomingEvents = () => {
               placeholder="First Name"
               id="firstName"
               name="firstname"
-              value={formNames.firstname}
+              value={formValues.firstname}
               onChange={handleChange}
             />
 
@@ -179,7 +204,7 @@ const UpcomingEvents = () => {
               placeholder="Last Name"
               id="lastName"
               name="lastname"
-              value={formNames.lastname}
+              value={formValues.lastname}
               onChange={handleChange}
             />
           </div>
@@ -187,13 +212,13 @@ const UpcomingEvents = () => {
           <div className="form-control eventTypes">
             {/* <img src={balloon} alt="balloon_icon" className="event_icon" /> */}
             Birthday
-            <input type="checkbox" name="checkbox" />
+            <input type="checkbox" name="birthday" />
           </div>
 
           <div className="form-control eventTypes">
             {/* <img src={heart} alt="heart_icon" className="event_icon" /> */}
             Anniversary
-            <input type="checkbox" name="checkbox" />
+            <input type="checkbox" name="anniversary" />
           </div>
 
           <div className="form-control eventTypes">
@@ -213,21 +238,12 @@ const UpcomingEvents = () => {
           </div>
         </form>
         <div className="dateModal hidden">
-          <label>Date of Birth</label>
+          <label>Choose the date</label>
           <input
             type="date"
-            name="birthdate"
+            name="birthday"
+            value={formValues.birthday}
             id="dateofbirth"
-            onChange={handleChange}
-          ></input>
-        </div>
-
-        <div className="dateModal hidden">
-          <label>Anniversary</label>
-          <input
-            type="date"
-            name="anniversarydate"
-            id="dateofanniversary"
             onChange={handleChange}
           ></input>
         </div>

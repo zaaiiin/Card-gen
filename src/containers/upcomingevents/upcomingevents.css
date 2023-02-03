@@ -119,6 +119,7 @@
   margin-right: auto;
   width: 450px;
   z-index: 10;
+
   /* float: left; */
 }
 
@@ -134,9 +135,6 @@
   position: absolute;
 }
 
-form {
-  border-radius: 20%;
-}
 .form-control {
   font-size: 20px;
 }
@@ -246,7 +244,7 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
-/* Pseudo element for check styling */
+/* Pseudo element for check styling  */
 [type="checkbox"]::before {
   content: "";
   color: transparent;

@@ -10,7 +10,7 @@ const Dashboard = (props) => {
         {submittedData.map((data, index) => {
           return (
             <li key={index}>
-              {data.firstname} {data.lastname} {data.birthdate}
+              {data.firstname} {data.lastname} {data.birthday}
             </li>
           );
         })}
