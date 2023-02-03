@@ -1,0 +1,41 @@
+.dashboardContainer {
+  background-color: white;
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-top: 5px;
+  /* padding-bottom: 15px; */
+  background-color: White;
+  place-content: center;
+  align-content: center;
+}
+
+li {
+  margin: auto;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 800px;
+  padding: 35px 40px;
+  display: flex;
+  background-color: bisque;
+  height: 100px;
+  border-radius: 10px;
+  font-size: 26px;
+  font-weight: 800;
+  color: rgb(22, 21, 104);
+}
+
+/* .allButtons {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;;
+    padding: 20px;
+  } */

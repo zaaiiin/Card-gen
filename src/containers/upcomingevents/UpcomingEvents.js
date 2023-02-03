@@ -6,6 +6,7 @@ import logoandname from "../../assets/logoandname.png";
 import plussign from "../../assets/plussign.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import Dashboard from "../../containers/dashboard/Dashboard.js";
 // import balloon from "../../assets/balloon.png";
 // import heart from "../../assets/heart.png";
 // import otherevent from "../../assets/otherevent.png";
@@ -16,6 +17,7 @@ const UpcomingEvents = () => {
     const addevent_btn = document.querySelector(".addevent_btn");
     const modalevent_form = document.querySelector(".modaladd_form");
     const overlay = document.querySelector(".overlay");
+    // const submitevent_btn = document.querySelector(".submitevent_btn");
 
     const openModalForm = () => {
       modalevent_form.classList.remove("hidden");
@@ -56,24 +58,26 @@ const UpcomingEvents = () => {
     lastname: "",
   };
 
+  const initialDates = {
+    birthday: "",
+    anniversary: "",
+  };
+
   const [formNames, setFormNames] = useState(initialValues);
+  const [formDates, setFormDates] = useState(initialDates);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  const [submittedData, setSubmittedData] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormNames({ ...formNames, [name]: value });
-    console.log(formNames);
+    setFormDates({ ...formDates, [name]: value });
+    console.log(formDates);
+    console.log(formNames, submittedData);
   };
-  // localStorage.firstname = formNames.firstname;
-  // localStorage.lastname = formNames.lastname;
-  // console.log(localStorage.firstname);
-
-  // localStorage.firstname = [formNames.firstname];
-  // localStorage.lastname = [formNames.lastname];
 
   useEffect(() => {
-    console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       closeModalForm();
     }
@@ -94,6 +98,10 @@ const UpcomingEvents = () => {
     e.preventDefault();
     setFormErrors(validate(formNames));
     setIsSubmit(true);
+    setSubmittedData([...submittedData, { ...formNames }, { ...formDates }]);
+    console.log(submittedData);
+    setFormNames({ firstname: "", lastname: "" });
+    setFormDates({ birthday: "", anniversary: "" });
   };
 
   const validate = (values) => {
@@ -130,8 +138,11 @@ const UpcomingEvents = () => {
           />
         </button>
       </div>
-
       <div className="events_dashboard--title">Upcoming Events</div>
+
+      {/* passing props to dashboard component */}
+
+      <Dashboard submittedData={submittedData} />
 
       <div className="addevent_btn--container">
         <button type="button" className="addevent_btn">
@@ -140,15 +151,16 @@ const UpcomingEvents = () => {
         </button>
       </div>
 
-      <div className="dateModal hidden">
-        <label>Date of Birth</label>
-        <input type="date" name="dateofbirth" id="dateofbirth"></input>
-      </div>
-
       <div className="modaladd_form hidden">
-        <form action="#" className="eventForm" onSubmit={handleSubmit}>
+        <form
+          name="eventForm"
+          action="#"
+          className="eventForm"
+          onSubmit={handleSubmit}
+        >
           <div className="form-control">
             <p>{formErrors.firstname}</p>
+
             <input
               type="text"
               placeholder="First Name"
@@ -200,6 +212,25 @@ const UpcomingEvents = () => {
             </button>
           </div>
         </form>
+        <div className="dateModal hidden">
+          <label>Date of Birth</label>
+          <input
+            type="date"
+            name="birthdate"
+            id="dateofbirth"
+            onChange={handleChange}
+          ></input>
+        </div>
+
+        <div className="dateModal hidden">
+          <label>Anniversary</label>
+          <input
+            type="date"
+            name="anniversarydate"
+            id="dateofanniversary"
+            onChange={handleChange}
+          ></input>
+        </div>
       </div>
       <div className="overlay hidden"></div>
     </div>
