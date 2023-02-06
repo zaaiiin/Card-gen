@@ -42,33 +42,40 @@ const UpcomingEvents = () => {
     const dateModalAnniversary = document.querySelector(
       ".dateModalAnniversary"
     );
-    const birthdaycheckbox = document.getElementsByName("birthdaybox");
-    const anniversarycheckbox = document.getElementsByName("anniversarybox");
 
-    birthdaycheckbox[0].addEventListener("change", changeBirthdayCheckBoxState);
-    anniversarycheckbox[0].addEventListener(
-      "change",
-      changeAnniversaryCheckBoxState
+    const bdaycheckbox = document.querySelector(
+      "form[name='eventForm'] input[name='birthdaybox']"
+    );
+    const anniversarycheckbox = document.querySelector(
+      "form[name='eventForm'] input[name='anniversarybox']"
     );
 
-    function changeBirthdayCheckBoxState() {
-      if (this.checked) {
+    bdaycheckbox.addEventListener("change", changeCheckBoxState);
+    anniversarycheckbox.addEventListener("change", changeCheckBoxState);
+
+    function changeCheckBoxState() {
+      if (bdaycheckbox.checked) {
+        console.log("box is checked");
         dateModal.classList.remove("hidden");
-        // dateModalAnniversary.classList.add("hidden");
+        dateModalAnniversary.classList.add("hidden");
+      } else if (anniversarycheckbox.checked) {
+        console.log("abox is checked");
+        dateModalAnniversary.classList.remove("hidden");
+        dateModal.classList.add("hidden");
       } else {
-        // dateModalAnniversary.classList.remove("hidden");
+        dateModalAnniversary.classList.add("hidden");
         dateModal.classList.add("hidden");
       }
     }
-
-    function changeAnniversaryCheckBoxState() {
-      if (this.checked) {
-        dateModalAnniversary.classList.remove("hidden");
-      } else {
-        dateModalAnniversary.classList.add("hidden");
-      }
-    }
   }, []);
+
+  // function changeAnniversaryCheckBoxState() {
+  //   if (this.checked) {
+  //     dateModalAnniversary.classList.remove("hidden");
+  //   } else {
+  //     dateModalAnniversary.classList.add("hidden");
+  //   }
+  // }
 
   const initialValues = {
     firstname: "",
