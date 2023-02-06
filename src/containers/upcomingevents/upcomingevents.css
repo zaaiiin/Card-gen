@@ -307,7 +307,8 @@ input[type="checkbox"] {
   /* pointer-events: none; */
 }
 
-.dateModal {
+.dateModal,
+.dateModalAnniversary {
   position: absolute;
   top: 145px;
   right: -300px;
@@ -352,19 +353,7 @@ label {
   opacity: 0;
 }
 
-#dateofbirth {
-  display: block;
-  border-radius: 3%;
-  border-color: white;
-  border: transparent;
-  font-size: 15px;
-  font-family: "Lato", sans-serif;
-  font-weight: 600;
-  margin: 10px;
-  justify-content: center;
-  letter-spacing: 0.5px;
-}
-
+#dateofbirth,
 #dateofanniversary {
   display: block;
   border-radius: 3%;
@@ -377,3 +366,16 @@ label {
   justify-content: center;
   letter-spacing: 0.5px;
 }
+
+/* #dateofanniversary {
+  display: block;
+  border-radius: 3%;
+  border-color: white;
+  border: transparent;
+  font-size: 15px;
+  font-family: "Lato", sans-serif;
+  font-weight: 600;
+  margin: 10px;
+  justify-content: center;
+  letter-spacing: 0.5px;
+} */

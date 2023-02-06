@@ -33,19 +33,39 @@ const UpcomingEvents = () => {
     close_btn.addEventListener("click", closeModalForm);
     overlay.addEventListener("click", closeModalForm);
 
-    const checkboxes = document.querySelectorAll("input[type=checkbox]");
+    // const checkboxes = document.querySelectorAll("input[type=checkbox]");
 
-    for (let i = 0; i < checkboxes.length; i++) {
-      checkboxes[i].addEventListener("change", changeCheckBoxState);
-    }
-
+    // for (let i = 0; i < checkboxes.length; i++) {
+    //   checkboxes[i].addEventListener("change", changeCheckBoxState);
+    // }
     const dateModal = document.querySelector(".dateModal");
+    const dateModalAnniversary = document.querySelector(
+      ".dateModalAnniversary"
+    );
+    const birthdaycheckbox = document.getElementsByName("birthdaybox");
+    const anniversarycheckbox = document.getElementsByName("anniversarybox");
 
-    function changeCheckBoxState() {
+    birthdaycheckbox[0].addEventListener("change", changeBirthdayCheckBoxState);
+    anniversarycheckbox[0].addEventListener(
+      "change",
+      changeAnniversaryCheckBoxState
+    );
+
+    function changeBirthdayCheckBoxState() {
       if (this.checked) {
         dateModal.classList.remove("hidden");
+        // dateModalAnniversary.classList.add("hidden");
       } else {
+        // dateModalAnniversary.classList.remove("hidden");
         dateModal.classList.add("hidden");
+      }
+    }
+
+    function changeAnniversaryCheckBoxState() {
+      if (this.checked) {
+        dateModalAnniversary.classList.remove("hidden");
+      } else {
+        dateModalAnniversary.classList.add("hidden");
       }
     }
   }, []);
@@ -212,13 +232,13 @@ const UpcomingEvents = () => {
           <div className="form-control eventTypes">
             {/* <img src={balloon} alt="balloon_icon" className="event_icon" /> */}
             Birthday
-            <input type="checkbox" name="birthday" />
+            <input type="checkbox" name="birthdaybox" />
           </div>
 
           <div className="form-control eventTypes">
             {/* <img src={heart} alt="heart_icon" className="event_icon" /> */}
             Anniversary
-            <input type="checkbox" name="anniversary" />
+            <input type="checkbox" name="anniversarybox" />
           </div>
 
           <div className="form-control eventTypes">
@@ -244,6 +264,16 @@ const UpcomingEvents = () => {
             name="birthday"
             value={formValues.birthday}
             id="dateofbirth"
+            onChange={handleChange}
+          ></input>
+        </div>
+        <div className="dateModalAnniversary hidden">
+          <label>Choose the date</label>
+          <input
+            type="date"
+            name="anniversary"
+            value={formValues.anniversary}
+            id="dateofanniversary"
             onChange={handleChange}
           ></input>
         </div>
