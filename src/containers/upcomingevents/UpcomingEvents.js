@@ -23,65 +23,88 @@ const UpcomingEvents = () => {
       overlay.classList.remove("hidden");
     };
 
-    const closeModalForm = () => {
-      modalevent_form.classList.add("hidden");
-      overlay.classList.add("hidden");
-      dateModal.classList.add("hidden");
-    };
+    // const closeModalForm = () => {
+    //   modalevent_form.classList.add("hidden");
+    //   overlay.classList.add("hidden");
+    //   dateModal.classList.add("hidden");
+    //   dateModalAnniversary.classList.add("hidden");
+    //   uncheckAll();
+    // };
 
     addevent_btn.addEventListener("click", openModalForm);
     close_btn.addEventListener("click", closeModalForm);
     overlay.addEventListener("click", closeModalForm);
 
-    // const checkboxes = document.querySelectorAll("input[type=checkbox]");
-
-    // for (let i = 0; i < checkboxes.length; i++) {
-    //   checkboxes[i].addEventListener("change", changeCheckBoxState);
-    // }
     const dateModal = document.querySelector(".dateModal");
     const dateModalAnniversary = document.querySelector(
       ".dateModalAnniversary"
     );
-
     const bdaycheckbox = document.querySelector(
       "form[name='eventForm'] input[name='birthdaybox']"
     );
     const anniversarycheckbox = document.querySelector(
       "form[name='eventForm'] input[name='anniversarybox']"
     );
+    const otherEventsCheckbox = document.querySelector(
+      "form[name='eventForm'] input[name='othereventsbox']"
+    );
 
     bdaycheckbox.addEventListener("change", changeCheckBoxState);
     anniversarycheckbox.addEventListener("change", changeCheckBoxState);
+    otherEventsCheckbox.addEventListener("change", changeCheckBoxState);
+
+    const otherEventsTextArea = document.querySelector(".otherEventsTextArea");
 
     function changeCheckBoxState() {
       if (bdaycheckbox.checked) {
         console.log("box is checked");
         dateModal.classList.remove("hidden");
         dateModalAnniversary.classList.add("hidden");
+        bdaycheckbox.disabled = false;
+        anniversarycheckbox.disabled = true;
+        otherEventsCheckbox.disabled = true;
+        otherEventsTextArea.value = "";
       } else if (anniversarycheckbox.checked) {
-        console.log("abox is checked");
         dateModalAnniversary.classList.remove("hidden");
+        dateModal.classList.add("hidden");
+        console.log("aabox is checked");
+        anniversarycheckbox.disabled = false;
+        bdaycheckbox.disabled = true;
+        otherEventsCheckbox.disabled = true;
+        otherEventsTextArea.value = "";
+      } else if (otherEventsCheckbox.checked) {
+        otherEventsTextArea.focus();
+        otherEventsTextArea.contentEditable = true;
+        otherEventsTextArea.value = "";
+        otherEventsCheckbox.disabled = false;
+        bdaycheckbox.disabled = true;
+        anniversarycheckbox.disabled = true;
+        dateModalAnniversary.classList.add("hidden");
         dateModal.classList.add("hidden");
       } else {
         dateModalAnniversary.classList.add("hidden");
         dateModal.classList.add("hidden");
+        anniversarycheckbox.disabled = false;
+        bdaycheckbox.disabled = false;
+        otherEventsCheckbox.disabled = false;
+        resetValues();
       }
     }
-  }, []);
 
-  // function changeAnniversaryCheckBoxState() {
-  //   if (this.checked) {
-  //     dateModalAnniversary.classList.remove("hidden");
-  //   } else {
-  //     dateModalAnniversary.classList.add("hidden");
-  //   }
-  // }
+    // otherEventsTextArea.addEventListener("blur", function () {
+    //   otherEventsTextArea.contentEditable = false;
+    //   // otherEventsCheckbox.checked = false;
+    // });
+
+    // eslint-disable-next-line
+  }, []);
 
   const initialValues = {
     firstname: "",
     lastname: "",
     birthday: "",
     anniversary: "",
+    other: "",
   };
 
   const [formValues, setFormValues] = useState(initialValues);
@@ -97,15 +120,47 @@ const UpcomingEvents = () => {
     console.log(formValues, submittedData);
   };
 
-  const modalevent_form = document.querySelector(".modaladd_form");
-  const overlay = document.querySelector(".overlay");
-  const dateModal = document.querySelector(".dateModal");
-
   const closeModalForm = () => {
+    const modalevent_form = document.querySelector(".modaladd_form");
+    const overlay = document.querySelector(".overlay");
+    const dateModal = document.querySelector(".dateModal");
+    const dateModalAnniversary = document.querySelector(
+      ".dateModalAnniversary"
+    );
+
     modalevent_form.classList.add("hidden");
     overlay.classList.add("hidden");
     dateModal.classList.add("hidden");
+    dateModalAnniversary.classList.add("hidden");
+    uncheckAll();
+    resetValues();
+    resetCheckBoxes();
   };
+
+  function resetValues() {
+    setFormValues({
+      firstname: "",
+      lastname: "",
+      birthday: "",
+      anniversary: "",
+      other: "",
+    });
+  }
+
+  function resetCheckBoxes() {
+    const bdaycheckbox = document.querySelector(
+      "form[name='eventForm'] input[name='birthdaybox']"
+    );
+    const anniversarycheckbox = document.querySelector(
+      "form[name='eventForm'] input[name='anniversarybox']"
+    );
+    const otherEventsCheckbox = document.querySelector(
+      "form[name='eventForm'] input[name='othereventsbox']"
+    );
+    anniversarycheckbox.disabled = false;
+    bdaycheckbox.disabled = false;
+    otherEventsCheckbox.disabled = false;
+  }
 
   useEffect(() => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
@@ -114,38 +169,17 @@ const UpcomingEvents = () => {
     // eslint-disable-next-line
   }, [formErrors, isSubmit]);
 
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   const errors = validate(formValues);
-  //   setFormErrors(errors);
-  //   if (Object.keys(formErrors).length > 0) {
-  //     return;
-  //   }
-
-  //   setIsSubmit(true);
-  //   setSubmittedData([...submittedData, { ...formValues }]);
-  //   console.log(submittedData);
-  //   setFormValues({
-  //     firstname: "",
-  //     lastname: "",
-  //     birthday: "",
-  //     anniversary: "",
-  //   });
   const handleSubmit = (e) => {
     e.preventDefault();
     const errors = validate(formValues);
     setFormErrors(errors);
     if (Object.keys(errors).length === 0) {
       setSubmittedData([...submittedData, { ...formValues }]);
-      setFormValues({
-        firstname: "",
-        lastname: "",
-        birthday: "",
-        anniversary: "",
-      });
+      resetValues();
       setIsSubmit(true);
-      uncheckAll();
       closeModalForm();
+      uncheckAll();
+      resetCheckBoxes();
     }
   };
 
@@ -248,14 +282,20 @@ const UpcomingEvents = () => {
             <input type="checkbox" name="anniversarybox" />
           </div>
 
-          <div className="form-control eventTypes">
+          <div className="form-control eventTypes" id="otherEventsDiv">
             {/* <img
               src={otherevent}
               alt="otherevent_icon"
               className="event_icon"
             /> */}
-            Other
-            <input type="checkbox" />
+            <textarea
+              placeholder="Other"
+              className="otherEventsTextArea"
+              value={formValues.other}
+              name="other"
+              onChange={handleChange}
+            ></textarea>
+            <input type="checkbox" name="othereventsbox" />
           </div>
 
           <div className="submitevent_btn--container">
@@ -265,7 +305,7 @@ const UpcomingEvents = () => {
           </div>
         </form>
         <div className="dateModal hidden">
-          <label>Choose the date</label>
+          <label>Choose a date</label>
           <input
             type="date"
             name="birthday"
@@ -275,7 +315,7 @@ const UpcomingEvents = () => {
           ></input>
         </div>
         <div className="dateModalAnniversary hidden">
-          <label>Choose the date</label>
+          <label>Choose a date</label>
           <input
             type="date"
             name="anniversary"
