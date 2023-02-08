@@ -39,6 +39,8 @@ const UpcomingEvents = () => {
     const dateModalAnniversary = document.querySelector(
       ".dateModalAnniversary"
     );
+    const dateModalOtherEvent = document.querySelector(".dateModalOtherEvent");
+
     const bdaycheckbox = document.querySelector(
       "form[name='eventForm'] input[name='birthdaybox']"
     );
@@ -56,45 +58,40 @@ const UpcomingEvents = () => {
     const otherEventsTextArea = document.querySelector(".otherEventsTextArea");
 
     function changeCheckBoxState() {
-      if (bdaycheckbox.checked) {
-        console.log("box is checked");
-        dateModal.classList.remove("hidden");
-        dateModalAnniversary.classList.add("hidden");
-        bdaycheckbox.disabled = false;
-        anniversarycheckbox.disabled = true;
-        otherEventsCheckbox.disabled = true;
-        otherEventsTextArea.value = "";
-      } else if (anniversarycheckbox.checked) {
-        dateModalAnniversary.classList.remove("hidden");
-        dateModal.classList.add("hidden");
-        console.log("aabox is checked");
-        anniversarycheckbox.disabled = false;
-        bdaycheckbox.disabled = true;
-        otherEventsCheckbox.disabled = true;
-        otherEventsTextArea.value = "";
-      } else if (otherEventsCheckbox.checked) {
-        otherEventsTextArea.focus();
-        otherEventsTextArea.contentEditable = true;
-        otherEventsTextArea.value = "";
-        otherEventsCheckbox.disabled = false;
-        bdaycheckbox.disabled = true;
-        anniversarycheckbox.disabled = true;
-        dateModalAnniversary.classList.add("hidden");
-        dateModal.classList.add("hidden");
-      } else {
-        dateModalAnniversary.classList.add("hidden");
-        dateModal.classList.add("hidden");
-        anniversarycheckbox.disabled = false;
-        bdaycheckbox.disabled = false;
-        otherEventsCheckbox.disabled = false;
+      const checkboxArray = [
+        bdaycheckbox,
+        anniversarycheckbox,
+        otherEventsCheckbox,
+      ];
+      const modalArray = [dateModal, dateModalAnniversary, dateModalOtherEvent];
+
+      checkboxArray.forEach((checkbox) => {
+        if (checkbox.checked) {
+          modalArray.forEach((modal) => modal.classList.add("hidden"));
+          if (checkbox === bdaycheckbox) {
+            dateModal.classList.remove("hidden");
+          } else if (checkbox === anniversarycheckbox) {
+            dateModalAnniversary.classList.remove("hidden");
+          } else if (checkbox === otherEventsCheckbox) {
+            dateModalOtherEvent.classList.remove("hidden");
+          }
+          checkboxArray.forEach((cb) => {
+            if (cb !== checkbox) cb.disabled = true;
+          });
+          otherEventsTextArea.value = "";
+          if (checkbox === otherEventsCheckbox) {
+            otherEventsTextArea.focus();
+            otherEventsTextArea.contentEditable = true;
+          }
+        }
+      });
+
+      if (checkboxArray.every((checkbox) => !checkbox.checked)) {
+        modalArray.forEach((modal) => modal.classList.add("hidden"));
+        checkboxArray.forEach((checkbox) => (checkbox.disabled = false));
         resetValues();
       }
     }
-
-    // otherEventsTextArea.addEventListener("blur", function () {
-    //   otherEventsTextArea.contentEditable = false;
-    //   // otherEventsCheckbox.checked = false;
-    // });
 
     // eslint-disable-next-line
   }, []);
@@ -104,7 +101,8 @@ const UpcomingEvents = () => {
     lastname: "",
     birthday: "",
     anniversary: "",
-    other: "",
+    otherevent: "",
+    othereventdate: "",
   };
 
   const [formValues, setFormValues] = useState(initialValues);
@@ -127,11 +125,13 @@ const UpcomingEvents = () => {
     const dateModalAnniversary = document.querySelector(
       ".dateModalAnniversary"
     );
+    const dateModalOtherEvent = document.querySelector(".dateModalOtherEvent");
 
     modalevent_form.classList.add("hidden");
     overlay.classList.add("hidden");
     dateModal.classList.add("hidden");
     dateModalAnniversary.classList.add("hidden");
+    dateModalOtherEvent.classList.add("hidden");
     uncheckAll();
     resetValues();
     resetCheckBoxes();
@@ -143,7 +143,8 @@ const UpcomingEvents = () => {
       lastname: "",
       birthday: "",
       anniversary: "",
-      other: "",
+      otherevent: "",
+      othereventdate: "",
     });
   }
 
@@ -196,6 +197,7 @@ const UpcomingEvents = () => {
     if (!values.firstname) {
       errors.firstname = "First name is required";
     }
+
     return errors;
   };
 
@@ -291,8 +293,8 @@ const UpcomingEvents = () => {
             <textarea
               placeholder="Other"
               className="otherEventsTextArea"
-              value={formValues.other}
-              name="other"
+              value={formValues.otherevent}
+              name="otherevent"
               onChange={handleChange}
             ></textarea>
             <input type="checkbox" name="othereventsbox" />
@@ -321,6 +323,16 @@ const UpcomingEvents = () => {
             name="anniversary"
             value={formValues.anniversary}
             id="dateofanniversary"
+            onChange={handleChange}
+          ></input>
+        </div>
+        <div className="dateModalOtherEvent hidden">
+          <label>Choose a date</label>
+          <input
+            type="date"
+            name="othereventdate"
+            value={formValues.othereventdate}
+            id="dateofotherevent"
             onChange={handleChange}
           ></input>
         </div>

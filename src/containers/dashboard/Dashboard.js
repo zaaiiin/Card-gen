@@ -11,7 +11,8 @@ const Dashboard = (props) => {
           return (
             <li key={index}>
               {data.firstname} {data.lastname} birthday: {data.birthday} &nbsp;
-              anniversary: {data.anniversary}
+              anniversary: &nbsp;{data.anniversary} {data.otherevent}: &nbsp;
+              {data.othereventdate}
             </li>
           );
         })}

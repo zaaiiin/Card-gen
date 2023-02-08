@@ -276,6 +276,7 @@ input[type="checkbox"] {
 [type="checkbox"]:disabled {
   background-color: rgb(165, 163, 163);
   outline: none;
+  cursor: not-allowed;
 }
 
 #otherEventsDiv {
@@ -324,7 +325,8 @@ input[type="checkbox"] {
 }
 
 .dateModal,
-.dateModalAnniversary {
+.dateModalAnniversary,
+.dateModalOtherEvent {
   position: absolute;
   top: 145px;
   right: -300px;
@@ -346,16 +348,6 @@ input[type="checkbox"] {
   top: 200px;
   right: -300px;
   background-color: #65bdc2;
-  color: white;
-  height: 110px;
-  width: 260px;
-  border: #5babaf;
-  border-radius: 10px;
-  margin: auto;
-  padding: 20px;
-  justify-content: left;
-  font-family: "Raleway", sans-serif;
-  z-index: 10;
 }
 
 .dateModalAnniversary label {
@@ -391,7 +383,8 @@ label {
 }
 
 #dateofbirth,
-#dateofanniversary {
+#dateofanniversary,
+#dateofotherevent {
   display: block;
   border-radius: 3%;
   border-color: white;
@@ -440,4 +433,33 @@ input[name="othereventsbox"] {
 .otherEventsTextArea:focus {
   outline: none;
   color: white;
+}
+
+.dateModalOtherEvent {
+  position: absolute;
+  top: 250px;
+  right: -300px;
+  background-color: #528d91;
+  color: white;
+  height: 110px;
+  width: 260px;
+  border: #528d91;
+  border-radius: 10px;
+  margin: auto;
+  padding: 20px;
+  justify-content: left;
+  font-family: "Raleway", sans-serif;
+  z-index: 10;
+}
+
+.dateModalOtherEvent {
+  position: absolute;
+  top: 250px;
+  right: -300px;
+  background-color: #64adb3;
+  border: #64adb3;
+}
+
+.dateModalOtherEvent label {
+  background-color: #64adb3;
 }
