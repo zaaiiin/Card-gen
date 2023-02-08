@@ -213,6 +213,7 @@ input:focus {
   gap: 16em;
   place-content: center;
 }
+
 .event_icon {
   align-items: left;
 }
@@ -353,6 +354,7 @@ input[type="checkbox"] {
 .dateModalAnniversary label {
   background-color: #65bdc2;
 }
+
 label {
   display: flex;
   margin-left: 10px;
@@ -398,14 +400,8 @@ label {
 }
 
 #otherEventsDiv {
-  /* border: 1px solid blue; */
   padding: 10px;
 }
-
-/* #otherEventsDiv[contenteditable="false"] {
-  background-color: lightgray;
-  cursor: not-allowed;
-} */
 
 input[name="othereventsbox"] {
   margin: 0px;
@@ -430,9 +426,17 @@ input[name="othereventsbox"] {
   resize: none;
 }
 
+.otherEventsTextArea:hover {
+  cursor: not-allowed !important;
+}
 .otherEventsTextArea:focus {
   outline: none;
   color: white;
+  cursor: default !important;
+}
+
+.otherEventsTextArea:hover {
+  cursor: default;
 }
 
 .dateModalOtherEvent {
@@ -462,4 +466,10 @@ input[name="othereventsbox"] {
 
 .dateModalOtherEvent label {
   background-color: #64adb3;
+}
+
+.event_icon {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
 }

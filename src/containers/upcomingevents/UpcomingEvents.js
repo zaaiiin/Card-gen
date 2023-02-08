@@ -7,9 +7,6 @@ import plussign from "../../assets/plussign.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Dashboard from "../../containers/dashboard/Dashboard.js";
-// import balloon from "../../assets/balloon.png";
-// import heart from "../../assets/heart.png";
-// import otherevent from "../../assets/otherevent.png";
 
 const UpcomingEvents = () => {
   useEffect(() => {
@@ -17,30 +14,11 @@ const UpcomingEvents = () => {
     const addevent_btn = document.querySelector(".addevent_btn");
     const modalevent_form = document.querySelector(".modaladd_form");
     const overlay = document.querySelector(".overlay");
-
-    const openModalForm = () => {
-      modalevent_form.classList.remove("hidden");
-      overlay.classList.remove("hidden");
-    };
-
-    // const closeModalForm = () => {
-    //   modalevent_form.classList.add("hidden");
-    //   overlay.classList.add("hidden");
-    //   dateModal.classList.add("hidden");
-    //   dateModalAnniversary.classList.add("hidden");
-    //   uncheckAll();
-    // };
-
-    addevent_btn.addEventListener("click", openModalForm);
-    close_btn.addEventListener("click", closeModalForm);
-    overlay.addEventListener("click", closeModalForm);
-
     const dateModal = document.querySelector(".dateModal");
     const dateModalAnniversary = document.querySelector(
       ".dateModalAnniversary"
     );
     const dateModalOtherEvent = document.querySelector(".dateModalOtherEvent");
-
     const bdaycheckbox = document.querySelector(
       "form[name='eventForm'] input[name='birthdaybox']"
     );
@@ -50,12 +28,20 @@ const UpcomingEvents = () => {
     const otherEventsCheckbox = document.querySelector(
       "form[name='eventForm'] input[name='othereventsbox']"
     );
+    const otherEventsTextArea = document.querySelector(".otherEventsTextArea");
+
+    const openModalForm = () => {
+      modalevent_form.classList.remove("hidden");
+      overlay.classList.remove("hidden");
+    };
+
+    addevent_btn.addEventListener("click", openModalForm);
+    close_btn.addEventListener("click", closeModalForm);
+    overlay.addEventListener("click", closeModalForm);
 
     bdaycheckbox.addEventListener("change", changeCheckBoxState);
     anniversarycheckbox.addEventListener("change", changeCheckBoxState);
     otherEventsCheckbox.addEventListener("change", changeCheckBoxState);
-
-    const otherEventsTextArea = document.querySelector(".otherEventsTextArea");
 
     function changeCheckBoxState() {
       const checkboxArray = [
@@ -88,7 +74,7 @@ const UpcomingEvents = () => {
 
       if (checkboxArray.every((checkbox) => !checkbox.checked)) {
         modalArray.forEach((modal) => modal.classList.add("hidden"));
-        checkboxArray.forEach((checkbox) => (checkbox.disabled = false));
+        resetCheckBoxes();
         resetValues();
       }
     }
@@ -138,14 +124,7 @@ const UpcomingEvents = () => {
   };
 
   function resetValues() {
-    setFormValues({
-      firstname: "",
-      lastname: "",
-      birthday: "",
-      anniversary: "",
-      otherevent: "",
-      othereventdate: "",
-    });
+    setFormValues(initialValues);
   }
 
   function resetCheckBoxes() {
@@ -158,9 +137,14 @@ const UpcomingEvents = () => {
     const otherEventsCheckbox = document.querySelector(
       "form[name='eventForm'] input[name='othereventsbox']"
     );
-    anniversarycheckbox.disabled = false;
-    bdaycheckbox.disabled = false;
-    otherEventsCheckbox.disabled = false;
+
+    const checkboxArray = [
+      bdaycheckbox,
+      anniversarycheckbox,
+      otherEventsCheckbox,
+    ];
+
+    checkboxArray.forEach((checkbox) => (checkbox.disabled = false));
   }
 
   useEffect(() => {
@@ -197,7 +181,6 @@ const UpcomingEvents = () => {
     if (!values.firstname) {
       errors.firstname = "First name is required";
     }
-
     return errors;
   };
 
@@ -272,24 +255,17 @@ const UpcomingEvents = () => {
             />
           </div>
 
-          <div className="form-control eventTypes">
-            {/* <img src={balloon} alt="balloon_icon" className="event_icon" /> */}
+          <div className="form-control eventTypes" id="birthdaylabel">
             Birthday
             <input type="checkbox" name="birthdaybox" />
           </div>
 
-          <div className="form-control eventTypes">
-            {/* <img src={heart} alt="heart_icon" className="event_icon" /> */}
+          <div className="form-control eventTypes" id="anniversarylabel">
             Anniversary
             <input type="checkbox" name="anniversarybox" />
           </div>
 
           <div className="form-control eventTypes" id="otherEventsDiv">
-            {/* <img
-              src={otherevent}
-              alt="otherevent_icon"
-              className="event_icon"
-            /> */}
             <textarea
               placeholder="Other"
               className="otherEventsTextArea"
