@@ -36,14 +36,13 @@ const Dashboard = (props) => {
         {submittedData.map((data, index) => {
           return (
             <div className="allContainers" key={index}>
-              {" "}
               <div className="dashboardContent dateDetailsContainer">
                 <div className="dashboardContent eventDate">
                   {data.birthday}
                   {data.anniversary}
                   {data.othereventdate}
                 </div>
-                <div className="dashboardContent dateSideContainer"></div>{" "}
+                <div className="dashboardContent dateSideContainer"></div>
               </div>
               <div className="dashboardContent eventName">
                 <div className="eventIcon" key={data.index}>
