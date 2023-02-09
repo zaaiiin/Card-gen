@@ -112,7 +112,7 @@ ul {
   border-radius: 20px;
 
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(9, 1fr);
   grid-column-gap: 0px;
   position: relative;
   flex-direction: column;
@@ -135,7 +135,7 @@ ul {
 }
 
 .eventType {
-  grid-column: span 4;
+  grid-column: span 8;
   background-color: transparent;
   /* margin-right: -10px; */
   /* margin-left: 40px; */
@@ -149,6 +149,7 @@ ul {
   font-size: 25px;
   font-weight: 800;
   font-family: "Raleway", sans-serif !important;
+  padding-left: 20px;
 }
 
 .eventCountdown {
@@ -170,7 +171,6 @@ ul {
   font-family: "Raleway", sans-serif;
 }
 
-.iconImage {
-  background: transparent;
-  height: 35px;
+img {
+  background-color: transparent;
 }
