@@ -5,6 +5,16 @@ import heart from "../../assets/heart.png";
 import otherevent from "../../assets/otherevent.png";
 
 const Dashboard = (props) => {
+  const { submittedData } = props;
+  //adding dynamic container colour change serially with event addition
+  const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
+
+  for (let i = 0; i < submittedData.length; i++) {
+    submittedData[i].backgroundcolor =
+      containerColors[i % containerColors.length];
+  }
+
+  //assigning icons to corresponding event
   let arrayOfIcons = [];
 
   arrayOfIcons.push(
@@ -28,7 +38,6 @@ const Dashboard = (props) => {
     return eventIcon;
   }
 
-  const { submittedData } = props;
   console.log(submittedData);
   return (
     <div className="dashboardContainer">
@@ -42,9 +51,15 @@ const Dashboard = (props) => {
                   {data.anniversary}
                   {data.othereventdate}
                 </div>
-                <div className="dashboardContent dateSideContainer"></div>
+                <div
+                  className="dashboardContent dateSideContainer"
+                  style={{ backgroundColor: data.backgroundcolor }}
+                ></div>
               </div>
-              <div className="dashboardContent eventName">
+              <div
+                className="dashboardContent eventName"
+                style={{ backgroundColor: data.backgroundcolor }}
+              >
                 <div className="eventIcon" key={data.index}>
                   {displayIcon(data)}
                 </div>
@@ -54,7 +69,10 @@ const Dashboard = (props) => {
                   {data.otherevent}
                 </div>
               </div>
-              <div className="dashboardContent eventCountdown">
+              <div
+                className="dashboardContent eventCountdown"
+                style={{ backgroundColor: data.backgroundcolor }}
+              >
                 59 days left
               </div>
             </div>
