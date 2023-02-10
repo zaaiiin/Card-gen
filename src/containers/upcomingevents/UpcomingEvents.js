@@ -60,6 +60,7 @@ const UpcomingEvents = () => {
             dateModalAnniversary.classList.remove("hidden");
           } else if (checkbox === otherEventsCheckbox) {
             dateModalOtherEvent.classList.remove("hidden");
+            otherEventsTextArea.style.cursor = "pointer";
           }
           checkboxArray.forEach((cb) => {
             if (cb !== checkbox) cb.disabled = true;
@@ -67,7 +68,11 @@ const UpcomingEvents = () => {
           otherEventsTextArea.value = "";
           if (checkbox === otherEventsCheckbox) {
             otherEventsTextArea.focus();
-            otherEventsTextArea.contentEditable = true;
+            // otherEventsTextArea.contentEditable = true;
+            otherEventsTextArea.disabled = false;
+          } else {
+            // otherEventsTextArea.contentEditable = false;
+            otherEventsTextArea.disabled = true;
           }
         }
       });
@@ -100,6 +105,7 @@ const UpcomingEvents = () => {
     console.log(e.target);
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+    setFormErrors({});
 
     console.log(formValues, submittedData);
   };
@@ -121,6 +127,7 @@ const UpcomingEvents = () => {
     uncheckAll();
     resetValues();
     resetCheckBoxes();
+    setFormErrors({});
   };
 
   function resetValues() {
@@ -151,13 +158,14 @@ const UpcomingEvents = () => {
     if (Object.keys(formErrors).length === 0 && isSubmit) {
       closeModalForm();
     }
-    // eslint-disable-next-line
-  }, [formErrors, isSubmit]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const errors = validate(formValues);
     setFormErrors(errors);
+
     if (Object.keys(errors).length === 0) {
       setSubmittedData([...submittedData, { ...formValues }]);
       resetValues();
@@ -177,10 +185,27 @@ const UpcomingEvents = () => {
 
   const validate = (values) => {
     const errors = {};
+    const otherEventsCheckbox = document.querySelector(
+      "form[name='eventForm'] input[name='othereventsbox']"
+    );
+    const otherEventsTextArea = document.querySelector(".otherEventsTextArea");
 
     if (!values.firstname) {
       errors.firstname = "First name is required";
     }
+
+    if (!values.birthday && !values.anniversary && !values.othereventdate) {
+      errors.date = "A date is required";
+    }
+
+    if (otherEventsCheckbox.checked && !values.otherevent) {
+      errors.eventname = "Event name is required";
+      otherEventsTextArea.style.cursor = "pointer";
+    } else if (values.otherevent) {
+      values.firstname = "";
+      delete errors.firstname;
+    }
+    console.log(errors);
     return errors;
   };
 
@@ -230,7 +255,7 @@ const UpcomingEvents = () => {
           onSubmit={handleSubmit}
         >
           <div className="form-control">
-            <p>{formErrors.firstname}</p>
+            <p id="firstNameError">{formErrors.firstname}</p>
 
             <input
               type="text"
@@ -266,6 +291,7 @@ const UpcomingEvents = () => {
           </div>
 
           <div className="form-control eventTypes" id="otherEventsDiv">
+            <div className="errorMessage">{formErrors.date}</div>
             <textarea
               placeholder="Other"
               className="otherEventsTextArea"
@@ -273,9 +299,10 @@ const UpcomingEvents = () => {
               name="otherevent"
               onChange={handleChange}
             ></textarea>
+
             <input type="checkbox" name="othereventsbox" />
           </div>
-
+          <div className="errorMessageEventName">{formErrors.eventname}</div>
           <div className="submitevent_btn--container">
             <button type="submit" className="submitevent_btn">
               Save
