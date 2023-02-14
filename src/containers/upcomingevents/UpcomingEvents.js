@@ -201,6 +201,8 @@ const UpcomingEvents = () => {
     if (otherEventsCheckbox.checked && !values.otherevent) {
       errors.eventname = "Event name is required";
       otherEventsTextArea.style.cursor = "pointer";
+      values.firstname = "";
+      delete errors.firstname;
     } else if (values.otherevent) {
       values.firstname = "";
       delete errors.firstname;
