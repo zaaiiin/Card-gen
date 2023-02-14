@@ -1,8 +1,8 @@
-import React from "react";
 import "./dashboard.css";
 import balloon from "../../assets/balloon.png";
 import heart from "../../assets/heart.png";
 import otherevent from "../../assets/otherevent.png";
+import React, { useState, useEffect } from "react";
 
 const Dashboard = (props) => {
   const { submittedData } = props;
@@ -38,6 +38,112 @@ const Dashboard = (props) => {
     return eventIcon;
   }
 
+  // const [formattedBirthday, setFormattedBirthday] = useState(null);
+  // const [birthdayDataArray, setBirthdayDataArray] = useState([]);
+  // const [formattedDate, setFormattedDate] = useState([]);
+
+  // const getFormattedDate = (date) => {
+  //   const suffixes = [
+  //     "th",
+  //     "st",
+  //     "nd",
+  //     "rd",
+  //     "th",
+  //     "th",
+  //     "th",
+  //     "th",
+  //     "th",
+  //     "th",
+  //   ];
+  //   const day = date.getDate();
+  //   const suffix = day >= 11 && day <= 13 ? "th" : suffixes[day % 10];
+  //   return `${date.toLocaleString("en-US", {
+  //     month: "short",
+  //   })} ${day}${suffix}`;
+  // };
+
+  // const getFormattedDates = (dates) => {
+  //   return dates.map((date) => getFormattedDate(new Date(date)));
+  // };
+
+  // useEffect(() => {
+  //   const newDate = () => {
+  //     let birthdayDataArray = [];
+  //     let formattedDatesArray = [];
+  //     if (
+  //       Array.isArray(props.submittedData) &&
+  //       props.submittedData.length > 0
+  //     ) {
+  //       for (let i = 0; i < props.submittedData.length; i++) {
+  //         birthdayDataArray.push(props.submittedData[i].birthday);
+  //         formattedDatesArray.push(
+  //           getFormattedDate(new Date(props.submittedData[i].birthday))
+  //         );
+  //         console.log(birthdayDataArray);
+  //       }
+
+  //       // const lastValue = birthdayDataArray.slice(-1);
+
+  //       // const birthday = new Date(lastValue);
+
+  //       // const formattedDate = getFormattedDate(birthday);
+  //       // setFormattedBirthday(formattedDate);
+  //       // return [formattedDate, formattedDatesArray];
+  //     } else {
+  //       setFormattedBirthday(null);
+  //     }
+  //     // return [null, formattedDatesArray];
+
+  //     setFormattedDate(formattedDatesArray);
+  //     setBirthdayDataArray(birthdayDataArray);
+  //   };
+  //   newDate();
+  // }, [props.submittedData]);
+
+  const suffixes = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"];
+
+  function getFormattedDate(date) {
+    const day = date.getDate();
+    const suffix = day >= 11 && day <= 13 ? "th" : suffixes[day % 10];
+    return `${date.toLocaleString("en-US", {
+      month: "short",
+    })} ${day}${suffix}`;
+  }
+
+  const [formattedBirthdayArray, setFormattedBirthdayArray] = useState([]);
+  const [formattedAnniversaryArray, setFormattedAnniversaryArray] = useState(
+    []
+  );
+  const [formattedOthereventArray, setFormattedOthereventArray] = useState([]);
+
+  useEffect(() => {
+    if (Array.isArray(submittedData) && submittedData.length > 0) {
+      const newFormattedBirthdayArray = submittedData.map((data) => {
+        if (data.birthday) {
+          return getFormattedDate(new Date(data.birthday));
+        }
+        return null;
+      });
+      setFormattedBirthdayArray(newFormattedBirthdayArray);
+
+      const newFormattedAnniversaryArray = submittedData.map((data) => {
+        if (data.anniversary) {
+          return getFormattedDate(new Date(data.anniversary));
+        }
+        return null;
+      });
+      setFormattedAnniversaryArray(newFormattedAnniversaryArray);
+
+      const newFormattedOtherEventArray = submittedData.map((data) => {
+        if (data.othereventdate) {
+          return getFormattedDate(new Date(data.othereventdate));
+        }
+        return null;
+      });
+      setFormattedOthereventArray(newFormattedOtherEventArray);
+    }
+  }, [submittedData]);
+
   console.log(submittedData);
   return (
     <div className="dashboardContainer">
@@ -46,10 +152,10 @@ const Dashboard = (props) => {
           return (
             <div className="allContainers" key={index}>
               <div className="dashboardContent dateDetailsContainer">
-                <div className="dashboardContent eventDate">
-                  {data.birthday}
-                  {data.anniversary}
-                  {data.othereventdate}
+                <div className="dashboardContent eventDate" key={index}>
+                  {formattedBirthdayArray[index]}
+                  {formattedAnniversaryArray[index]}
+                  {formattedOthereventArray[index]}
                 </div>
                 <div
                   className="dashboardContent dateSideContainer"

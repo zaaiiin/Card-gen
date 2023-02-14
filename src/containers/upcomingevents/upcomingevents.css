@@ -1,12 +1,11 @@
 .upcomingevents_wrapper {
   background-color: white;
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   justify-content: center;
   align-items: center;
   position: relative;
   z-index: 1;
-  padding-bottom: 500px;
 }
 
 .homepage_header {
@@ -50,7 +49,6 @@
   color: white;
   font-size: 50px;
   font-weight: 900;
-  color: white;
   font-size: 50px;
   align-items: center;
   width: 100vw;
@@ -64,13 +62,15 @@
 
 .addevent_btn--container {
   /* display: flex;
-  flex-direction: column; */
+
   position: fixed;
   align-items: center;
   /* margin: 2%; */
-  background: white;
   z-index: 1;
-  position: relative;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+
   /* display: block; */
 }
 
@@ -86,9 +86,10 @@
   width: 160px;
   margin: 0px;
   height: 50px;
-  /* position: absolute;
-  right: 70px;
-  top: ; */
+  position: absolute;
+  /* /* right: 0px; */
+  bottom: 50px;
+  left: 50px;
 }
 
 .addevent_btn:hover {
@@ -362,11 +363,11 @@ input[type="checkbox"] {
 }
 
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vmax;
   background-color: rgba(0, 0, 0, 0.76);
   backdrop-filter: blur(3px);
   z-index: 9;
