@@ -38,68 +38,6 @@ const Dashboard = (props) => {
     return eventIcon;
   }
 
-  // const [formattedBirthday, setFormattedBirthday] = useState(null);
-  // const [birthdayDataArray, setBirthdayDataArray] = useState([]);
-  // const [formattedDate, setFormattedDate] = useState([]);
-
-  // const getFormattedDate = (date) => {
-  //   const suffixes = [
-  //     "th",
-  //     "st",
-  //     "nd",
-  //     "rd",
-  //     "th",
-  //     "th",
-  //     "th",
-  //     "th",
-  //     "th",
-  //     "th",
-  //   ];
-  //   const day = date.getDate();
-  //   const suffix = day >= 11 && day <= 13 ? "th" : suffixes[day % 10];
-  //   return `${date.toLocaleString("en-US", {
-  //     month: "short",
-  //   })} ${day}${suffix}`;
-  // };
-
-  // const getFormattedDates = (dates) => {
-  //   return dates.map((date) => getFormattedDate(new Date(date)));
-  // };
-
-  // useEffect(() => {
-  //   const newDate = () => {
-  //     let birthdayDataArray = [];
-  //     let formattedDatesArray = [];
-  //     if (
-  //       Array.isArray(props.submittedData) &&
-  //       props.submittedData.length > 0
-  //     ) {
-  //       for (let i = 0; i < props.submittedData.length; i++) {
-  //         birthdayDataArray.push(props.submittedData[i].birthday);
-  //         formattedDatesArray.push(
-  //           getFormattedDate(new Date(props.submittedData[i].birthday))
-  //         );
-  //         console.log(birthdayDataArray);
-  //       }
-
-  //       // const lastValue = birthdayDataArray.slice(-1);
-
-  //       // const birthday = new Date(lastValue);
-
-  //       // const formattedDate = getFormattedDate(birthday);
-  //       // setFormattedBirthday(formattedDate);
-  //       // return [formattedDate, formattedDatesArray];
-  //     } else {
-  //       setFormattedBirthday(null);
-  //     }
-  //     // return [null, formattedDatesArray];
-
-  //     setFormattedDate(formattedDatesArray);
-  //     setBirthdayDataArray(birthdayDataArray);
-  //   };
-  //   newDate();
-  // }, [props.submittedData]);
-
   const suffixes = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"];
 
   function getFormattedDate(date) {
