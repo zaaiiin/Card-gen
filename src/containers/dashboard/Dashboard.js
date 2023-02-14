@@ -38,6 +38,7 @@ const Dashboard = (props) => {
     return eventIcon;
   }
 
+  //formatting dates for all events
   const suffixes = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"];
 
   function getFormattedDate(date) {
