@@ -39,9 +39,20 @@ const Dashboard = (props) => {
   }
 
   //formatting dates for all events
-  const suffixes = ["th", "st", "nd", "rd", "th", "th", "th", "th", "th", "th"];
 
   function getFormattedDate(date) {
+    const suffixes = [
+      "th",
+      "st",
+      "nd",
+      "rd",
+      "th",
+      "th",
+      "th",
+      "th",
+      "th",
+      "th",
+    ];
     const day = date.getDate();
     const suffix = day >= 11 && day <= 13 ? "th" : suffixes[day % 10];
     return `${date.toLocaleString("en-US", {
@@ -101,7 +112,7 @@ const Dashboard = (props) => {
   });
   console.log(eventDates);
 
-  const getTimeRemaining = (eventDate) => {
+  function getTimeRemaining(eventDate) {
     const difference = Date.parse(eventDate) - Date.now();
     function convertToDays(difference) {
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -113,43 +124,39 @@ const Dashboard = (props) => {
     const currentYear = new Date().getFullYear();
     const eventDates = new Date(currentYear, eventMonth - 1);
     const currentDates = new Date(currentYear, currentMonth - 1);
+    const currentDate = new Date().getDate();
+    const specificEventDate = new Date(eventDate).getDate();
+
+    function addYearToDate(date) {
+      const newDate = new Date(date);
+      newDate.setFullYear(newDate.getFullYear() + 1);
+      return newDate;
+    }
 
     if (difference > 0) {
       const days = convertToDays(difference);
-      return {
-        difference,
-        days,
-      };
+      return days;
     }
 
-    if (difference <= 0 && eventMonth < currentMonth) {
-      let getDateFormat = new Date(eventDate);
-
-      console.log(getDateFormat);
-      let eventYear = getDateFormat.getFullYear();
-
-      eventYear = currentYear + 1;
-      getDateFormat.setFullYear(eventYear);
-
-      const difference = Date.parse(getDateFormat) - Date.now();
+    if (
+      (specificEventDate !== currentDate && eventMonth === currentMonth) ||
+      (difference < 0 && eventDates < currentDates)
+    ) {
+      const updatedEventDate = addYearToDate(eventDate);
+      const difference = Date.parse(updatedEventDate) - Date.now();
       const days = convertToDays(difference);
-      console.log(days);
-
-      return {
-        difference,
-        days,
-      };
+      return days;
     }
 
-    if (difference <= 0 && eventDates > currentDates) {
+    if (difference < 0 && eventDates > currentDates) {
       const difference = eventDates.getTime() - Date.now();
       const days = convertToDays(difference);
-      return {
-        difference,
-        days,
-      };
+      return days;
+    } else if (difference < 0 && eventDates < currentDates) {
+      const days = convertToDays(difference);
+      return days;
     }
-  };
+  }
 
   const remainingTimes = eventDates.map((date) => getTimeRemaining(date));
 
@@ -194,7 +201,7 @@ const Dashboard = (props) => {
                 style={{ backgroundColor: data.backgroundcolor }}
               >
                 {remainingTime
-                  ? `${remainingTime.days} days left`
+                  ? `${remainingTime} days left`
                   : "🎉Today's the day! 🎉"}
               </div>
             </div>
