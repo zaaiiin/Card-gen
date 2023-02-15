@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 
 const Dashboard = (props) => {
   const { submittedData } = props;
-  //adding dynamic container colour change serially with event addition
+  //add dynamic container colour change serially with event addition
   const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
 
   for (let i = 0; i < submittedData.length; i++) {
@@ -14,7 +14,7 @@ const Dashboard = (props) => {
       containerColors[i % containerColors.length];
   }
 
-  //assigning icons to corresponding event
+  //assign icons to corresponding event
   let arrayOfIcons = [];
 
   arrayOfIcons.push(
@@ -38,8 +38,7 @@ const Dashboard = (props) => {
     return eventIcon;
   }
 
-  //formatting dates for all events
-
+  //suffix function
   function getFormattedDate(date) {
     const suffixes = [
       "th",
@@ -60,41 +59,32 @@ const Dashboard = (props) => {
     })} ${day}${suffix}`;
   }
 
+  //format dates for all events
   const [formattedBirthdayArray, setFormattedBirthdayArray] = useState([]);
   const [formattedAnniversaryArray, setFormattedAnniversaryArray] = useState(
     []
   );
   const [formattedOthereventArray, setFormattedOthereventArray] = useState([]);
 
+  function formatDates(submittedData, keyName, setStateFunc) {
+    const formattedDates = submittedData.map((data) => {
+      if (data[keyName]) {
+        return getFormattedDate(new Date(data[keyName]));
+      }
+      return null;
+    });
+    setStateFunc(formattedDates);
+  }
+
   useEffect(() => {
     if (Array.isArray(submittedData) && submittedData.length > 0) {
-      const newFormattedBirthdayArray = submittedData.map((data) => {
-        if (data.birthday) {
-          return getFormattedDate(new Date(data.birthday));
-        }
-        return null;
-      });
-      setFormattedBirthdayArray(newFormattedBirthdayArray);
-
-      const newFormattedAnniversaryArray = submittedData.map((data) => {
-        if (data.anniversary) {
-          return getFormattedDate(new Date(data.anniversary));
-        }
-        return null;
-      });
-      setFormattedAnniversaryArray(newFormattedAnniversaryArray);
-
-      const newFormattedOtherEventArray = submittedData.map((data) => {
-        if (data.othereventdate) {
-          return getFormattedDate(new Date(data.othereventdate));
-        }
-        return null;
-      });
-      setFormattedOthereventArray(newFormattedOtherEventArray);
+      formatDates(submittedData, "birthday", setFormattedBirthdayArray);
+      formatDates(submittedData, "anniversary", setFormattedAnniversaryArray);
+      formatDates(submittedData, "othereventdate", setFormattedOthereventArray);
     }
   }, [submittedData]);
 
-  //creating a countdown
+  //push unformatted event dates to an array
   const [eventDates, setEventDates] = useState([]);
 
   submittedData.forEach((data) => {
@@ -112,6 +102,7 @@ const Dashboard = (props) => {
   });
   console.log(eventDates);
 
+  //countdown function
   function getTimeRemaining(eventDate) {
     const difference = Date.parse(eventDate) - Date.now();
     function convertToDays(difference) {
@@ -139,8 +130,8 @@ const Dashboard = (props) => {
     }
 
     if (
-      (specificEventDate !== currentDate && eventMonth === currentMonth) ||
-      (difference < 0 && eventDates < currentDates)
+      (difference < 0 && eventDates < currentDates) ||
+      (specificEventDate !== currentDate && eventMonth === currentMonth)
     ) {
       const updatedEventDate = addYearToDate(eventDate);
       const difference = Date.parse(updatedEventDate) - Date.now();
@@ -159,8 +150,6 @@ const Dashboard = (props) => {
   }
 
   const remainingTimes = eventDates.map((date) => getTimeRemaining(date));
-
-  console.log(remainingTimes);
 
   console.log(submittedData);
   return (
