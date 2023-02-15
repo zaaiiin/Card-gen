@@ -83,11 +83,84 @@ const Dashboard = (props) => {
     }
   }, [submittedData]);
 
+  //creating a countdown
+  const [eventDates, setEventDates] = useState([]);
+
+  submittedData.forEach((data) => {
+    if (data.birthday && !eventDates.includes(data.birthday)) {
+      eventDates.push(data.birthday);
+    } else if (data.anniversary && !eventDates.includes(data.anniversary)) {
+      eventDates.push(data.anniversary);
+    } else if (
+      data.otherevent &&
+      data.othereventdate &&
+      !eventDates.includes(data.othereventdate)
+    ) {
+      eventDates.push(data.othereventdate);
+    }
+  });
+  console.log(eventDates);
+
+  const getTimeRemaining = (eventDate) => {
+    const difference = Date.parse(eventDate) - Date.now();
+    function convertToDays(difference) {
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      return days;
+    }
+
+    const eventMonth = new Date(eventDate).getMonth() + 1;
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+    const eventDates = new Date(currentYear, eventMonth - 1);
+    const currentDates = new Date(currentYear, currentMonth - 1);
+
+    if (difference > 0) {
+      const days = convertToDays(difference);
+      return {
+        difference,
+        days,
+      };
+    }
+
+    if (difference <= 0 && eventMonth < currentMonth) {
+      let getDateFormat = new Date(eventDate);
+
+      console.log(getDateFormat);
+      let eventYear = getDateFormat.getFullYear();
+
+      eventYear = currentYear + 1;
+      getDateFormat.setFullYear(eventYear);
+
+      const difference = Date.parse(getDateFormat) - Date.now();
+      const days = convertToDays(difference);
+      console.log(days);
+
+      return {
+        difference,
+        days,
+      };
+    }
+
+    if (difference <= 0 && eventDates > currentDates) {
+      const difference = eventDates.getTime() - Date.now();
+      const days = convertToDays(difference);
+      return {
+        difference,
+        days,
+      };
+    }
+  };
+
+  const remainingTimes = eventDates.map((date) => getTimeRemaining(date));
+
+  console.log(remainingTimes);
+
   console.log(submittedData);
   return (
     <div className="dashboardContainer">
       <ul>
         {submittedData.map((data, index) => {
+          const remainingTime = remainingTimes[index];
           return (
             <div className="allContainers" key={index}>
               <div className="dashboardContent dateDetailsContainer">
@@ -114,11 +187,15 @@ const Dashboard = (props) => {
                   {data.otherevent}
                 </div>
               </div>
+
               <div
                 className="dashboardContent eventCountdown"
+                key={index}
                 style={{ backgroundColor: data.backgroundcolor }}
               >
-                59 days left
+                {remainingTime
+                  ? `${remainingTime.days} days left`
+                  : "🎉Today's the day! 🎉"}
               </div>
             </div>
           );
