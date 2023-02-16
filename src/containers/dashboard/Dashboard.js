@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 
 const Dashboard = (props) => {
   const { submittedData } = props;
-  //add dynamic container colour change serially with event addition
+  //adding dynamic container colour change serially with event addition
   const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
 
   for (let i = 0; i < submittedData.length; i++) {
@@ -14,7 +14,7 @@ const Dashboard = (props) => {
       containerColors[i % containerColors.length];
   }
 
-  //assign icons to corresponding event
+  //assigning icons to corresponding event
   let arrayOfIcons = [];
 
   arrayOfIcons.push(
@@ -38,7 +38,8 @@ const Dashboard = (props) => {
     return eventIcon;
   }
 
-  //suffix function
+  //formatting dates for all events
+
   function getFormattedDate(date) {
     const suffixes = [
       "th",
@@ -59,7 +60,6 @@ const Dashboard = (props) => {
     })} ${day}${suffix}`;
   }
 
-  //format dates for all events
   const [formattedBirthdayArray, setFormattedBirthdayArray] = useState([]);
   const [formattedAnniversaryArray, setFormattedAnniversaryArray] = useState(
     []
@@ -84,7 +84,7 @@ const Dashboard = (props) => {
     }
   }, [submittedData]);
 
-  //push unformatted event dates to an array
+  //creating a countdown
   const [eventDates, setEventDates] = useState([]);
 
   submittedData.forEach((data) => {
@@ -102,11 +102,10 @@ const Dashboard = (props) => {
   });
   console.log(eventDates);
 
-  //countdown function
   function getTimeRemaining(eventDate) {
     const difference = Date.parse(eventDate) - Date.now();
     function convertToDays(difference) {
-      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const days = Math.round(difference / (1000 * 60 * 60 * 24));
       return days;
     }
 
@@ -126,31 +125,41 @@ const Dashboard = (props) => {
 
     if (difference > 0) {
       const days = convertToDays(difference);
-      return days;
+
+      return { days, difference };
     }
 
-    if (
-      (difference < 0 && eventDates < currentDates) ||
-      (specificEventDate !== currentDate && eventMonth === currentMonth)
-    ) {
+    if (difference < 0 && eventDates < currentDates) {
+      function setToThisYear() {
+        let eventDateYear = new Date(eventDate);
+        // const getEventDateYear = eventDateYear.getFullYear();
+        eventDateYear.setFullYear(currentYear);
+        console.log(eventDateYear);
+        return eventDateYear;
+      }
+      const setEventDate = setToThisYear(eventDate);
+      const updatedEventDate = addYearToDate(setEventDate);
+      const difference = Date.parse(updatedEventDate) - Date.now();
+      const days = convertToDays(difference);
+      return { days, difference };
+    }
+
+    if (specificEventDate !== currentDate && eventMonth === currentMonth) {
       const updatedEventDate = addYearToDate(eventDate);
       const difference = Date.parse(updatedEventDate) - Date.now();
       const days = convertToDays(difference);
-      return days;
+      return { days, difference };
     }
 
     if (difference < 0 && eventDates > currentDates) {
       const difference = eventDates.getTime() - Date.now();
       const days = convertToDays(difference);
-      return days;
-    } else if (difference < 0 && eventDates < currentDates) {
-      const days = convertToDays(difference);
-      return days;
+      return { days, difference };
     }
   }
 
   const remainingTimes = eventDates.map((date) => getTimeRemaining(date));
-
+  console.log(remainingTimes);
   console.log(submittedData);
   return (
     <div className="dashboardContainer">
@@ -190,7 +199,7 @@ const Dashboard = (props) => {
                 style={{ backgroundColor: data.backgroundcolor }}
               >
                 {remainingTime
-                  ? `${remainingTime} days left`
+                  ? `${remainingTime.days} days left`
                   : "🎉Today's the day! 🎉"}
               </div>
             </div>
