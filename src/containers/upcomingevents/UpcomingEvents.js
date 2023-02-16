@@ -50,17 +50,25 @@ const UpcomingEvents = () => {
         otherEventsCheckbox,
       ];
       const modalArray = [dateModal, dateModalAnniversary, dateModalOtherEvent];
+      const reminderContainer = document.querySelector(".reminderContainer");
+      const birthdayDate = document.getElementById("dateofbirth");
+      const anniversaryDate = document.getElementById("dateofanniversary");
+      const othereventDate = document.getElementById("dateofotherevent");
 
-      checkboxArray.forEach((checkbox) => {
+      checkboxArray.forEach((checkbox, formValues) => {
         if (checkbox.checked) {
           modalArray.forEach((modal) => modal.classList.add("hidden"));
+
           if (checkbox === bdaycheckbox) {
             dateModal.classList.remove("hidden");
+            reminderContainer.style.marginTop = "10px";
           } else if (checkbox === anniversarycheckbox) {
             dateModalAnniversary.classList.remove("hidden");
+            reminderContainer.style.marginTop = "60px";
           } else if (checkbox === otherEventsCheckbox) {
             dateModalOtherEvent.classList.remove("hidden");
             otherEventsTextArea.style.cursor = "pointer";
+            reminderContainer.style.marginTop = "110px";
           }
           checkboxArray.forEach((cb) => {
             if (cb !== checkbox) cb.disabled = true;
@@ -79,9 +87,30 @@ const UpcomingEvents = () => {
 
       if (checkboxArray.every((checkbox) => !checkbox.checked)) {
         modalArray.forEach((modal) => modal.classList.add("hidden"));
+        reminderContainer.classList.add("hidden");
+
         resetCheckBoxes();
         resetValues();
       }
+
+      //displaying the reminder options
+      function displayReminderModal() {
+        if (
+          birthdayDate.value ||
+          anniversaryDate.value ||
+          othereventDate.value
+        ) {
+          reminderContainer.classList.remove("hidden");
+        }
+      }
+
+      function handleReminder() {
+        birthdayDate.addEventListener("input", displayReminderModal);
+        anniversaryDate.addEventListener("input", displayReminderModal);
+        othereventDate.addEventListener("input", displayReminderModal);
+      }
+
+      handleReminder();
     }
 
     // eslint-disable-next-line
@@ -94,6 +123,7 @@ const UpcomingEvents = () => {
     anniversary: "",
     otherevent: "",
     othereventdate: "",
+    reminder: "",
   };
 
   const [formValues, setFormValues] = useState(initialValues);
@@ -340,6 +370,34 @@ const UpcomingEvents = () => {
             id="dateofotherevent"
             onChange={handleChange}
           ></input>
+        </div>
+        <div className="reminderContainer hidden">
+          <div className="reminderTitle">Remind me:</div>
+          <div className="optionsContainer">
+            <label htmlFor="oneDay">One day earlier</label>
+            <input
+              type="radio"
+              name="reminder"
+              value={formValues.reminder}
+              id="reminderdate"
+            ></input>
+            <br></br>
+            <label htmlFor="oneDay">Three days earlier</label>
+            <input
+              type="radio"
+              name="reminder"
+              value={formValues.reminder}
+              id="reminderdate"
+            ></input>
+            <br></br>
+            <label htmlFor="oneDay">One week earlier</label>
+            <input
+              type="radio"
+              name="reminder"
+              value={formValues.reminder}
+              id="reminderdate"
+            ></input>
+          </div>
         </div>
       </div>
       <div className="overlay hidden"></div>

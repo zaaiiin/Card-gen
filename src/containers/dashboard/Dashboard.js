@@ -22,7 +22,6 @@ const Dashboard = (props) => {
     <img src={heart} />,
     <img src={otherevent} />
   );
-  console.log(arrayOfIcons);
 
   function displayIcon(data) {
     let eventIcon;
@@ -60,6 +59,7 @@ const Dashboard = (props) => {
     })} ${day}${suffix}`;
   }
 
+  //format dates and save to respective arrays
   const [formattedBirthdayArray, setFormattedBirthdayArray] = useState([]);
   const [formattedAnniversaryArray, setFormattedAnniversaryArray] = useState(
     []
@@ -100,8 +100,8 @@ const Dashboard = (props) => {
       eventDates.push(data.othereventdate);
     }
   });
-  console.log(eventDates);
 
+  //get days remaining until event
   function getTimeRemaining(eventDate) {
     const difference = Date.parse(eventDate) - Date.now();
     function convertToDays(difference) {
@@ -134,7 +134,7 @@ const Dashboard = (props) => {
         let eventDateYear = new Date(eventDate);
         // const getEventDateYear = eventDateYear.getFullYear();
         eventDateYear.setFullYear(currentYear);
-        console.log(eventDateYear);
+
         return eventDateYear;
       }
       const setEventDate = setToThisYear(eventDate);
@@ -159,7 +159,7 @@ const Dashboard = (props) => {
   }
 
   const remainingTimes = eventDates.map((date) => getTimeRemaining(date));
-  console.log(remainingTimes);
+
   console.log(submittedData);
   return (
     <div className="dashboardContainer">
