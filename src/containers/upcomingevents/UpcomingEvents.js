@@ -101,6 +101,8 @@ const UpcomingEvents = () => {
           othereventDate.value
         ) {
           reminderContainer.classList.remove("hidden");
+        } else {
+          reminderContainer.classList.add("hidden");
         }
       }
 
@@ -148,12 +150,14 @@ const UpcomingEvents = () => {
       ".dateModalAnniversary"
     );
     const dateModalOtherEvent = document.querySelector(".dateModalOtherEvent");
+    const reminderContainer = document.querySelector(".reminderContainer");
 
     modalevent_form.classList.add("hidden");
     overlay.classList.add("hidden");
     dateModal.classList.add("hidden");
     dateModalAnniversary.classList.add("hidden");
     dateModalOtherEvent.classList.add("hidden");
+    reminderContainer.classList.add("hidden");
     uncheckAll();
     resetValues();
     resetCheckBoxes();

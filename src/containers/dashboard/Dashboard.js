@@ -85,21 +85,22 @@ const Dashboard = (props) => {
   }, [submittedData]);
 
   //creating a countdown
-  const [eventDates, setEventDates] = useState([]);
+  function addDateToEvent(keyName, submittedData, eventDates) {
+    submittedData.forEach((data) => {
+      if (data[keyName]) {
+        const eventDate = new Date(data[keyName]).toDateString();
+        eventDates.push(eventDate);
+      }
+    });
+  }
 
-  submittedData.forEach((data) => {
-    if (data.birthday && !eventDates.includes(data.birthday)) {
-      eventDates.push(data.birthday);
-    } else if (data.anniversary && !eventDates.includes(data.anniversary)) {
-      eventDates.push(data.anniversary);
-    } else if (
-      data.otherevent &&
-      data.othereventdate &&
-      !eventDates.includes(data.othereventdate)
-    ) {
-      eventDates.push(data.othereventdate);
-    }
-  });
+  const eventDates = [];
+
+  addDateToEvent("birthday", submittedData, eventDates);
+  addDateToEvent("anniversary", submittedData, eventDates);
+  addDateToEvent("othereventdate", submittedData, eventDates);
+
+  console.log(eventDates);
 
   //get days remaining until event
   function getTimeRemaining(eventDate) {
@@ -144,20 +145,21 @@ const Dashboard = (props) => {
       return { days, difference };
     }
 
+    if (difference < 0 && eventDates > currentDates) {
+      const difference = eventDates.getTime() - Date.now();
+      const days = convertToDays(difference);
+      return { days, difference };
+    }
+
     if (specificEventDate !== currentDate && eventMonth === currentMonth) {
       const updatedEventDate = addYearToDate(eventDate);
       const difference = Date.parse(updatedEventDate) - Date.now();
       const days = convertToDays(difference);
       return { days, difference };
     }
-
-    if (difference < 0 && eventDates > currentDates) {
-      const difference = eventDates.getTime() - Date.now();
-      const days = convertToDays(difference);
-      return { days, difference };
-    }
   }
 
+  // console.log(remainingDays);
   const remainingTimes = eventDates.map((date) => getTimeRemaining(date));
 
   console.log(submittedData);
@@ -166,6 +168,7 @@ const Dashboard = (props) => {
       <ul>
         {submittedData.map((data, index) => {
           const remainingTime = remainingTimes[index];
+
           return (
             <div className="allContainers" key={index}>
               <div className="dashboardContent dateDetailsContainer">
