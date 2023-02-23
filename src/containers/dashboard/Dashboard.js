@@ -9,9 +9,11 @@ const Dashboard = (props) => {
   //adding dynamic container colour change serially with event addition
   const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
 
-  for (let i = 0; i < submittedData.length; i++) {
-    submittedData[i].backgroundcolor =
-      containerColors[i % containerColors.length];
+  if (submittedData) {
+    for (let i = 0; i < submittedData.length; i++) {
+      submittedData[i].backgroundcolor =
+        containerColors[i % containerColors.length];
+    }
   }
 
   //assigning icons to corresponding event
@@ -86,12 +88,14 @@ const Dashboard = (props) => {
 
   //creating a countdown
   function addDateToEvent(keyName, submittedData, eventDates) {
-    submittedData.forEach((data) => {
-      if (data[keyName]) {
-        const eventDate = new Date(data[keyName]).toDateString();
-        eventDates.push(eventDate);
-      }
-    });
+    if (submittedData) {
+      submittedData.forEach((data) => {
+        if (data[keyName]) {
+          const eventDate = new Date(data[keyName]).toDateString();
+          eventDates.push(eventDate);
+        }
+      });
+    }
   }
 
   const eventDates = [];
@@ -99,8 +103,6 @@ const Dashboard = (props) => {
   addDateToEvent("birthday", submittedData, eventDates);
   addDateToEvent("anniversary", submittedData, eventDates);
   addDateToEvent("othereventdate", submittedData, eventDates);
-
-  console.log(eventDates);
 
   //get days remaining until event
   function getTimeRemaining(eventDate) {
@@ -159,55 +161,193 @@ const Dashboard = (props) => {
     }
   }
 
-  // console.log(remainingDays);
   const remainingTimes = eventDates.map((date) => getTimeRemaining(date));
 
-  console.log(submittedData);
+  // //adding reminders
+  // const birthdayReminder = document.getElementById("birthdayreminderdate");
+  // const anniversaryReminder = document.getElementById(
+  //   "anniversaryreminderdate"
+  // );
+  // const otherEventReminder = document.getElementById("othereventreminderdate");
+  // // console.log(
+  // //   birthdayReminder.value,
+  // //   anniversaryReminder.value,
+  // //   otherEventReminder.value
+  // // );
+
+  // const [reminders, setReminders] = useState([]);
+
+  // useEffect(() => {
+  //   // const oneDayPrior = document.getElementById("onedayprior");
+  //   // const threeDaysPrior = document.getElementById("threedaysprior");
+  //   // const oneWeekPrior = document.getElementById("oneweekprior");
+  //   const reminderRadioButtons = document.querySelectorAll(
+  //     "input[type='radio'][name='reminder']"
+  //   );
+
+  //   const date = submittedData.map((data) => {
+  //     return data.birthday || data.anniversary || data.othereventdate;
+  //   });
+
+  //   const eventDate = new Date(date[0]);
+  //   let millisecondsInADay = 24 * 60 * 60 * 1000;
+  //   let dateOffset;
+  //   let allReminders = [];
+
+  //   for (let i = 0; i < reminderRadioButtons.length; i++) {
+  //     // if (
+  //     //   reminderRadioButtons[i].checked &&
+  //     //   reminderRadioButtons[i].value === "0"
+  //     // ) {
+  //     //   allReminders.push(date[0]);
+  //     // } else if (
+  //     if (
+  //       reminderRadioButtons[i].checked &&
+  //       reminderRadioButtons[i].value === "1"
+  //     ) {
+  //       dateOffset = millisecondsInADay * 1; //1 day
+  //       allReminders.push(
+  //         new Date(
+  //           eventDate.setTime(eventDate.getTime() - dateOffset)
+  //         ).toLocaleString("en-UK")
+  //       );
+  //     } else if (
+  //       reminderRadioButtons[i].checked &&
+  //       reminderRadioButtons[i].value === "3"
+  //     ) {
+  //       dateOffset = millisecondsInADay * 3; //1 day
+  //       allReminders.push(
+  //         new Date(
+  //           eventDate.setTime(eventDate.getTime() - dateOffset)
+  //         ).toLocaleString("en-UK")
+  //       );
+  //     } else if (
+  //       reminderRadioButtons[i].checked &&
+  //       reminderRadioButtons[i].value === "7"
+  //     ) {
+  //       dateOffset = millisecondsInADay * 7; //1 day
+  //       allReminders.push(
+  //         new Date(
+  //           eventDate.setTime(eventDate.getTime() - dateOffset)
+  //         ).toLocaleString("en-UK")
+  //       );
+  //     }
+  //   }
+
+  //   setReminders(allReminders);
+  // }, [submittedData]);
+
+  // const allReminders = submittedData.map((data, index) => {
+  //   const date = data.birthday || data.anniversary || data.othereventdate;
+  //   return date;
+  // });
+  // console.log(allReminders);
+  // // const [reminders, setReminders] = useState([]);
+  // // useEffect(() => {
+
+  // function changeRadioButton(date) {
+  //   const reminderRadioButtons = document.querySelectorAll(
+  //     "input[type='radio'][name='reminder']"
+  //   );
+
+  //   const eventDate = new Date(date);
+  //   console.log(eventDate);
+
+  //   const millisecondsInADay = 24 * 60 * 60 * 1000;
+
+  //   let selectedValue = null;
+  //   for (let i = 0; i < reminderRadioButtons.length; i++) {
+  //     if (
+  //       reminderRadioButtons[i].checked &&
+  //       ["1", "3", "7"].includes(reminderRadioButtons[i].value)
+  //     ) {
+  //       selectedValue = reminderRadioButtons[i].value;
+  //       break;
+  //     }
+  //   }
+
+  //   if (selectedValue === "1") {
+  //     const dateOffset = millisecondsInADay * 1; //1 day
+  //     const newDate = new Date(eventDate.getTime() - dateOffset);
+  //     const reminder = new Date(
+  //       eventDate.setTime(newDate.getTime())
+  //     ).toLocaleString("en-UK");
+  //     return { reminder, selectedValue };
+  //   }
+
+  //   if (selectedValue === "3") {
+  //     const dateOffset = millisecondsInADay * 3; //3 days
+  //     const newDate = new Date(eventDate.getTime() - dateOffset);
+  //     const reminder = new Date(
+  //       eventDate.setTime(newDate.getTime())
+  //     ).toLocaleString("en-UK");
+  //     return { reminder, selectedValue };
+  //   }
+
+  //   if (selectedValue === "7") {
+  //     const dateOffset = millisecondsInADay * 7; //7 days
+  //     const newDate = new Date(eventDate.getTime() - dateOffset);
+  //     const reminder = new Date(
+  //       eventDate.setTime(newDate.getTime())
+  //     ).toLocaleString("en-UK");
+  //     return { reminder, selectedValue };
+  //   }
+  // }
+
+  // const reminderDates = allReminders.map((date) => changeRadioButton(date));
+
+  // console.log(submittedData);
   return (
     <div className="dashboardContainer">
       <ul>
-        {submittedData.map((data, index) => {
-          const remainingTime = remainingTimes[index];
+        {submittedData &&
+          submittedData.map((data, index) => {
+            const remainingTime = remainingTimes[index];
+            // const reminders = reminderDates[index];
 
-          return (
-            <div className="allContainers" key={index}>
-              <div className="dashboardContent dateDetailsContainer">
-                <div className="dashboardContent eventDate" key={index}>
-                  {formattedBirthdayArray[index]}
-                  {formattedAnniversaryArray[index]}
-                  {formattedOthereventArray[index]}
+            return (
+              <div className="allContainers" key={index}>
+                <div className="dashboardContent dateDetailsContainer">
+                  <div className="dashboardContent eventDate" key={index}>
+                    {formattedBirthdayArray[index]}
+                    {formattedAnniversaryArray[index]}
+                    {formattedOthereventArray[index]}
+                  </div>
+                  <div
+                    className="dashboardContent dateSideContainer"
+                    style={{ backgroundColor: data.backgroundcolor }}
+                  ></div>
                 </div>
                 <div
-                  className="dashboardContent dateSideContainer"
+                  className="dashboardContent eventName"
                   style={{ backgroundColor: data.backgroundcolor }}
-                ></div>
-              </div>
-              <div
-                className="dashboardContent eventName"
-                style={{ backgroundColor: data.backgroundcolor }}
-              >
-                <div className="eventIcon" key={data.index}>
-                  {displayIcon(data)}
+                >
+                  <div className="eventIcon" key={data.index}>
+                    {displayIcon(data)}
+                  </div>
+
+                  <div className="eventType">
+                    {data.firstname} {data.lastname}
+                    {data.otherevent}
+                    {/* <div className="reminders" key={index}>
+                    {reminders}
+                  </div>{" "} */}
+                    {/* </div> */}
+                  </div>
                 </div>
 
-                <div className="eventType">
-                  {data.firstname} {data.lastname}
-                  {data.otherevent}
+                <div
+                  className="dashboardContent eventCountdown"
+                  key={index}
+                  style={{ backgroundColor: data.backgroundcolor }}
+                >
+                  {remainingTime
+                    ? `${remainingTime.days + 1} days left`
+                    : "🎉Today's the day! 🎉"}
                 </div>
               </div>
-
-              <div
-                className="dashboardContent eventCountdown"
-                key={index}
-                style={{ backgroundColor: data.backgroundcolor }}
-              >
-                {remainingTime
-                  ? `${remainingTime.days} days left`
-                  : "🎉Today's the day! 🎉"}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </ul>
     </div>
   );

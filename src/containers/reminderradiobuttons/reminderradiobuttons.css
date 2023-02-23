@@ -1,0 +1,69 @@
+.reminderContainer {
+  position: absolute;
+  top: 425px;
+  right: -230px;
+  /* transform: translateX(115.5%); */
+
+  border-radius: 10px;
+  border-color: white;
+  border: transparent;
+  font-size: 15px;
+  font-family: "Lato", sans-serif;
+  font-weight: 600;
+  height: 215px;
+
+  background-color: white;
+  color: white;
+  width: 190px;
+  padding: 12px;
+  z-index: 10;
+}
+
+.reminderTitle {
+  display: flex;
+  margin-left: 10px;
+  background-color: transparent;
+  font-weight: 700;
+  width: 190px;
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+  margin-bottom: 14px;
+  color: #72d1d6;
+}
+.optionsContainer {
+  background-color: transparent;
+  margin-left: -7px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  border-radius: 2px;
+  width: 210px;
+  height: 10px;
+}
+
+.reminderContainer label {
+  margin-top: 7px;
+  color: black;
+  font-size: 13px;
+  font-weight: 800;
+  margin-left: 32px;
+  width: 130px;
+  background-color: transparent;
+  font-family: "Raleway", sans-serif;
+  padding-top: 1px;
+}
+
+.reminderContainer label:hover {
+  background-color: rgba(91, 189, 196, 0.301);
+  border-radius: 5px;
+  width: 130px;
+}
+
+input[type="radio"],
+input.radio {
+  float: left;
+  margin: -15px 20px 20px 12px;
+}
+
+input[type="radio"]:hover {
+  cursor: pointer;
+}
