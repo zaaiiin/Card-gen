@@ -2,10 +2,12 @@ import "./dashboard.css";
 import balloon from "../../assets/balloon.png";
 import heart from "../../assets/heart.png";
 import otherevent from "../../assets/otherevent.png";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 const Dashboard = (props) => {
   const { submittedData } = props;
+  const [reminders, setReminders] = useState(props.reminders);
+
   //adding dynamic container colour change serially with event addition
   const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
 
@@ -62,6 +64,7 @@ const Dashboard = (props) => {
   }
 
   //format dates and save to respective arrays
+
   const [formattedBirthdayArray, setFormattedBirthdayArray] = useState([]);
   const [formattedAnniversaryArray, setFormattedAnniversaryArray] = useState(
     []
@@ -161,140 +164,91 @@ const Dashboard = (props) => {
     }
   }
 
-  const remainingTimes = eventDates.map((date) => getTimeRemaining(date));
+  const remainingTimes =
+    eventDates && eventDates.map((date) => getTimeRemaining(date));
+  console.log(eventDates);
 
-  // //adding reminders
-  // const birthdayReminder = document.getElementById("birthdayreminderdate");
-  // const anniversaryReminder = document.getElementById(
-  //   "anniversaryreminderdate"
-  // );
-  // const otherEventReminder = document.getElementById("othereventreminderdate");
-  // // console.log(
-  // //   birthdayReminder.value,
-  // //   anniversaryReminder.value,
-  // //   otherEventReminder.value
-  // // );
+  const [reminderDates, setReminderDates] = useState([]);
 
-  // const [reminders, setReminders] = useState([]);
+  useEffect(() => {
+    setReminders(props.reminders);
+  }, [props.reminders]);
 
-  // useEffect(() => {
-  //   // const oneDayPrior = document.getElementById("onedayprior");
-  //   // const threeDaysPrior = document.getElementById("threedaysprior");
-  //   // const oneWeekPrior = document.getElementById("oneweekprior");
-  //   const reminderRadioButtons = document.querySelectorAll(
-  //     "input[type='radio'][name='reminder']"
-  //   );
+  useEffect(() => {
+    if (eventDates) {
+      const newReminderDates =
+        eventDates &&
+        eventDates.map((eventDate) =>
+          displayReminderDates(reminders, eventDate)
+        );
+      setReminderDates(newReminderDates);
+    }
+  }, [reminders, submittedData]);
 
-  //   const date = submittedData.map((data) => {
-  //     return data.birthday || data.anniversary || data.othereventdate;
-  //   });
+  console.log(reminderDates);
+  console.log(reminders);
+  console.log(eventDates);
+  // console.log(displayReminderDates("3", "Thu Feb 23 2023"));
 
-  //   const eventDate = new Date(date[0]);
-  //   let millisecondsInADay = 24 * 60 * 60 * 1000;
-  //   let dateOffset;
-  //   let allReminders = [];
+  function displayReminderDates(reminders, eventDate) {
+    console.log(eventDate);
+    const parts = eventDate.toString().split(" ");
+    const year = parts[3];
+    const monthAbbreviation = parts[1];
+    const monthMap = {
+      Jan: "01",
+      Feb: "02",
+      Mar: "03",
+      Apr: "04",
+      May: "05",
+      Jun: "06",
+      Jul: "07",
+      Aug: "08",
+      Sep: "09",
+      Oct: "10",
+      Nov: "11",
+      Dec: "12",
+    };
+    const month = monthMap[monthAbbreviation];
+    const day = parts[2];
+    const formattedDate = new Date(`${year}-${month}-${day}`);
+    console.log(formattedDate);
+    const millisecondsInADay = 24 * 60 * 60 * 1000;
 
-  //   for (let i = 0; i < reminderRadioButtons.length; i++) {
-  //     // if (
-  //     //   reminderRadioButtons[i].checked &&
-  //     //   reminderRadioButtons[i].value === "0"
-  //     // ) {
-  //     //   allReminders.push(date[0]);
-  //     // } else if (
-  //     if (
-  //       reminderRadioButtons[i].checked &&
-  //       reminderRadioButtons[i].value === "1"
-  //     ) {
-  //       dateOffset = millisecondsInADay * 1; //1 day
-  //       allReminders.push(
-  //         new Date(
-  //           eventDate.setTime(eventDate.getTime() - dateOffset)
-  //         ).toLocaleString("en-UK")
-  //       );
-  //     } else if (
-  //       reminderRadioButtons[i].checked &&
-  //       reminderRadioButtons[i].value === "3"
-  //     ) {
-  //       dateOffset = millisecondsInADay * 3; //1 day
-  //       allReminders.push(
-  //         new Date(
-  //           eventDate.setTime(eventDate.getTime() - dateOffset)
-  //         ).toLocaleString("en-UK")
-  //       );
-  //     } else if (
-  //       reminderRadioButtons[i].checked &&
-  //       reminderRadioButtons[i].value === "7"
-  //     ) {
-  //       dateOffset = millisecondsInADay * 7; //1 day
-  //       allReminders.push(
-  //         new Date(
-  //           eventDate.setTime(eventDate.getTime() - dateOffset)
-  //         ).toLocaleString("en-UK")
-  //       );
-  //     }
-  //   }
+    console.log(reminders);
 
-  //   setReminders(allReminders);
-  // }, [submittedData]);
+    let reminderDate;
 
-  // const allReminders = submittedData.map((data, index) => {
-  //   const date = data.birthday || data.anniversary || data.othereventdate;
-  //   return date;
-  // });
-  // console.log(allReminders);
-  // // const [reminders, setReminders] = useState([]);
-  // // useEffect(() => {
+    switch (reminders) {
+      case "0":
+        reminderDate = formattedDate;
+        break;
 
-  // function changeRadioButton(date) {
-  //   const reminderRadioButtons = document.querySelectorAll(
-  //     "input[type='radio'][name='reminder']"
-  //   );
+      case "1":
+        reminderDate = new Date(formattedDate.getTime() - millisecondsInADay);
+        break;
 
-  //   const eventDate = new Date(date);
-  //   console.log(eventDate);
+      case "3":
+        reminderDate = new Date(
+          formattedDate.getTime() - 3 * millisecondsInADay
+        );
+        break;
 
-  //   const millisecondsInADay = 24 * 60 * 60 * 1000;
+      case "7":
+        reminderDate = new Date(
+          formattedDate.getTime() - 7 * millisecondsInADay
+        );
+        break;
+      default:
+        reminderDate = null;
+    }
 
-  //   let selectedValue = null;
-  //   for (let i = 0; i < reminderRadioButtons.length; i++) {
-  //     if (
-  //       reminderRadioButtons[i].checked &&
-  //       ["1", "3", "7"].includes(reminderRadioButtons[i].value)
-  //     ) {
-  //       selectedValue = reminderRadioButtons[i].value;
-  //       break;
-  //     }
-  //   }
-
-  //   if (selectedValue === "1") {
-  //     const dateOffset = millisecondsInADay * 1; //1 day
-  //     const newDate = new Date(eventDate.getTime() - dateOffset);
-  //     const reminder = new Date(
-  //       eventDate.setTime(newDate.getTime())
-  //     ).toLocaleString("en-UK");
-  //     return { reminder, selectedValue };
-  //   }
-
-  //   if (selectedValue === "3") {
-  //     const dateOffset = millisecondsInADay * 3; //3 days
-  //     const newDate = new Date(eventDate.getTime() - dateOffset);
-  //     const reminder = new Date(
-  //       eventDate.setTime(newDate.getTime())
-  //     ).toLocaleString("en-UK");
-  //     return { reminder, selectedValue };
-  //   }
-
-  //   if (selectedValue === "7") {
-  //     const dateOffset = millisecondsInADay * 7; //7 days
-  //     const newDate = new Date(eventDate.getTime() - dateOffset);
-  //     const reminder = new Date(
-  //       eventDate.setTime(newDate.getTime())
-  //     ).toLocaleString("en-UK");
-  //     return { reminder, selectedValue };
-  //   }
-  // }
-
-  // const reminderDates = allReminders.map((date) => changeRadioButton(date));
+    if (reminderDate) {
+      return reminderDate.toLocaleString("en-UK");
+    } else {
+      return null;
+    }
+  }
 
   // console.log(submittedData);
   return (
@@ -303,7 +257,7 @@ const Dashboard = (props) => {
         {submittedData &&
           submittedData.map((data, index) => {
             const remainingTime = remainingTimes[index];
-            // const reminders = reminderDates[index];
+            // const reminders = reminderDates && reminderDates[index];
 
             return (
               <div className="allContainers" key={index}>
@@ -329,10 +283,11 @@ const Dashboard = (props) => {
                   <div className="eventType">
                     {data.firstname} {data.lastname}
                     {data.otherevent}
-                    {/* <div className="reminders" key={index}>
-                    {reminders}
-                  </div>{" "} */}
-                    {/* </div> */}
+                    <div className="reminders" key={index}>
+                      {reminderDates.map((reminderDate, index) => (
+                        <div key={index}>{reminderDate}</div>
+                      ))}
+                    </div>{" "}
                   </div>
                 </div>
 

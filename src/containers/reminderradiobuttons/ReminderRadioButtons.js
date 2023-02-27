@@ -2,7 +2,6 @@ import React from "react";
 import "./reminderradiobuttons.css";
 
 const ReminderRadioButtons = ({ handleReminderChange }) => {
-  console.log(handleReminderChange);
   return (
     <div className="reminderContainer ">
       <div className="reminderTitle">Remind me:</div>

@@ -31,14 +31,6 @@ const UpcomingEvents = () => {
     );
     const otherEventsTextArea = document.querySelector(".otherEventsTextArea");
 
-    // const oneDayPrior = document.getElementById("onedayprior");
-    // const threeDaysPrior = document.getElementById("threedaysprior");
-    // const oneWeekPrior = document.getElementById("oneweekprior");
-    // console.log(oneDayPrior.value, threeDaysPrior.value, oneWeekPrior.value);
-    const radioButtons = document.querySelectorAll(
-      "input[type='radio'][name='reminder']"
-    );
-
     const openModalForm = () => {
       modalevent_form.classList.remove("hidden");
       overlay.classList.remove("hidden");
@@ -59,16 +51,6 @@ const UpcomingEvents = () => {
         otherEventsCheckbox,
       ];
       const modalArray = [dateModal, dateModalAnniversary, dateModalOtherEvent];
-      const reminderContainer = document.querySelector(".reminderContainer");
-      const birthdayDate = document.getElementById("dateofbirth");
-      const anniversaryDate = document.getElementById("dateofanniversary");
-      const othereventDate = document.getElementById("dateofotherevent");
-
-      // const oneDayPrior = document.getElementById("onedayprior");
-      // const threeDaysPrior = document.getElementById("threedaysprior");
-      // const oneWeekPrior = document.getElementById("oneweekprior");
-
-      // const remindersArray = [oneDayPrior, threeDaysPrior, oneWeekPrior];
 
       checkboxArray.forEach((checkbox) => {
         if (checkbox.checked) {
@@ -76,15 +58,11 @@ const UpcomingEvents = () => {
 
           if (checkbox === bdaycheckbox) {
             dateModal.classList.remove("hidden");
-            // reminderContainer.style.marginTop = "10px";
-            // );
           } else if (checkbox === anniversarycheckbox) {
             dateModalAnniversary.classList.remove("hidden");
-            // reminderContainer.style.marginTop = "60px";
           } else if (checkbox === otherEventsCheckbox) {
             dateModalOtherEvent.classList.remove("hidden");
             otherEventsTextArea.style.cursor = "pointer";
-            // reminderContainer.style.marginTop = "110px";
           }
           checkboxArray.forEach((cb) => {
             if (cb !== checkbox) cb.disabled = true;
@@ -92,10 +70,9 @@ const UpcomingEvents = () => {
           otherEventsTextArea.value = "";
           if (checkbox === otherEventsCheckbox) {
             otherEventsTextArea.focus();
-            // otherEventsTextArea.contentEditable = true;
+
             otherEventsTextArea.disabled = false;
           } else {
-            // otherEventsTextArea.contentEditable = false;
             otherEventsTextArea.disabled = true;
           }
         }
@@ -108,27 +85,6 @@ const UpcomingEvents = () => {
         resetCheckBoxes();
         resetValues();
       }
-
-      //displaying the reminder options
-      // function displayReminderModal() {
-      //   if (
-      //     birthdayDate.value ||
-      //     anniversaryDate.value ||
-      //     othereventDate.value
-      //   ) {
-      //     reminderContainer.classList.remove("hidden");
-      //   } else {
-      //     reminderContainer.classList.add("hidden");
-      //   }
-      // }
-
-      // function handleReminder() {
-      //   birthdayDate.addEventListener("input", displayReminderModal);
-      //   anniversaryDate.addEventListener("input", displayReminderModal);
-      //   othereventDate.addEventListener("input", displayReminderModal);
-      // }
-
-      // handleReminder();
     }
 
     // eslint-disable-next-line
@@ -141,6 +97,7 @@ const UpcomingEvents = () => {
     anniversary: "",
     otherevent: "",
     othereventdate: "",
+    reminderduration: "",
   };
 
   const [formValues, setFormValues] = useState(initialValues);
@@ -151,26 +108,30 @@ const UpcomingEvents = () => {
   const [showReminder, setShowReminder] = useState(false);
 
   const handleChange = (e) => {
-    console.log(e.target);
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
     setFormErrors({});
-    setShowReminder(true);
-    console.log(showReminder);
 
     console.log(formValues, submittedData);
   };
 
+  useEffect(() => {
+    if (
+      formValues &&
+      (formValues.birthday ||
+        formValues.anniversary ||
+        formValues.othereventdate)
+    ) {
+      setShowReminder(true);
+    } else {
+      setShowReminder(false);
+    }
+  }, [formValues]);
+
   function handleReminderChange(e) {
     setReminders(e.target.value);
     console.log(reminders);
-    // console.log("hi");
   }
-
-  // useEffect(() => {
-  //   console.log(reminder);
-  //   handleReminderChange();
-  // }, [reminder, handleReminderChange]);
 
   const closeModalForm = () => {
     const modalevent_form = document.querySelector(".modaladd_form");
@@ -180,14 +141,13 @@ const UpcomingEvents = () => {
       ".dateModalAnniversary"
     );
     const dateModalOtherEvent = document.querySelector(".dateModalOtherEvent");
-    const reminderContainer = document.querySelector(".reminderContainer");
 
     modalevent_form.classList.add("hidden");
     overlay.classList.add("hidden");
     dateModal.classList.add("hidden");
     dateModalAnniversary.classList.add("hidden");
     dateModalOtherEvent.classList.add("hidden");
-    // reminderContainer.classList.add("hidden");
+
     uncheckAll();
     resetValues();
     resetCheckBoxes();
@@ -233,6 +193,7 @@ const UpcomingEvents = () => {
 
     if (Object.keys(errors).length === 0) {
       setSubmittedData([...submittedData, { ...formValues }]);
+      setReminders(reminders);
       resetValues();
       setIsSubmit(true);
       closeModalForm();
@@ -240,6 +201,7 @@ const UpcomingEvents = () => {
       resetCheckBoxes();
     }
   };
+  console.log(submittedData);
 
   function uncheckAll() {
     const checkboxes = document.querySelectorAll("input[type=checkbox]");
@@ -305,6 +267,8 @@ const UpcomingEvents = () => {
       {/* passing props to dashboard component */}
 
       <Dashboard submittedData={submittedData} />
+      <Dashboard reminders={reminders} />
+      <Dashboard formValues={formValues} />
 
       <div className="addevent_btn--container">
         <button type="button" className="addevent_btn">
@@ -405,43 +369,6 @@ const UpcomingEvents = () => {
             onChange={handleChange}
           ></input>
         </div>
-
-        {/* <div className="reminderContainer hidden">
-          <div className="reminderTitle">Remind me:</div>
-          <div className="optionsContainer">
-            <label htmlFor="zeroDay">On the day</label>
-            <input
-              type="radio"
-              name="reminder"
-              value="0"
-              id="zerodayprior"
-            ></input>
-            <br></br>
-            <label htmlFor="oneDay">One day earlier</label>
-            <input
-              type="radio"
-              name="reminder"
-              value="1"
-              id="onedayprior"
-            ></input>
-            <br></br>
-            <label htmlFor="threeDays">Three days earlier</label>
-            <input
-              type="radio"
-              name="reminder"
-              value="3"
-              id="threedaysprior"
-            ></input>
-            <br></br>
-            <label htmlFor="oneWeek">One week earlier</label>
-            <input
-              type="radio"
-              name="reminder"
-              value="7"
-              id="oneweekprior"
-            ></input>
-          </div>
-        </div> */}
 
         {showReminder && (
           <ReminderRadioButtons handleReminderChange={handleReminderChange} />
