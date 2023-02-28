@@ -33,10 +33,12 @@ const UpcomingEvents = () => {
     const otherEventsTextArea = document.querySelector(".otherEventsTextArea");
     const reminderContainer = document.querySelector(".reminderContainer");
     const dates = document.querySelectorAll("input[type='date']");
+    const firstName = document.getElementById("firstName");
 
     const openModalForm = () => {
       modalevent_form.classList.remove("hidden");
       overlay.classList.remove("hidden");
+      firstName.focus();
     };
 
     addevent_btn.addEventListener("click", openModalForm);
