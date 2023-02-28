@@ -59,12 +59,13 @@ const UpcomingEvents = () => {
         if (checkbox.checked) {
           modalArray.forEach((modal) => modal.classList.add("hidden"));
           reminderContainer.classList.remove("hidden");
-          dates.forEach((date) => date.focus());
 
           if (checkbox === bdaycheckbox) {
             dateModal.classList.remove("hidden");
+            dates.forEach((date) => date.focus());
           } else if (checkbox === anniversarycheckbox) {
             dateModalAnniversary.classList.remove("hidden");
+            dates.forEach((date) => date.focus());
           } else if (checkbox === otherEventsCheckbox) {
             dateModalOtherEvent.classList.remove("hidden");
             otherEventsTextArea.style.cursor = "pointer";
