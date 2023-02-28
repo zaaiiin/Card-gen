@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import "./upcomingevents.css";
 import "./reminderradiobuttons.css";
-
 import notif_icon from "../../assets/notif_icon.png";
 import profile_icon from "../../assets/profile_icon.png";
 import logoandname from "../../assets/logoandname.png";
@@ -227,6 +226,10 @@ const UpcomingEvents = () => {
     } else if (values.otherevent) {
       values.firstname = "";
       delete errors.firstname;
+    }
+
+    if (!values.reminder) {
+      errors.date = "Please set a reminder";
     }
     return errors;
   };

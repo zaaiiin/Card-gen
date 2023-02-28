@@ -245,9 +245,12 @@ const Dashboard = (props) => {
                   key={index}
                   style={{ backgroundColor: data.backgroundcolor }}
                 >
-                  {remainingTimes[index]
-                    ? `${remainingTimes[index].days} days left`
-                    : "🎉Today's the day! 🎉"}
+                  {" "}
+                  <div className="countdownContainer">
+                    {remainingTimes[index]
+                      ? `${remainingTimes[index].days} days left`
+                      : "🎉Today's the day! 🎉"}
+                  </div>
                 </div>
               </div>
             );

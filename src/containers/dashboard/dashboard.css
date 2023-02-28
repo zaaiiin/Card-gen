@@ -11,8 +11,7 @@ ul {
 .dashboardContent {
   color: #fff;
   font-size: 30px;
-  cursor: pointer;
-  transition: 0.4s;
+  transition: 0.5s;
   border: none;
   padding: 15px;
   font-family: "Lato", sans-serif;
@@ -29,7 +28,7 @@ ul {
   margin-top: 20px;
   margin-right: auto;
   margin-left: auto;
-  background-color: white;
+  background-color: transparent;
   width: 1140px;
 }
 
@@ -89,6 +88,7 @@ ul {
 
 .eventName:hover {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
 }
 
 .eventIcon {
@@ -125,16 +125,23 @@ ul {
   padding-left: 20px;
 }
 
-.eventCountdown {
-  grid-column: span 1;
-  background-color: #f9e1b4;
+.countdownContainer {
+  background-color: #fdf9f129;
+  border-radius: 10px;
+  height: 80px;
+  padding: 10px;
+  margin: -5px;
   display: grid;
   justify-content: center;
   align-content: center;
   align-items: center;
+}
+
+.eventCountdown {
+  grid-column: span 1;
+  background-color: #f9e1b4;
   height: 100px;
   margin-left: 0px;
-  padding: 17px;
   border-radius: 10px;
   font-size: 18px;
   font-weight: 800;
