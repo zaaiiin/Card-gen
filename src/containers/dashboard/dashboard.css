@@ -26,10 +26,9 @@ ul {
   grid-template-columns: repeat(7, 1fr);
   grid-column-gap: 0px;
   padding: 0px;
-  margin-top: 40px;
+  margin-top: 20px;
   margin-right: auto;
   margin-left: auto;
-  background-color: transparent;
   background-color: white;
   width: 1140px;
 }
@@ -55,6 +54,11 @@ ul {
   padding: 6px;
 }
 
+.dateDetailsContainer:hover,
+.dateSideContainer {
+  cursor: default;
+}
+
 .eventDate {
   background-color: transparent;
   color: black;
@@ -72,7 +76,7 @@ ul {
 .eventName {
   grid-column: span 4;
   background-color: #f9e1b4;
-  border-radius: 20px;
+  border-radius: 10px;
   height: 100px;
   width: 600px;
   padding: 0px;
@@ -83,24 +87,32 @@ ul {
   grid-column-gap: 0px;
 }
 
+.eventName:hover {
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
 .eventIcon {
   grid-column: span 1;
   /* height: 100%; */
   width: 100px;
-  border-radius: 15px;
+  border-radius: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-content: center;
   align-items: center;
-  margin: 0px;
+  margin: 10px;
   padding: 0px;
   background-color: #f7f4e85b;
 }
 
 .eventType {
   grid-column: span 8;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.241);
+  height: 80px;
+  margin: 10px;
+  margin-left: -2px;
+  border-radius: 10px;
   width: auto;
   display: flex;
   justify-content: left;
@@ -123,11 +135,15 @@ ul {
   height: 100px;
   margin-left: 0px;
   padding: 17px;
-  border-radius: 20px;
-  font-size: 20px;
+  border-radius: 10px;
+  font-size: 18px;
   font-weight: 800;
   color: black;
   font-family: "Raleway", sans-serif;
+}
+
+.eventCountdown:hover {
+  cursor: default;
 }
 
 img {
@@ -135,9 +151,12 @@ img {
 }
 
 .reminders {
-  color: white;
-  font-size: 20px;
-  right: 5px;
+  /* display: flex;
+  flex-direction: column; */
+  position: absolute;
+  color: rgba(0, 0, 0, 0.263);
+  font-size: 17px;
   background-color: transparent;
-  margin: 20px;
+  margin-left: 335px;
+  margin-top: -50px;
 }

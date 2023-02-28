@@ -3,4 +3,3 @@ export { default as About } from "./about/About";
 export { default as Form } from "./form/Form";
 export { default as UpcomingEvents } from "./upcomingevents/UpcomingEvents";
 export { default as Dashboard } from "./dashboard/Dashboard";
-export { default as ReminderRadioButtons } from "./reminderradiobuttons/ReminderRadioButtons";

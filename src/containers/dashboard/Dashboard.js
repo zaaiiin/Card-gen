@@ -6,7 +6,6 @@ import React, { useState, useEffect, useCallback } from "react";
 
 const Dashboard = (props) => {
   const { submittedData } = props;
-  const [reminders, setReminders] = useState(props.reminders);
 
   //adding dynamic container colour change serially with event addition
   const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
@@ -102,6 +101,7 @@ const Dashboard = (props) => {
   }
 
   const eventDates = [];
+  console.log(eventDates);
 
   addDateToEvent("birthday", submittedData, eventDates);
   addDateToEvent("anniversary", submittedData, eventDates);
@@ -110,88 +110,60 @@ const Dashboard = (props) => {
   //get days remaining until event
   function getTimeRemaining(eventDate) {
     const difference = Date.parse(eventDate) - Date.now();
+
     function convertToDays(difference) {
-      const days = Math.round(difference / (1000 * 60 * 60 * 24));
-      return days;
+      return Math.ceil(difference / (1000 * 60 * 60 * 24));
     }
 
     const eventMonth = new Date(eventDate).getMonth() + 1;
     const currentMonth = new Date().getMonth() + 1;
     const currentYear = new Date().getFullYear();
-    const eventDates = new Date(currentYear, eventMonth - 1);
-    const currentDates = new Date(currentYear, currentMonth - 1);
-    const currentDate = new Date().getDate();
+    const currentDay = new Date().getDate();
     const specificEventDate = new Date(eventDate).getDate();
 
-    function addYearToDate(date) {
-      const newDate = new Date(date);
-      newDate.setFullYear(newDate.getFullYear() + 1);
-      return newDate;
+    function getNextEventDate() {
+      const eventYear =
+        currentMonth > eventMonth ||
+        (currentMonth === eventMonth && currentDay > specificEventDate)
+          ? currentYear + 1
+          : currentYear;
+      return new Date(eventYear, eventMonth - 1, specificEventDate);
     }
 
     if (difference > 0) {
       const days = convertToDays(difference);
-
       return { days, difference };
     }
 
-    if (difference < 0 && eventDates < currentDates) {
-      function setToThisYear() {
-        let eventDateYear = new Date(eventDate);
-        // const getEventDateYear = eventDateYear.getFullYear();
-        eventDateYear.setFullYear(currentYear);
+    const nextEventDate = getNextEventDate();
+    const differenceToNextEventDate = nextEventDate.getTime() - Date.now();
 
-        return eventDateYear;
-      }
-      const setEventDate = setToThisYear(eventDate);
-      const updatedEventDate = addYearToDate(setEventDate);
-      const difference = Date.parse(updatedEventDate) - Date.now();
-      const days = convertToDays(difference);
-      return { days, difference };
-    }
-
-    if (difference < 0 && eventDates > currentDates) {
-      const difference = eventDates.getTime() - Date.now();
-      const days = convertToDays(difference);
-      return { days, difference };
-    }
-
-    if (specificEventDate !== currentDate && eventMonth === currentMonth) {
-      const updatedEventDate = addYearToDate(eventDate);
-      const difference = Date.parse(updatedEventDate) - Date.now();
-      const days = convertToDays(difference);
-      return { days, difference };
-    }
+    const days = convertToDays(differenceToNextEventDate);
+    return { days, difference: differenceToNextEventDate };
   }
 
   const remainingTimes =
-    eventDates && eventDates.map((date) => getTimeRemaining(date));
-  console.log(eventDates);
+    eventDates &&
+    eventDates.map((date, index) => {
+      const eachDate = eventDates[index];
+      const remainingTime = getTimeRemaining(eachDate);
+      return remainingTime;
+    });
+  console.log(remainingTimes);
 
-  const [reminderDates, setReminderDates] = useState([]);
+  const reminderValues = submittedData.map((data) => data.reminder);
+  console.log(reminderValues);
 
-  useEffect(() => {
-    setReminders(props.reminders);
-  }, [props.reminders]);
-
-  useEffect(() => {
-    if (eventDates) {
-      const newReminderDates =
-        eventDates &&
-        eventDates.map((eventDate) =>
-          displayReminderDates(reminders, eventDate)
-        );
-      setReminderDates(newReminderDates);
-    }
-  }, [reminders, submittedData]);
-
+  const reminderDates =
+    eventDates &&
+    eventDates.map((eventDate, index) => {
+      const reminderValue = reminderValues[index];
+      const reminderDate = displayReminderDates(reminderValue, eventDate);
+      return reminderDate;
+    });
   console.log(reminderDates);
-  console.log(reminders);
-  console.log(eventDates);
-  // console.log(displayReminderDates("3", "Thu Feb 23 2023"));
 
-  function displayReminderDates(reminders, eventDate) {
-    console.log(eventDate);
+  function displayReminderDates(reminderValue, eventDate) {
     const parts = eventDate.toString().split(" ");
     const year = parts[3];
     const monthAbbreviation = parts[1];
@@ -212,53 +184,32 @@ const Dashboard = (props) => {
     const month = monthMap[monthAbbreviation];
     const day = parts[2];
     const formattedDate = new Date(`${year}-${month}-${day}`);
-    console.log(formattedDate);
     const millisecondsInADay = 24 * 60 * 60 * 1000;
-
-    console.log(reminders);
 
     let reminderDate;
 
-    switch (reminders) {
-      case "0":
-        reminderDate = formattedDate;
-        break;
-
-      case "1":
-        reminderDate = new Date(formattedDate.getTime() - millisecondsInADay);
-        break;
-
-      case "3":
-        reminderDate = new Date(
-          formattedDate.getTime() - 3 * millisecondsInADay
-        );
-        break;
-
-      case "7":
-        reminderDate = new Date(
-          formattedDate.getTime() - 7 * millisecondsInADay
-        );
-        break;
-      default:
-        reminderDate = null;
+    if (reminderValue === "0") {
+      reminderDate = formattedDate;
+    } else {
+      reminderDate = new Date(
+        formattedDate.getTime() - parseInt(reminderValue) * millisecondsInADay
+      );
     }
 
     if (reminderDate) {
-      return reminderDate.toLocaleString("en-UK");
+      reminderDate = reminderDate.toLocaleString("en-UK").split(", ")[0];
     } else {
       return null;
     }
+
+    return reminderDate;
   }
 
-  // console.log(submittedData);
   return (
     <div className="dashboardContainer">
       <ul>
         {submittedData &&
           submittedData.map((data, index) => {
-            const remainingTime = remainingTimes[index];
-            // const reminders = reminderDates && reminderDates[index];
-
             return (
               <div className="allContainers" key={index}>
                 <div className="dashboardContent dateDetailsContainer">
@@ -284,10 +235,8 @@ const Dashboard = (props) => {
                     {data.firstname} {data.lastname}
                     {data.otherevent}
                     <div className="reminders" key={index}>
-                      {reminderDates.map((reminderDate, index) => (
-                        <div key={index}>{reminderDate}</div>
-                      ))}
-                    </div>{" "}
+                      {reminderDates[index]}
+                    </div>
                   </div>
                 </div>
 
@@ -296,8 +245,8 @@ const Dashboard = (props) => {
                   key={index}
                   style={{ backgroundColor: data.backgroundcolor }}
                 >
-                  {remainingTime
-                    ? `${remainingTime.days + 1} days left`
+                  {remainingTimes[index]
+                    ? `${remainingTimes[index].days} days left`
                     : "🎉Today's the day! 🎉"}
                 </div>
               </div>

@@ -2,7 +2,6 @@
   position: absolute;
   top: 425px;
   right: -240px;
-  /* transform: translateX(115.5%); */
 
   border-radius: 10px;
   border-color: white;
@@ -11,7 +10,6 @@
   font-family: "Lato", sans-serif;
   font-weight: 600;
   height: 215px;
-  /* letter-spacing: 0.5px; */
   background-color: #72d1d6;
   color: white;
   width: 200px;
@@ -41,9 +39,9 @@
 }
 
 .reminderContainer label {
-  margin-top: 7px;
+  margin-top: 3px;
   color: black;
-  font-size: 13px;
+  font-size: 14.8px;
   font-weight: 800;
   margin-left: 32px;
   width: 130px;
@@ -53,9 +51,10 @@
 }
 
 .reminderContainer label:hover {
-  background-color: rgba(91, 189, 196, 0.301);
+  background-color: rgba(91, 189, 196, 0.571);
   border-radius: 5px;
-  width: 130px;
+  width: 135px;
+  cursor: pointer;
 }
 
 input[type="radio"],

@@ -271,10 +271,6 @@ input:focus {
   z-index: 5;
 }
 
-/* #otherEventsDiv {
-  width: 450px;
-} */
-
 .errorMessageEventName {
   position: absolute;
   left: 30px;
@@ -330,9 +326,13 @@ input[type="checkbox"] {
 }
 
 [type="checkbox"]:disabled {
-  background-color: rgb(165, 163, 163);
+  background-color: rgb(165, 163, 163) !important;
   outline: none;
   cursor: not-allowed;
+}
+
+[type="checkbox"]:hover {
+  background-color: #adeef1;
 }
 
 #otherEventsDiv {
@@ -399,13 +399,6 @@ input[type="checkbox"] {
   z-index: 10;
 }
 
-/* .dateModalAnniversary {
-  position: absolute;
-  top: 410px;
-  right: -300px;
-  background-color: #72d1d6;
-} */
-
 label {
   display: flex;
   margin-left: 10px;
@@ -416,66 +409,7 @@ label {
   font-size: 18px;
 }
 
-/* .reminderContainer {
-  position: absolute;
-  top: 265px;
-  right: -300px;
-  height: 195px !important;
-  display: block;
-  border-radius: 10px;
-  border-color: white;
-  border: transparent;
-  font-size: 15px;
-  font-family: "Lato", sans-serif;
-  font-weight: 600;
-
-  justify-content: center;
-  letter-spacing: 0.5px;
-  background-color: #72d1d6;
-  color: white;
-  width: 260px;
-  padding: 20px;
-}
-
-.reminderTitle {
-  display: flex;
-  margin-left: 10px;
-  background-color: #72d1d6;
-  font-weight: 700;
-  width: 200px;
-  font-family: "Raleway", sans-serif;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-.optionsContainer {
-  background-color: #ffffff;
-  margin: auto;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  border-radius: 2px;
-  width: 210px;
-  height: 115px;
-}
-
-.reminderContainer label {
-  margin-top: 7px;
-  color: black;
-  font-size: 13px;
-  font-weight: 800;
-  margin-left: 32px;
-  width: 130px;
-  background-color: #ffffff;
-  font-family: "Raleway", sans-serif;
-  padding-top: 1px;
-}
-
 input[type="radio"],
-input.radio {
-  float: left;
-  /* clear: none; */
-/* margin: -15px 20px 20px 8px;
-} */
-*/ input[type="radio"],
 input.radio {
   float: left;
   /* clear: none; */
@@ -497,13 +431,15 @@ input.radio {
   display: none;
 }
 
+[type="date"]:hover {
+  cursor: pointer;
+}
+
 [type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
 
-#dateofbirth,
-#dateofanniversary,
-#dateofotherevent {
+#date {
   display: block;
   border-radius: 3%;
   border-color: white;
@@ -515,10 +451,6 @@ input.radio {
   justify-content: center;
   letter-spacing: 0.5px;
 }
-
-/* #otherEventsDiv {
-  padding: 10px;
-} */
 
 input[name="othereventsbox"] {
   margin: 0px;
@@ -544,7 +476,7 @@ input[name="othereventsbox"] {
 }
 
 .otherEventsTextArea:hover {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
 }
 .otherEventsTextArea:focus {
   color: white;

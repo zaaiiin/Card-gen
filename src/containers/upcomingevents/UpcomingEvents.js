@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import "./upcomingevents.css";
+import "./reminderradiobuttons.css";
+
 import notif_icon from "../../assets/notif_icon.png";
 import profile_icon from "../../assets/profile_icon.png";
 import logoandname from "../../assets/logoandname.png";
@@ -7,7 +9,6 @@ import plussign from "../../assets/plussign.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Dashboard from "../../containers/dashboard/Dashboard.js";
-import ReminderRadioButtons from "../../containers/reminderradiobuttons/ReminderRadioButtons.js";
 
 const UpcomingEvents = () => {
   useEffect(() => {
@@ -30,6 +31,8 @@ const UpcomingEvents = () => {
       "form[name='eventForm'] input[name='othereventsbox']"
     );
     const otherEventsTextArea = document.querySelector(".otherEventsTextArea");
+    const reminderContainer = document.querySelector(".reminderContainer");
+    const dates = document.querySelectorAll("input[type='date']");
 
     const openModalForm = () => {
       modalevent_form.classList.remove("hidden");
@@ -55,6 +58,8 @@ const UpcomingEvents = () => {
       checkboxArray.forEach((checkbox) => {
         if (checkbox.checked) {
           modalArray.forEach((modal) => modal.classList.add("hidden"));
+          reminderContainer.classList.remove("hidden");
+          dates.forEach((date) => date.focus());
 
           if (checkbox === bdaycheckbox) {
             dateModal.classList.remove("hidden");
@@ -80,7 +85,7 @@ const UpcomingEvents = () => {
 
       if (checkboxArray.every((checkbox) => !checkbox.checked)) {
         modalArray.forEach((modal) => modal.classList.add("hidden"));
-        // reminderContainer.classList.add("hidden");
+        reminderContainer.classList.add("hidden");
 
         resetCheckBoxes();
         resetValues();
@@ -97,15 +102,13 @@ const UpcomingEvents = () => {
     anniversary: "",
     otherevent: "",
     othereventdate: "",
-    reminderduration: "",
+    reminder: "",
   };
 
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [reminders, setReminders] = useState("0");
   const [submittedData, setSubmittedData] = useState([]);
-  const [showReminder, setShowReminder] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -115,24 +118,6 @@ const UpcomingEvents = () => {
     console.log(formValues, submittedData);
   };
 
-  useEffect(() => {
-    if (
-      formValues &&
-      (formValues.birthday ||
-        formValues.anniversary ||
-        formValues.othereventdate)
-    ) {
-      setShowReminder(true);
-    } else {
-      setShowReminder(false);
-    }
-  }, [formValues]);
-
-  function handleReminderChange(e) {
-    setReminders(e.target.value);
-    console.log(reminders);
-  }
-
   const closeModalForm = () => {
     const modalevent_form = document.querySelector(".modaladd_form");
     const overlay = document.querySelector(".overlay");
@@ -141,18 +126,20 @@ const UpcomingEvents = () => {
       ".dateModalAnniversary"
     );
     const dateModalOtherEvent = document.querySelector(".dateModalOtherEvent");
+    const reminderContainer = document.querySelector(".reminderContainer");
 
     modalevent_form.classList.add("hidden");
     overlay.classList.add("hidden");
     dateModal.classList.add("hidden");
     dateModalAnniversary.classList.add("hidden");
     dateModalOtherEvent.classList.add("hidden");
+    reminderContainer.classList.add("hidden");
 
     uncheckAll();
     resetValues();
     resetCheckBoxes();
     setFormErrors({});
-    setShowReminder(false);
+    // setShowReminder(false);
   };
 
   function resetValues() {
@@ -169,6 +156,7 @@ const UpcomingEvents = () => {
     const otherEventsCheckbox = document.querySelector(
       "form[name='eventForm'] input[name='othereventsbox']"
     );
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
 
     const checkboxArray = [
       bdaycheckbox,
@@ -177,6 +165,10 @@ const UpcomingEvents = () => {
     ];
 
     checkboxArray.forEach((checkbox) => (checkbox.disabled = false));
+
+    radioButtons.forEach((button) => {
+      button.checked = false;
+    });
   }
 
   useEffect(() => {
@@ -193,7 +185,6 @@ const UpcomingEvents = () => {
 
     if (Object.keys(errors).length === 0) {
       setSubmittedData([...submittedData, { ...formValues }]);
-      setReminders(reminders);
       resetValues();
       setIsSubmit(true);
       closeModalForm();
@@ -267,8 +258,6 @@ const UpcomingEvents = () => {
       {/* passing props to dashboard component */}
 
       <Dashboard submittedData={submittedData} />
-      <Dashboard reminders={reminders} />
-      <Dashboard formValues={formValues} />
 
       <div className="addevent_btn--container">
         <button type="button" className="addevent_btn">
@@ -345,7 +334,7 @@ const UpcomingEvents = () => {
             type="date"
             name="birthday"
             value={formValues.birthday}
-            id="dateofbirth"
+            id="date"
             onChange={handleChange}
           ></input>
         </div>
@@ -355,7 +344,7 @@ const UpcomingEvents = () => {
             type="date"
             name="anniversary"
             value={formValues.anniversary}
-            id="dateofanniversary"
+            id="date"
             onChange={handleChange}
           ></input>
         </div>
@@ -365,14 +354,51 @@ const UpcomingEvents = () => {
             type="date"
             name="othereventdate"
             value={formValues.othereventdate}
-            id="dateofotherevent"
+            id="date"
             onChange={handleChange}
           ></input>
         </div>
-
-        {showReminder && (
-          <ReminderRadioButtons handleReminderChange={handleReminderChange} />
-        )}
+        <div className="reminderContainer hidden">
+          <div className="reminderTitle">Remind me:</div>
+          <div className="optionsContainer">
+            <label htmlFor="zerodayprior">On the day</label>
+            <input
+              type="radio"
+              name="reminder"
+              value="0"
+              onChange={handleChange}
+              id="zerodayprior"
+            ></input>
+            <br></br>
+            <label htmlFor="onedayprior">One day earlier</label>
+            <input
+              type="radio"
+              name="reminder"
+              value="1"
+              onChange={handleChange}
+              id="onedayprior"
+            ></input>
+            <br></br>
+            <label htmlFor="threedaysprior">Three days earlier</label>
+            <input
+              type="radio"
+              name="reminder"
+              value="3"
+              onChange={handleChange}
+              id="threedaysprior"
+            ></input>
+            <br></br>
+            <label htmlFor="oneweekprior">One week earlier</label>
+            <input
+              type="radio"
+              name="reminder"
+              value="7"
+              onChange={handleChange}
+              id="oneweekprior"
+            ></input>
+          </div>
+        </div>
+        );
       </div>
       <div className="overlay hidden"></div>
     </div>
