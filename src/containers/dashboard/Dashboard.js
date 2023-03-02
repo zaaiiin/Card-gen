@@ -1,8 +1,11 @@
 import "./dashboard.css";
 import balloon from "../../assets/balloon.png";
 import heart from "../../assets/heart.png";
+import reminder_icon from "../../assets/reminder_icon.png";
 import otherevent from "../../assets/otherevent.png";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
+import addNotification from "react-push-notification";
+import small_logo from "../../assets/small_logo.png";
 
 const Dashboard = (props) => {
   const { submittedData } = props;
@@ -86,7 +89,7 @@ const Dashboard = (props) => {
       formatDates(submittedData, "anniversary", setFormattedAnniversaryArray);
       formatDates(submittedData, "othereventdate", setFormattedOthereventArray);
     }
-  }, [submittedData]);
+  }, []);
 
   //creating a countdown
   function addDateToEvent(keyName, submittedData, eventDates) {
@@ -101,11 +104,30 @@ const Dashboard = (props) => {
   }
 
   const eventDates = [];
-  console.log(eventDates);
 
   addDateToEvent("birthday", submittedData, eventDates);
   addDateToEvent("anniversary", submittedData, eventDates);
   addDateToEvent("othereventdate", submittedData, eventDates);
+
+  //add +1 to current year if event has already passed
+  function getNextEventDate(eventDate) {
+    const eventMonth = new Date(eventDate).getMonth() + 1;
+    const currentMonth = new Date().getMonth() + 1;
+    const currentYear = new Date().getFullYear();
+    const currentDay = new Date().getDate();
+    const specificEventDate = new Date(eventDate).getDate();
+
+    const eventYear =
+      currentMonth > eventMonth ||
+      (currentMonth === eventMonth && currentDay > specificEventDate)
+        ? currentYear + 1
+        : currentYear;
+    return new Date(eventYear, eventMonth - 1, specificEventDate);
+  }
+
+  // useEffect(() => {
+  //   console.log("Child component rendered");
+  // }, [props.submittedData]);
 
   //get days remaining until event
   function getTimeRemaining(eventDate) {
@@ -115,27 +137,12 @@ const Dashboard = (props) => {
       return Math.ceil(difference / (1000 * 60 * 60 * 24));
     }
 
-    const eventMonth = new Date(eventDate).getMonth() + 1;
-    const currentMonth = new Date().getMonth() + 1;
-    const currentYear = new Date().getFullYear();
-    const currentDay = new Date().getDate();
-    const specificEventDate = new Date(eventDate).getDate();
-
-    function getNextEventDate() {
-      const eventYear =
-        currentMonth > eventMonth ||
-        (currentMonth === eventMonth && currentDay > specificEventDate)
-          ? currentYear + 1
-          : currentYear;
-      return new Date(eventYear, eventMonth - 1, specificEventDate);
-    }
-
     if (difference > 0) {
       const days = convertToDays(difference);
       return { days, difference };
     }
 
-    const nextEventDate = getNextEventDate();
+    const nextEventDate = getNextEventDate(eventDate);
     const differenceToNextEventDate = nextEventDate.getTime() - Date.now();
 
     const days = convertToDays(differenceToNextEventDate);
@@ -149,10 +156,8 @@ const Dashboard = (props) => {
       const remainingTime = getTimeRemaining(eachDate);
       return remainingTime;
     });
-  console.log(remainingTimes);
 
   const reminderValues = submittedData.map((data) => data.reminder);
-  console.log(reminderValues);
 
   const reminderDates =
     eventDates &&
@@ -161,10 +166,12 @@ const Dashboard = (props) => {
       const reminderDate = displayReminderDates(reminderValue, eventDate);
       return reminderDate;
     });
-  console.log(reminderDates);
 
+  //format reminder dates based on reminder option/value
   function displayReminderDates(reminderValue, eventDate) {
-    const parts = eventDate.toString().split(" ");
+    const updatedDate = getNextEventDate(eventDate);
+
+    const parts = updatedDate.toString().split(" ");
     const year = parts[3];
     const monthAbbreviation = parts[1];
     const monthMap = {
@@ -205,6 +212,88 @@ const Dashboard = (props) => {
     return reminderDate;
   }
 
+  const reminderNotification = (message) => {
+    addNotification({
+      title: "CardGen Reminder",
+      message: message,
+      theme: "darkblue",
+      vibrate: [2],
+      icon: small_logo,
+      duration: 6000,
+      native: true,
+      onClick: () => console.log("hello"),
+    });
+  };
+
+  function sendNotif(reminderDate, data) {
+    const today = new Date();
+    const todayStr = today.toLocaleString("en-UK").split(", ")[0];
+
+    const { birthday, anniversary, othereventdate, firstname, reminder } = data;
+
+    const inZeroDays = reminder === "0";
+    const inOneDay = reminder === "1";
+    const inThreeDays = reminder === "3";
+    const inOneWeek = reminder === "7";
+
+    let message;
+    if (reminderDate === todayStr) {
+      if (inZeroDays) {
+        if (birthday) {
+          message = `Today is ${firstname}'s birthday`;
+        } else if (anniversary) {
+          message = `Today is ${firstname}'s anniversary`;
+        } else if (othereventdate) {
+          message = `You have an important event today!`;
+        }
+      }
+
+      if (inOneDay) {
+        if (birthday) {
+          message = `Tomorrow is ${firstname}'s birthday`;
+        } else if (anniversary) {
+          message = `Tomorrow is ${firstname}'s anniversary`;
+        } else if (othereventdate) {
+          message = `You have an important event tomorrow!`;
+        }
+      }
+
+      if (inThreeDays) {
+        if (birthday) {
+          message = `${firstname}'s birthday is in three days`;
+        } else if (anniversary) {
+          message = `${firstname}'s anniversary is in three days`;
+        } else if (othereventdate) {
+          message = `You have an important event coming up in three days`;
+        }
+      }
+
+      if (inOneWeek) {
+        if (birthday) {
+          message = `${firstname}'s birthday is in a week`;
+        } else if (anniversary) {
+          message = `${firstname}'s anniversary is in a week`;
+        } else if (othereventdate) {
+          message = `You have an important event coming up in a week`;
+        }
+      }
+
+      reminderNotification(message);
+    }
+  }
+
+  const [notifSent, setNotifSent] = useState(false);
+
+  useEffect(() => {
+    if (submittedData.length > 0 && !notifSent) {
+      const pushNotif = submittedData.map((data, index) => {
+        const eachDate = reminderDates[index];
+        sendNotif(eachDate, data);
+      });
+      setNotifSent(true);
+    }
+  }, [submittedData, notifSent]);
+
   return (
     <div className="dashboardContainer">
       <ul>
@@ -234,6 +323,9 @@ const Dashboard = (props) => {
                   <div className="eventType">
                     {data.firstname} {data.lastname}
                     {data.otherevent}
+                    <div className="reminder_img">
+                      <img src={reminder_icon} alt="reminder_icon" />
+                    </div>
                     <div className="reminders" key={index}>
                       {reminderDates[index]}
                     </div>
@@ -247,9 +339,11 @@ const Dashboard = (props) => {
                 >
                   {" "}
                   <div className="countdownContainer">
-                    {remainingTimes[index]
-                      ? `${remainingTimes[index].days} days left`
-                      : "🎉Today's the day! 🎉"}
+                    {remainingTimes[index].days === -0
+                      ? "🎉Today's the day! 🎉"
+                      : remainingTimes[index].days === 1
+                      ? `${remainingTimes[index].days} day left`
+                      : `${remainingTimes[index].days} days left`}
                   </div>
                 </div>
               </div>
@@ -260,4 +354,4 @@ const Dashboard = (props) => {
   );
 };
 
-export default Dashboard;
+export default React.memo(Dashboard);

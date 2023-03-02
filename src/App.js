@@ -8,6 +8,7 @@ import {
   Dashboard,
 } from "./containers";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Notifications } from "react-push-notification";
 
 function App() {
   return (

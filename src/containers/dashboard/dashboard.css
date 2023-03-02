@@ -167,3 +167,13 @@ img {
   margin-left: 335px;
   margin-top: -50px;
 }
+
+.reminder_img {
+  background: white;
+  padding: 0px;
+  margin: auto;
+  background-color: transparent;
+  margin-left: 315px;
+  margin-top: -48px;
+  position: absolute;
+}

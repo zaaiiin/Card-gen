@@ -117,7 +117,7 @@ const UpcomingEvents = () => {
     setFormValues({ ...formValues, [name]: value });
     setFormErrors({});
 
-    console.log(formValues, submittedData);
+    // console.log(formValues, submittedData);
   };
 
   const closeModalForm = () => {
@@ -179,6 +179,8 @@ const UpcomingEvents = () => {
     }
   }, []);
 
+  // const [formData, setFormData] = useState([]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -186,6 +188,7 @@ const UpcomingEvents = () => {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
+      // setFormData([...formData, submittedData]);
       setSubmittedData([...submittedData, { ...formValues }]);
       resetValues();
       setIsSubmit(true);
@@ -194,7 +197,8 @@ const UpcomingEvents = () => {
       resetCheckBoxes();
     }
   };
-  console.log(submittedData);
+
+  // console.log(submittedData);
 
   function uncheckAll() {
     const checkboxes = document.querySelectorAll("input[type=checkbox]");
@@ -233,6 +237,7 @@ const UpcomingEvents = () => {
     }
     return errors;
   };
+  const MemoizedDashboard = React.memo(Dashboard);
 
   return (
     <div className="upcomingevents_wrapper">
@@ -260,18 +265,15 @@ const UpcomingEvents = () => {
         </button>
       </div>
       <div className="events_dashboard--title">Upcoming Events</div>
-
       {/* passing props to dashboard component */}
 
-      <Dashboard submittedData={submittedData} />
-
+      <MemoizedDashboard submittedData={submittedData} />
       <div className="addevent_btn--container">
         <button type="button" className="addevent_btn">
           Add event{" "}
           <img src={plussign} alt="addevent" className="addevent_img" />
         </button>
       </div>
-
       <div className="modaladd_form hidden">
         <form
           name="eventForm"
