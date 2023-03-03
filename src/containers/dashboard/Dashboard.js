@@ -4,15 +4,14 @@ import heart from "../../assets/heart.png";
 import reminder_icon from "../../assets/reminder_icon.png";
 import otherevent from "../../assets/otherevent.png";
 import React, { useState, useEffect } from "react";
-import addNotification from "react-push-notification";
-import small_logo from "../../assets/small_logo.png";
+import NotificationSender from "../../containers/NotificationSender.js";
 
 const Dashboard = (props) => {
   const { submittedData } = props;
 
   //adding dynamic container colour change serially with event addition
   const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
-
+  console.log(window.sessionStorage.getItem("notification"));
   if (submittedData) {
     for (let i = 0; i < submittedData.length; i++) {
       submittedData[i].backgroundcolor =
@@ -84,11 +83,13 @@ const Dashboard = (props) => {
   }
 
   useEffect(() => {
-    if (Array.isArray(submittedData) && submittedData.length > 0) {
+    // if (Array.isArray(submittedData) && submittedData.length > 0) {
+    if (submittedData) {
       formatDates(submittedData, "birthday", setFormattedBirthdayArray);
       formatDates(submittedData, "anniversary", setFormattedAnniversaryArray);
       formatDates(submittedData, "othereventdate", setFormattedOthereventArray);
     }
+    // }
   }, []);
 
   //creating a countdown
@@ -212,90 +213,12 @@ const Dashboard = (props) => {
     return reminderDate;
   }
 
-  const reminderNotification = (message) => {
-    addNotification({
-      title: "CardGen Reminder",
-      message: message,
-      theme: "darkblue",
-      vibrate: [2],
-      icon: small_logo,
-      duration: 6000,
-      native: true,
-      onClick: () => console.log("hello"),
-    });
-  };
-
-  function sendNotif(reminderDate, data) {
-    const today = new Date();
-    const todayStr = today.toLocaleString("en-UK").split(", ")[0];
-
-    const { birthday, anniversary, othereventdate, firstname, reminder } = data;
-
-    const inZeroDays = reminder === "0";
-    const inOneDay = reminder === "1";
-    const inThreeDays = reminder === "3";
-    const inOneWeek = reminder === "7";
-
-    let message;
-    if (reminderDate === todayStr) {
-      if (inZeroDays) {
-        if (birthday) {
-          message = `Today is ${firstname}'s birthday`;
-        } else if (anniversary) {
-          message = `Today is ${firstname}'s anniversary`;
-        } else if (othereventdate) {
-          message = `You have an important event today!`;
-        }
-      }
-
-      if (inOneDay) {
-        if (birthday) {
-          message = `Tomorrow is ${firstname}'s birthday`;
-        } else if (anniversary) {
-          message = `Tomorrow is ${firstname}'s anniversary`;
-        } else if (othereventdate) {
-          message = `You have an important event tomorrow!`;
-        }
-      }
-
-      if (inThreeDays) {
-        if (birthday) {
-          message = `${firstname}'s birthday is in three days`;
-        } else if (anniversary) {
-          message = `${firstname}'s anniversary is in three days`;
-        } else if (othereventdate) {
-          message = `You have an important event coming up in three days`;
-        }
-      }
-
-      if (inOneWeek) {
-        if (birthday) {
-          message = `${firstname}'s birthday is in a week`;
-        } else if (anniversary) {
-          message = `${firstname}'s anniversary is in a week`;
-        } else if (othereventdate) {
-          message = `You have an important event coming up in a week`;
-        }
-      }
-
-      reminderNotification(message);
-    }
-  }
-
-  const [notifSent, setNotifSent] = useState(false);
-
-  useEffect(() => {
-    if (submittedData.length > 0 && !notifSent) {
-      const pushNotif = submittedData.map((data, index) => {
-        const eachDate = reminderDates[index];
-        sendNotif(eachDate, data);
-      });
-      setNotifSent(true);
-    }
-  }, [submittedData, notifSent]);
-
   return (
     <div className="dashboardContainer">
+      <NotificationSender
+        submittedData={submittedData}
+        reminderDates={reminderDates}
+      />
       <ul>
         {submittedData &&
           submittedData.map((data, index) => {
@@ -354,4 +277,4 @@ const Dashboard = (props) => {
   );
 };
 
-export default React.memo(Dashboard);
+export default Dashboard;

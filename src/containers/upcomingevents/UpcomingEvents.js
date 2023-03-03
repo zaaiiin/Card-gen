@@ -7,7 +7,7 @@ import logoandname from "../../assets/logoandname.png";
 import plussign from "../../assets/plussign.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import Dashboard from "../../containers/dashboard/Dashboard.js";
+import Dashboard from "../dashboard/Dashboard.js";
 
 const UpcomingEvents = () => {
   useEffect(() => {
@@ -179,8 +179,6 @@ const UpcomingEvents = () => {
     }
   }, []);
 
-  // const [formData, setFormData] = useState([]);
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -188,7 +186,6 @@ const UpcomingEvents = () => {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      // setFormData([...formData, submittedData]);
       setSubmittedData([...submittedData, { ...formValues }]);
       resetValues();
       setIsSubmit(true);
