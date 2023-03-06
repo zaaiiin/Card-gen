@@ -4,7 +4,6 @@ import small_logo from "../assets/small_logo.png";
 
 const NotificationSender = (props) => {
   const { submittedData, reminderDates } = props;
-  const [notificationSentToday, setNotificationSentToday] = useState(false);
 
   const reminderNotification = (message) => {
     addNotification({
@@ -19,10 +18,11 @@ const NotificationSender = (props) => {
     });
   };
 
-  function sendNotif(reminderDate, data, index) {
+  function sendNotif(reminderDate, data) {
     const today = new Date().toLocaleDateString();
 
-    const { birthday, anniversary, othereventdate, firstname, reminder } = data;
+    const { birthday, anniversary, othereventdate, firstname, reminder, id } =
+      data;
 
     const inZeroDays = reminder === "0";
     const inOneDay = reminder === "1";
@@ -71,8 +71,8 @@ const NotificationSender = (props) => {
         }
       }
       console.log("changed");
-      window.sessionStorage.setItem(index, "sent");
-      console.log(window.sessionStorage.getItem(index));
+      window.sessionStorage.setItem(id, "sent");
+      console.log(window.sessionStorage.getItem(id));
       reminderNotification(message);
     }
   }
@@ -82,8 +82,11 @@ const NotificationSender = (props) => {
     props.reminderDates.forEach((date, index) => {
       if (date === today) {
         console.log(props.submittedData[index]);
-        if (window.sessionStorage.getItem(index) !== "sent") {
-          sendNotif(date, props.submittedData[index], index);
+        if (
+          window.sessionStorage.getItem(props.submittedData[index].id) !==
+          "sent"
+        ) {
+          sendNotif(date, props.submittedData[index]);
         }
       }
     });

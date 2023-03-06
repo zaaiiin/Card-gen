@@ -105,6 +105,7 @@ const UpcomingEvents = () => {
     otherevent: "",
     othereventdate: "",
     reminder: "",
+    id: Date.now(),
   };
 
   const [formValues, setFormValues] = useState(initialValues);
@@ -117,7 +118,7 @@ const UpcomingEvents = () => {
     setFormValues({ ...formValues, [name]: value });
     setFormErrors({});
 
-    // console.log(formValues, submittedData);
+    console.log(formValues, submittedData);
   };
 
   const closeModalForm = () => {
