@@ -78,19 +78,21 @@ const NotificationSender = (props) => {
   }
 
   useEffect(() => {
-    const today = new Date().toLocaleDateString();
-    props.reminderDates.forEach((date, index) => {
-      if (date === today) {
-        console.log(props.submittedData[index]);
-        if (
-          window.sessionStorage.getItem(props.submittedData[index].id) !==
-          "sent"
-        ) {
-          sendNotif(date, props.submittedData[index]);
+    if (Array.isArray(submittedData) && submittedData.length > 0) {
+      const today = new Date().toLocaleDateString();
+      props.reminderDates.forEach((date, index) => {
+        if (date === today) {
+          console.log(props.submittedData[index]);
+          if (
+            window.sessionStorage.getItem(props.submittedData[index].id) !==
+            "sent"
+          ) {
+            sendNotif(date, props.submittedData[index]);
+          }
         }
-      }
-    });
-    // setNotificationSentToday(true);
+      });
+      // setNotificationSentToday(true);
+    }
   }, [props.reminderDates]);
   console.log(reminderDates);
 };

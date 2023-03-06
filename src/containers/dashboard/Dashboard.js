@@ -9,9 +9,13 @@ import NotificationSender from "../../containers/NotificationSender.js";
 const Dashboard = (props) => {
   const { submittedData } = props;
 
+  //run this code once page reloads to retrieve the stored data and set it to the state variable
+
+  //update the storedData whenever the submittedData prop changes
+
   //adding dynamic container colour change serially with event addition
   const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
-  console.log(window.sessionStorage.getItem("notification"));
+
   if (submittedData) {
     for (let i = 0; i < submittedData.length; i++) {
       submittedData[i].backgroundcolor =
@@ -83,24 +87,30 @@ const Dashboard = (props) => {
   }
 
   useEffect(() => {
-    // if (Array.isArray(submittedData) && submittedData.length > 0) {
-    if (submittedData) {
-      formatDates(submittedData, "birthday", setFormattedBirthdayArray);
-      formatDates(submittedData, "anniversary", setFormattedAnniversaryArray);
-      formatDates(submittedData, "othereventdate", setFormattedOthereventArray);
+    if (Array.isArray(submittedData) && submittedData.length > 0) {
+      if (submittedData) {
+        formatDates(submittedData, "birthday", setFormattedBirthdayArray);
+        formatDates(submittedData, "anniversary", setFormattedAnniversaryArray);
+        formatDates(
+          submittedData,
+          "othereventdate",
+          setFormattedOthereventArray
+        );
+      }
     }
-    // }
   }, []);
 
   //creating a countdown
   function addDateToEvent(keyName, submittedData, eventDates) {
-    if (submittedData) {
-      submittedData.forEach((data) => {
-        if (data[keyName]) {
-          const eventDate = new Date(data[keyName]).toDateString();
-          eventDates.push(eventDate);
-        }
-      });
+    if (Array.isArray(submittedData) && submittedData.length > 0) {
+      if (submittedData) {
+        submittedData.forEach((data) => {
+          if (data[keyName]) {
+            const eventDate = new Date(data[keyName]).toDateString();
+            eventDates.push(eventDate);
+          }
+        });
+      }
     }
   }
 
@@ -157,6 +167,8 @@ const Dashboard = (props) => {
       const remainingTime = getTimeRemaining(eachDate);
       return remainingTime;
     });
+
+  console.log(remainingTimes);
 
   const reminderValues = submittedData.map((data) => data.reminder);
 
@@ -220,7 +232,9 @@ const Dashboard = (props) => {
         reminderDates={reminderDates}
       />
       <ul>
-        {submittedData &&
+        {Array.isArray(submittedData) &&
+          submittedData.length > 0 &&
+          submittedData &&
           submittedData.map((data, index) => {
             return (
               <div className="allContainers" key={index}>

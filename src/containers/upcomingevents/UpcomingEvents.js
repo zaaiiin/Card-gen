@@ -117,11 +117,40 @@ const UpcomingEvents = () => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
     setFormErrors({});
-
-    console.log(formValues, submittedData);
   };
+  console.log(formValues);
 
-  const closeModalForm = () => {
+  // const [storedFormData, setStoredFormData] = useState([]);
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("submittedData");
+
+    if (storedData !== null && storedData !== undefined) {
+      console.log(storedData);
+      setSubmittedData(JSON.parse(storedData));
+      console.log(storedData);
+    } else {
+      setSubmittedData([]);
+    }
+  }, []);
+
+  console.log(submittedData);
+
+  useEffect(() => {
+    const clearall_btn = document.querySelector(".clearall_btn");
+    localStorage.setItem("submittedData", JSON.stringify(submittedData));
+
+    if (Array.isArray(submittedData) && submittedData.length > 0) {
+      console.log(submittedData);
+      clearall_btn.classList.remove("hidden");
+    }
+
+    if (Array.isArray(submittedData) && submittedData.length > 0) {
+      clearall_btn.classList.remove("hidden");
+    }
+  }, [submittedData]);
+
+  function closeModalForm() {
     const modalevent_form = document.querySelector(".modaladd_form");
     const overlay = document.querySelector(".overlay");
     const dateModal = document.querySelector(".dateModal");
@@ -143,7 +172,7 @@ const UpcomingEvents = () => {
     resetCheckBoxes();
     setFormErrors({});
     // setShowReminder(false);
-  };
+  }
 
   function resetValues() {
     setFormValues(initialValues);
@@ -180,7 +209,7 @@ const UpcomingEvents = () => {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
 
     const errors = validate(formValues);
@@ -193,10 +222,15 @@ const UpcomingEvents = () => {
       closeModalForm();
       uncheckAll();
       resetCheckBoxes();
-    }
-  };
 
-  // console.log(submittedData);
+      const clearall_btn = document.querySelector(".clearall_btn");
+      if (submittedData) {
+        clearall_btn.classList.remove("hidden");
+      }
+    }
+  }
+
+  console.log(submittedData);
 
   function uncheckAll() {
     const checkboxes = document.querySelectorAll("input[type=checkbox]");
@@ -205,7 +239,15 @@ const UpcomingEvents = () => {
     }
   }
 
-  const validate = (values) => {
+  function clearAll() {
+    const clearall_btn = document.querySelector(".clearall_btn");
+    localStorage.clear();
+    setSubmittedData([]);
+    clearall_btn.classList.add("hidden");
+    console.log("cleared");
+  }
+
+  function validate(values) {
     const errors = {};
     const otherEventsCheckbox = document.querySelector(
       "form[name='eventForm'] input[name='othereventsbox']"
@@ -234,7 +276,7 @@ const UpcomingEvents = () => {
       errors.date = "Please set a reminder";
     }
     return errors;
-  };
+  }
   const MemoizedDashboard = React.memo(Dashboard);
 
   return (
@@ -270,6 +312,15 @@ const UpcomingEvents = () => {
         <button type="button" className="addevent_btn">
           Add event{" "}
           <img src={plussign} alt="addevent" className="addevent_img" />
+        </button>
+        <div className="clearall_btn--container"></div>
+        <button
+          type="button"
+          className="clearall_btn hidden"
+          onClick={clearAll}
+        >
+          Clear all
+          {/* <img src={plussign} alt="addevent" className="addevent_img" /> */}
         </button>
       </div>
       <div className="modaladd_form hidden">
