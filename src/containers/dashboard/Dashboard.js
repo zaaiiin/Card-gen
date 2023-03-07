@@ -14,14 +14,6 @@ const Dashboard = (props) => {
   //update the storedData whenever the submittedData prop changes
 
   //adding dynamic container colour change serially with event addition
-  const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
-
-  if (submittedData) {
-    for (let i = 0; i < submittedData.length; i++) {
-      submittedData[i].backgroundcolor =
-        containerColors[i % containerColors.length];
-    }
-  }
 
   //assigning icons to corresponding event
   let arrayOfIcons = [];
@@ -274,6 +266,15 @@ const Dashboard = (props) => {
 
   withCountdownandReminderDates.sort((a, b) => a.countdown - b.countdown);
 
+  const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
+
+  if (withCountdownandReminderDates) {
+    for (let i = 0; i < withCountdownandReminderDates.length; i++) {
+      withCountdownandReminderDates[i].backgroundcolor =
+        containerColors[i % containerColors.length];
+    }
+  }
+
   return (
     <div className="dashboardContainer">
       <NotificationSender
@@ -293,19 +294,19 @@ const Dashboard = (props) => {
                     className="dashboardContent eventDate"
                     key={index}
                     style={{
-                      color: data.backgroundcolor,
+                      color: obj.backgroundcolor,
                     }}
                   >
                     {obj.formattedDates}
                   </div>
                   <div
                     className="dashboardContent dateSideContainer"
-                    style={{ backgroundColor: data.backgroundcolor }}
+                    style={{ backgroundColor: obj.backgroundcolor }}
                   ></div>
                 </div>
                 <div
                   className="dashboardContent eventName"
-                  style={{ backgroundColor: data.backgroundcolor }}
+                  style={{ backgroundColor: obj.backgroundcolor }}
                 >
                   <div className="eventIcon" key={data.index}>
                     {displayIcon(data)}
@@ -326,7 +327,9 @@ const Dashboard = (props) => {
                 <div
                   className="dashboardContent eventCountdown"
                   key={index}
-                  style={{ backgroundColor: data.backgroundcolor }}
+                  style={{
+                    backgroundColor: obj.backgroundcolor,
+                  }}
                 >
                   {" "}
                   <div className="countdownContainer">
