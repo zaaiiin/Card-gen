@@ -71,8 +71,8 @@ const NotificationSender = (props) => {
         }
       }
       console.log("changed");
-      window.sessionStorage.setItem(id, "sent");
-      console.log(window.sessionStorage.getItem(id));
+      window.localStorage.setItem(id, "sent");
+      console.log(window.localStorage.getItem(id));
       reminderNotification(message);
     }
   }
@@ -84,7 +84,7 @@ const NotificationSender = (props) => {
         if (date === today) {
           console.log(props.submittedData[index]);
           if (
-            window.sessionStorage.getItem(props.submittedData[index].id) !==
+            window.localStorage.getItem(props.submittedData[index].id) !==
             "sent"
           ) {
             sendNotif(date, props.submittedData[index]);
@@ -94,7 +94,6 @@ const NotificationSender = (props) => {
       // setNotificationSentToday(true);
     }
   }, [props.reminderDates]);
-  console.log(reminderDates);
 };
 
 export default React.memo(NotificationSender);

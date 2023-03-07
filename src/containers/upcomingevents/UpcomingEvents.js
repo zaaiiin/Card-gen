@@ -125,7 +125,7 @@ const UpcomingEvents = () => {
   useEffect(() => {
     const storedData = localStorage.getItem("submittedData");
 
-    if (storedData !== null && storedData !== undefined) {
+    if (localStorage.length > 0) {
       console.log(storedData);
       setSubmittedData(JSON.parse(storedData));
       console.log(storedData);

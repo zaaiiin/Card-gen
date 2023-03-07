@@ -38,7 +38,7 @@ ul {
   grid-column-gap: 0px;
   background-color: transparent;
   padding: auto;
-  margin-right: -85px;
+  margin-right: -87px;
   margin-left: 15px;
   position: relative;
 }
@@ -65,10 +65,11 @@ ul {
   display: flex;
   flex-direction: row;
   align-items: center;
-  font-size: 16px !important;
+  font-size: 19px !important;
   font-family: "Raleway", sans-serif !important;
   font-weight: 800;
   margin-left: 54px;
+  margin-right: 8px;
   width: 0px;
 }
 
@@ -176,4 +177,9 @@ img {
   margin-left: 315px;
   margin-top: -48px;
   position: absolute;
+}
+
+.scrollTo {
+  background-color: white !important;
+  height: 200px;
 }

@@ -3,7 +3,7 @@ import balloon from "../../assets/balloon.png";
 import heart from "../../assets/heart.png";
 import reminder_icon from "../../assets/reminder_icon.png";
 import otherevent from "../../assets/otherevent.png";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import NotificationSender from "../../containers/NotificationSender.js";
 
 const Dashboard = (props) => {
@@ -99,6 +99,27 @@ const Dashboard = (props) => {
       }
     }
   }, []);
+
+  const [allFormattedDates, setAllFormattedDates] = useState([]);
+  useEffect(() => {
+    const newArray = [];
+    if (formattedBirthdayArray) {
+      newArray.push(...formattedBirthdayArray);
+    }
+    if (formattedAnniversaryArray) {
+      newArray.push(...formattedAnniversaryArray);
+    }
+    if (formattedOthereventArray) {
+      newArray.push(...formattedOthereventArray);
+    }
+    setAllFormattedDates(newArray.filter(Boolean));
+  }, [
+    formattedBirthdayArray,
+    formattedAnniversaryArray,
+    formattedOthereventArray,
+  ]);
+
+  console.log(allFormattedDates);
 
   //creating a countdown
   function addDateToEvent(keyName, submittedData, eventDates) {
@@ -225,6 +246,34 @@ const Dashboard = (props) => {
     return reminderDate;
   }
 
+  const messageRef = useRef();
+
+  useEffect(() => {
+    if (messageRef.current) {
+      messageRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        // inline: "nearest",
+      });
+    }
+  }, [submittedData]);
+
+  const daysRemaining = remainingTimes.map((data) => {
+    return data.days;
+  });
+  const withCountdownandReminderDates = submittedData.map((data, index) => {
+    return {
+      data,
+      countdown: daysRemaining[index],
+      reminderDates: reminderDates[index],
+      formattedDates: allFormattedDates[index],
+    };
+  });
+
+  console.log(withCountdownandReminderDates);
+
+  withCountdownandReminderDates.sort((a, b) => a.countdown - b.countdown);
+
   return (
     <div className="dashboardContainer">
       <NotificationSender
@@ -232,17 +281,22 @@ const Dashboard = (props) => {
         reminderDates={reminderDates}
       />
       <ul>
-        {Array.isArray(submittedData) &&
-          submittedData.length > 0 &&
-          submittedData &&
-          submittedData.map((data, index) => {
+        {Array.isArray(withCountdownandReminderDates) &&
+          withCountdownandReminderDates.length > 0 &&
+          withCountdownandReminderDates &&
+          withCountdownandReminderDates.map((obj, index) => {
+            const data = obj.data;
             return (
               <div className="allContainers" key={index}>
                 <div className="dashboardContent dateDetailsContainer">
-                  <div className="dashboardContent eventDate" key={index}>
-                    {formattedBirthdayArray[index]}
-                    {formattedAnniversaryArray[index]}
-                    {formattedOthereventArray[index]}
+                  <div
+                    className="dashboardContent eventDate"
+                    key={index}
+                    style={{
+                      color: data.backgroundcolor,
+                    }}
+                  >
+                    {obj.formattedDates}
                   </div>
                   <div
                     className="dashboardContent dateSideContainer"
@@ -257,14 +311,14 @@ const Dashboard = (props) => {
                     {displayIcon(data)}
                   </div>
 
-                  <div className="eventType">
+                  <div className="eventType" key={data.index}>
                     {data.firstname} {data.lastname}
                     {data.otherevent}
                     <div className="reminder_img">
                       <img src={reminder_icon} alt="reminder_icon" />
                     </div>
                     <div className="reminders" key={index}>
-                      {reminderDates[index]}
+                      {obj.reminderDates}
                     </div>
                   </div>
                 </div>
@@ -276,16 +330,17 @@ const Dashboard = (props) => {
                 >
                   {" "}
                   <div className="countdownContainer">
-                    {remainingTimes[index].days === -0
+                    {obj.countdown === -0
                       ? "🎉Today's the day! 🎉"
-                      : remainingTimes[index].days === 1
-                      ? `${remainingTimes[index].days} day left`
-                      : `${remainingTimes[index].days} days left`}
+                      : obj.countdown === 1
+                      ? `${obj.countdown} day left`
+                      : `${obj.countdown} days left`}
                   </div>
                 </div>
               </div>
             );
           })}
+        <div className="scrollTo" ref={messageRef}></div>
       </ul>
     </div>
   );
