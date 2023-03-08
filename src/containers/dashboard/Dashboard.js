@@ -313,8 +313,8 @@ const Dashboard = (props) => {
                   </div>
 
                   <div className="eventType" key={data.index}>
-                    {data.firstname} {data.lastname}
-                    {data.otherevent}
+                    {obj.data.firstname} {obj.data.lastname}
+                    {obj.data.otherevent}
                     <div className="reminder_img">
                       <img src={reminder_icon} alt="reminder_icon" />
                     </div>

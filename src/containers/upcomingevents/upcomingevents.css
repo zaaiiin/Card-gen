@@ -138,13 +138,13 @@
   display: flex;
   padding-top: 200px;
   justify-content: center;
-
-  height: calc(100vh - 700px);
+  /* height: calc(100vh - 700px); */
+  border-radius: 2rem !important;
 
   /* float: left; */
 }
 
-.eventForm {
+.modaladd_form .eventForm {
   color: white;
   align-content: center;
   justify-content: center;
@@ -152,16 +152,40 @@
   display: flex;
   flex-direction: column;
   width: 450px;
-  border-radius: 5%;
+  border-radius: 10px !important;
   position: absolute;
+  z-index: 10;
 }
 
 .form-control {
   font-size: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#firstName,
+#lastName {
+  background-color: #2c577e;
+  height: 70px;
+  width: 450px;
+  padding: 15px 32px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#lastName {
+  background-color: #083b69;
+  border-top-left-radius: 0px !important;
+  border-top-right-radius: 0px !important;
+}
+
+.submitevent_btn--container {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .eventForm input {
-  height: 30px;
+  height: 10px;
   margin-top: auto;
   border: none;
   color: white;
@@ -222,18 +246,6 @@ input:focus {
 
 .close_btn:after {
   transform: rotate(-45deg);
-}
-
-#firstName,
-#lastName {
-  background-color: #2c577e;
-  height: 70px;
-  width: 450px;
-  padding: 15px 32px;
-}
-
-#lastName {
-  background-color: #083b69;
 }
 
 .eventTypes {
@@ -475,7 +487,6 @@ input[name="othereventsbox"] {
   background-color: #2c577e;
   width: 360px;
   height: 70px;
-  /* margin-top: auto; */
   border: none;
   color: rgba(207, 197, 197, 0.808);
   box-shadow: none;
@@ -486,17 +497,17 @@ input[name="othereventsbox"] {
 }
 
 .otherEventsTextArea:hover {
-  cursor: not-allowed !important;
+  cursor: not-allowed;
 }
 .otherEventsTextArea:focus {
   color: white;
-  cursor: default !important;
+  cursor: text !important;
   width: 450px;
   height: 99px;
   border-radius: 5px;
   margin: 0px;
 }
-/ .otherEventsTextArea:focus::placeholder {
+.otherEventsTextArea:focus::placeholder {
   color: transparent;
 }
 

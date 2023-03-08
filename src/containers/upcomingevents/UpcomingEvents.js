@@ -33,11 +33,13 @@ const UpcomingEvents = () => {
     const reminderContainer = document.querySelector(".reminderContainer");
     const dates = document.querySelectorAll("input[type='date']");
     const firstName = document.getElementById("firstName");
+    const lastName = document.getElementById("lastName");
 
     const openModalForm = () => {
       modalevent_form.classList.remove("hidden");
       overlay.classList.remove("hidden");
       firstName.focus();
+      otherEventsTextArea.disabled = true;
     };
 
     addevent_btn.addEventListener("click", openModalForm);
@@ -69,28 +71,28 @@ const UpcomingEvents = () => {
             dates.forEach((date) => date.focus());
           } else if (checkbox === otherEventsCheckbox) {
             dateModalOtherEvent.classList.remove("hidden");
-            otherEventsTextArea.style.cursor = "pointer";
+            otherEventsTextArea.disabled = false;
+            otherEventsTextArea.style.cursor = "text";
+            otherEventsTextArea.focus();
+            checkedOtherEvent();
+            firstName.value = "";
           }
+
           checkboxArray.forEach((cb) => {
             if (cb !== checkbox) cb.disabled = true;
           });
-          otherEventsTextArea.value = "";
-          if (checkbox === otherEventsCheckbox) {
-            otherEventsTextArea.focus();
-
-            otherEventsTextArea.disabled = false;
-          } else {
-            otherEventsTextArea.disabled = true;
-          }
         }
       });
 
       if (checkboxArray.every((checkbox) => !checkbox.checked)) {
         modalArray.forEach((modal) => modal.classList.add("hidden"));
         reminderContainer.classList.add("hidden");
-
+        firstName.focus();
         resetCheckBoxes();
         resetValues();
+        otherEventsTextArea.disabled = true;
+        otherEventsTextArea.style.cursor = "not-allowed";
+        uncheckedOtherEvent();
       }
     }
 
@@ -119,8 +121,6 @@ const UpcomingEvents = () => {
     setFormErrors({});
   };
   console.log(formValues);
-
-  // const [storedFormData, setStoredFormData] = useState([]);
 
   useEffect(() => {
     const storedData = localStorage.getItem("submittedData");
@@ -171,7 +171,7 @@ const UpcomingEvents = () => {
     resetValues();
     resetCheckBoxes();
     setFormErrors({});
-    // setShowReminder(false);
+    uncheckedOtherEvent();
   }
 
   function resetValues() {
@@ -239,6 +239,19 @@ const UpcomingEvents = () => {
     }
   }
 
+  const firstName = document.getElementById("firstName");
+  const lastName = document.getElementById("lastName");
+
+  function checkedOtherEvent() {
+    firstName.disabled = true;
+    firstName.style.cursor = "not-allowed";
+  }
+
+  function uncheckedOtherEvent() {
+    firstName.disabled = false;
+    firstName.style.cursor = "text";
+  }
+
   function clearAll() {
     const clearall_btn = document.querySelector(".clearall_btn");
     localStorage.clear();
@@ -268,7 +281,9 @@ const UpcomingEvents = () => {
       values.firstname = "";
       delete errors.firstname;
     } else if (values.otherevent) {
+      firstName.Value = "";
       values.firstname = "";
+      values.lastname = "";
       delete errors.firstname;
     }
 

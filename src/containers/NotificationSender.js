@@ -91,7 +91,6 @@ const NotificationSender = (props) => {
           }
         }
       });
-      // setNotificationSentToday(true);
     }
   }, [props.reminderDates]);
 };
