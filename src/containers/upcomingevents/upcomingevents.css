@@ -45,37 +45,32 @@
   margin: 5px;
 }
 
+.title_container {
+  background-color: #083b69;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  position: relative;
+}
+
 .events_dashboard--title {
   color: white;
   font-size: 50px;
   font-weight: 900;
   font-size: 50px;
-  align-items: center;
-  width: 100vw;
-  height: 250px;
-  align-content: center;
-  padding-top: 8%;
-  background-color: #083b69;
+  height: auto;
+  background-color: none;
   z-index: 1;
-  display: block;
-}
-
-.addevent_btn--container {
-  /* display: flex;
-
-  position: fixed;
-  align-items: center;
-  /* margin: 2%; */
-  z-index: 1;
-  background-color: white;
   display: flex;
-  flex-direction: column;
-
-  /* display: block; */
+  position: absolute;
+  top: 50px;
+  margin-top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-.addevent_btn,
-.clearall_btn {
+.addevent_btn {
   background: #ec7689;
   color: white;
   border: none;
@@ -84,26 +79,43 @@
   padding: 5px;
   font-size: 20px;
   font-weight: 700;
-  width: 160px;
+  width: 148px;
   margin: 0px;
   height: 50px;
-  /* position: absolute; */
   position: fixed;
-
-  bottom: 50px;
-  left: 1300px;
+  top: 750px;
+  right: 50px;
 }
 
 .clearall_btn {
-  background-color: rgba(126, 120, 120, 0.294) !important;
-  position: absolute;
-  bottom: 500px;
-  left: 1300px !important;
+  color: #ec7689;
+
+  border-color: #ec7689 !important;
+  border-radius: 15px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-top: none;
+  padding: 2px;
+  font-size: 20px;
+  font-weight: 700;
+  width: 120px;
+  margin: 0px;
+  height: 50px;
+  position: relative;
+  background-color: white !important;
+  top: 0px;
+  left: 620px;
+  z-index: 8;
 }
 
-.addevent_btn:hover,
-.clearall_btn:hover {
+.addevent_btn:hover {
   opacity: 0.8;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+}
+
+.clearall_btn:hover {
+  opacity: 0.5;
   transition: all 0.2s ease-in;
   cursor: pointer;
 }
@@ -367,7 +379,7 @@ input[type="checkbox"] {
   color: white;
   background-color: #ec7689;
   border: none;
-  width: 150px;
+  width: 120px;
   height: 40px;
   border-radius: 35px;
   margin: 20px;
@@ -399,7 +411,6 @@ input[type="checkbox"] {
   background-color: rgba(0, 0, 0, 0.836);
   backdrop-filter: blur(3px);
   z-index: 9;
-  /* pointer-events: none; */
 }
 
 .dateModal,

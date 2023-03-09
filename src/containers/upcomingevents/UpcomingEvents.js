@@ -74,8 +74,8 @@ const UpcomingEvents = () => {
             otherEventsTextArea.disabled = false;
             otherEventsTextArea.style.cursor = "text";
             otherEventsTextArea.focus();
-            checkedOtherEvent();
-            firstName.value = "";
+            changeFieldSettings(firstName, true);
+            changeFieldSettings(lastName, true);
           }
 
           checkboxArray.forEach((cb) => {
@@ -92,7 +92,8 @@ const UpcomingEvents = () => {
         resetValues();
         otherEventsTextArea.disabled = true;
         otherEventsTextArea.style.cursor = "not-allowed";
-        uncheckedOtherEvent();
+        changeFieldSettings(firstName, false);
+        changeFieldSettings(lastName, false);
       }
     }
 
@@ -120,28 +121,23 @@ const UpcomingEvents = () => {
     setFormValues({ ...formValues, [name]: value });
     setFormErrors({});
   };
-  console.log(formValues);
-
+  //run this code once page reloads to retrieve the stored data and set it to the state variable
   useEffect(() => {
     const storedData = localStorage.getItem("submittedData");
 
     if (localStorage.length > 0) {
-      console.log(storedData);
       setSubmittedData(JSON.parse(storedData));
-      console.log(storedData);
     } else {
       setSubmittedData([]);
     }
   }, []);
 
-  console.log(submittedData);
-
+  //update the storedData whenever the submittedData prop changes
   useEffect(() => {
     const clearall_btn = document.querySelector(".clearall_btn");
     localStorage.setItem("submittedData", JSON.stringify(submittedData));
 
     if (Array.isArray(submittedData) && submittedData.length > 0) {
-      console.log(submittedData);
       clearall_btn.classList.remove("hidden");
     }
 
@@ -171,7 +167,8 @@ const UpcomingEvents = () => {
     resetValues();
     resetCheckBoxes();
     setFormErrors({});
-    uncheckedOtherEvent();
+    changeFieldSettings(firstName, false);
+    changeFieldSettings(lastName, false);
   }
 
   function resetValues() {
@@ -230,8 +227,6 @@ const UpcomingEvents = () => {
     }
   }
 
-  console.log(submittedData);
-
   function uncheckAll() {
     const checkboxes = document.querySelectorAll("input[type=checkbox]");
     for (let i = 0; i < checkboxes.length; i++) {
@@ -242,22 +237,24 @@ const UpcomingEvents = () => {
   const firstName = document.getElementById("firstName");
   const lastName = document.getElementById("lastName");
 
-  function checkedOtherEvent() {
-    firstName.disabled = true;
-    firstName.style.cursor = "not-allowed";
-  }
-
-  function uncheckedOtherEvent() {
-    firstName.disabled = false;
-    firstName.style.cursor = "text";
+  function changeFieldSettings(field, disableField) {
+    field.style.cursor = disableField ? "not-allowed" : "text";
+    field.disableField = disableField;
   }
 
   function clearAll() {
-    const clearall_btn = document.querySelector(".clearall_btn");
-    localStorage.clear();
-    setSubmittedData([]);
-    clearall_btn.classList.add("hidden");
-    console.log("cleared");
+    const confirmation = window.confirm(
+      "Are you sure you want to clear all events saved?"
+    );
+
+    if (confirmation) {
+      setTimeout(() => {
+        const clearall_btn = document.querySelector(".clearall_btn");
+        localStorage.clear();
+        setSubmittedData([]);
+        clearall_btn.classList.add("hidden");
+      }, 500);
+    }
   }
 
   function validate(values) {
@@ -296,48 +293,44 @@ const UpcomingEvents = () => {
 
   return (
     <div className="upcomingevents_wrapper">
-      <div className="homepage_header">
-        <div className="homepage_header--image">
-          <Link to="/">
-            <img src={logoandname} alt="logoandname" />
-          </Link>
+      <div className="title_container">
+        <div className="homepage_header">
+          <div className="homepage_header--image">
+            <Link to="/">
+              <img src={logoandname} alt="logoandname" />
+            </Link>
+          </div>
         </div>
+        <div className="nav_icons">
+          <button type="button" className="nav_btn profile" id="profile">
+            <img
+              src={profile_icon}
+              alt="profile_icon"
+              className="profile_img nav_img"
+            />
+          </button>
+          <button type="button" className="nav_btn" id="notif">
+            <img
+              src={notif_icon}
+              alt="notification_icon"
+              className="notif_img nav_img"
+            />
+          </button>
+        </div>
+        <div className="events_dashboard--title">Upcoming Events</div>
       </div>
-      <div className="nav_icons">
-        <button type="button" className="nav_btn profile" id="profile">
-          <img
-            src={profile_icon}
-            alt="profile_icon"
-            className="profile_img nav_img"
-          />
-        </button>
-        <button type="button" className="nav_btn" id="notif">
-          <img
-            src={notif_icon}
-            alt="notification_icon"
-            className="notif_img nav_img"
-          />
-        </button>
-      </div>
-      <div className="events_dashboard--title">Upcoming Events</div>
+      {/* <div className="addevent_btn--container"> */}
+      <button type="button" className="addevent_btn">
+        Add event <img src={plussign} alt="addevent" className="addevent_img" />
+      </button>
+      {/* </div> */}
+      <button type="button" className="clearall_btn hidden" onClick={clearAll}>
+        Clear all
+      </button>
       {/* passing props to dashboard component */}
 
       <MemoizedDashboard submittedData={submittedData} />
-      <div className="addevent_btn--container">
-        <button type="button" className="addevent_btn">
-          Add event{" "}
-          <img src={plussign} alt="addevent" className="addevent_img" />
-        </button>
-        <div className="clearall_btn--container"></div>
-        <button
-          type="button"
-          className="clearall_btn hidden"
-          onClick={clearAll}
-        >
-          Clear all
-          {/* <img src={plussign} alt="addevent" className="addevent_img" /> */}
-        </button>
-      </div>
+
       <div className="modaladd_form hidden">
         <form
           name="eventForm"

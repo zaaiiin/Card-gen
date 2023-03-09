@@ -9,12 +9,6 @@ import NotificationSender from "../../containers/NotificationSender.js";
 const Dashboard = (props) => {
   const { submittedData } = props;
 
-  //run this code once page reloads to retrieve the stored data and set it to the state variable
-
-  //update the storedData whenever the submittedData prop changes
-
-  //adding dynamic container colour change serially with event addition
-
   //assigning icons to corresponding event
   let arrayOfIcons = [];
 
@@ -266,6 +260,7 @@ const Dashboard = (props) => {
 
   withCountdownandReminderDates.sort((a, b) => a.countdown - b.countdown);
 
+  //adding dynamic container colour change serially with event addition
   const containerColors = ["#F9E1B4", "#9B9BDD", "#EC7689", "#8FC7FF"];
 
   if (withCountdownandReminderDates) {
@@ -294,7 +289,7 @@ const Dashboard = (props) => {
                     className="dashboardContent eventDate"
                     key={index}
                     style={{
-                      color: obj.backgroundcolor,
+                      color: "black",
                     }}
                   >
                     {obj.formattedDates}
