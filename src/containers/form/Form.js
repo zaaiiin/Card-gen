@@ -3,7 +3,7 @@ import "./form.css";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
-
+import forwardbutton from "../../assets/forwardbutton.png";
 import logoandname from "../../assets/logoandname.png";
 
 const Form = () => {
@@ -288,6 +288,17 @@ const Form = () => {
             Login
           </button>
         </form>
+      </div>
+      <div className="fade-in_btn">
+        <Link to="/UpcomingEvents">
+          <button type="button" className="basic_btn forward--btn">
+            <img
+              src={forwardbutton}
+              alt="forwardbutton"
+              id="forward_btn--img"
+            />
+          </button>
+        </Link>
       </div>
     </div>
   );

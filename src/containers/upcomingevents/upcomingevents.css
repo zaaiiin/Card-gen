@@ -89,8 +89,8 @@
 
 .clearall_btn {
   color: #ec7689;
-
   border-color: #ec7689 !important;
+  border-width: 3px;
   border-radius: 15px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
@@ -150,10 +150,7 @@
   display: flex;
   padding-top: 200px;
   justify-content: center;
-  /* height: calc(100vh - 700px); */
   border-radius: 2rem !important;
-
-  /* float: left; */
 }
 
 .modaladd_form .eventForm {
@@ -370,7 +367,6 @@ input[type="checkbox"] {
 }
 
 #otherEventsDiv {
-  /* padding: auto; */
   align-items: center;
   align-content: center;
 }
@@ -445,7 +441,6 @@ label {
 input[type="radio"],
 input.radio {
   float: left;
-  /* clear: none; */
   margin: -15px 20px 20px 8px;
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import addNotification from "react-push-notification";
 import small_logo from "../assets/small_logo.png";
 

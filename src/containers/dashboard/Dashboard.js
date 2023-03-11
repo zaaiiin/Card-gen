@@ -105,8 +105,6 @@ const Dashboard = (props) => {
     formattedOthereventArray,
   ]);
 
-  console.log(allFormattedDates);
-
   //creating a countdown
   function addDateToEvent(keyName, submittedData, eventDates) {
     if (Array.isArray(submittedData) && submittedData.length > 0) {
@@ -143,10 +141,6 @@ const Dashboard = (props) => {
     return new Date(eventYear, eventMonth - 1, specificEventDate);
   }
 
-  // useEffect(() => {
-  //   console.log("Child component rendered");
-  // }, [props.submittedData]);
-
   //get days remaining until event
   function getTimeRemaining(eventDate) {
     const difference = Date.parse(eventDate) - Date.now();
@@ -174,8 +168,6 @@ const Dashboard = (props) => {
       const remainingTime = getTimeRemaining(eachDate);
       return remainingTime;
     });
-
-  console.log(remainingTimes);
 
   const reminderValues = submittedData.map((data) => data.reminder);
 
@@ -255,8 +247,6 @@ const Dashboard = (props) => {
       formattedDates: allFormattedDates[index],
     };
   });
-
-  console.log(withCountdownandReminderDates);
 
   withCountdownandReminderDates.sort((a, b) => a.countdown - b.countdown);
 
