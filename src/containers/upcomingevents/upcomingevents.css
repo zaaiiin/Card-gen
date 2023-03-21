@@ -445,11 +445,9 @@ input.radio {
 }
 
 [type="date"] {
-  background: #fff
-    url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)
-    97% 50% no-repeat;
+  background: transparent;
   font-weight: 600;
-  width: 200px;
+  width: 155px;
   padding: 5px;
   margin: 20px 10px;
   font-family: "Lato", sans-serif;
@@ -474,7 +472,7 @@ input.radio {
   border: transparent;
   font-size: 15px;
   font-family: "Lato", sans-serif;
-  font-weight: 600;
+  font-weight: 900;
   margin: 10px;
   justify-content: center;
   letter-spacing: 0.5px;
