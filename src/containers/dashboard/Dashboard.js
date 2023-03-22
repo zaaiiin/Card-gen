@@ -300,11 +300,13 @@ const Dashboard = (props) => {
                   <div className="eventType" key={data.index}>
                     {obj.data.firstname} {obj.data.lastname}
                     {obj.data.otherevent}
-                    <div className="reminder_img">
-                      <img src={reminder_icon} alt="reminder_icon" />
-                    </div>
-                    <div className="reminders" key={index}>
-                      {obj.reminderDates}
+                    <div className="reminders_container">
+                      <div className="reminder_img">
+                        <img src={reminder_icon} alt="reminder_icon" />
+                      </div>
+                      <div className="reminders" key={index}>
+                        {obj.reminderDates}
+                      </div>
                     </div>
                   </div>
                 </div>
