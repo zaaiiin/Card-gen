@@ -22,7 +22,7 @@ ul {
   color: white;
   position: relative;
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, 160px);
   grid-column-gap: 0px;
   padding: 0px;
   margin-top: 10px;
@@ -30,10 +30,15 @@ ul {
   margin-left: auto;
   background-color: transparent;
   width: 1140px;
+  max-width: 100%;
+
+  justify-content: center !important;
+  align-items: center !important;
 }
 
 .dateDetailsContainer {
   display: grid;
+
   grid-template-columns: repeat(2, 1fr);
   grid-column-gap: 0px;
   background-color: transparent;
@@ -52,6 +57,9 @@ ul {
   border-radius: 6px;
   height: 70px;
   padding: 6px;
+  /* display: grid;
+  justify-content: left;
+  align-content: end; */
 }
 
 .dateDetailsContainer:hover,
@@ -81,7 +89,7 @@ ul {
   background-color: #f9e1b4;
   border-radius: 10px;
   height: 100px;
-  width: 600px;
+  width: 93%;
   padding: 0px;
   margin: auto;
 
@@ -161,8 +169,8 @@ img {
 }
 
 .reminders_container {
-  position: absolute;
-  margin-right: 300px;
+  position: relative;
+  margin-right: 310px;
   margin-top: 30px;
   width: 500px;
 }
@@ -174,7 +182,7 @@ img {
   color: rgba(0, 0, 0, 0.263);
   font-size: 17px;
   background-color: transparent;
-  margin-left: 335px;
+  margin-left: 300px;
   margin-top: -50px;
 }
 
@@ -183,7 +191,7 @@ img {
   padding: 0px;
   margin: auto;
   background-color: transparent;
-  margin-left: 315px;
+  margin-left: 280px;
   margin-top: -53px;
   position: absolute;
 }
@@ -193,66 +201,179 @@ img {
   height: 100px !important;
 }
 
-@media screen and (max-width: 688px) {
+@media screen and (max-width: 977px) {
+  .events_dashboard--title {
+    font-size: 45px;
+    top: 100px;
+  }
   .allContainers {
-    grid-template-columns: repeat(
-      7,
-      1fr
-    ); /* Change grid template columns to 2 */
-    width: 100%; /* Set width to 100% */
-    padding: 0 20px; /* Add left and right padding */
-    grid-column-gap: 0px;
-    display: grid;
+    grid-template-columns: repeat(7, 140px);
+    /* padding: 10 10px; */
   }
 
-  .dateDetailsContainer,
-  .dateSideContainer,
-  .eventDate,
-  .eventName,
-  .eventCountdown {
-    max-width: 100%;
-    /* min-width: 100%; */
+  .eventDate {
+    font-size: 18px !important;
+    margin-left: 30px;
+  }
+
+  .reminders {
+    margin-left: 235px;
+  }
+
+  .reminder_img {
+    margin-left: 215px;
   }
 
   /* .dateSideContainer {
-    margin-left: -80px !important;
+    margin-left: -45px !important;
   } */
+}
+
+@media screen and (max-width: 810px) {
+  .allContainers {
+    grid-template-columns: repeat(7, 120px);
+  }
 
   .eventDate {
-    background-color: transparent;
-    color: black;
-    justify-self: end;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 19px !important;
-    font-family: "Raleway", sans-serif !important;
-    font-weight: 800;
-    margin-left: 0px;
-    margin-right: 40px;
-    width: 0px;
+    font-size: 18px !important;
+    margin-left: 1px;
+  }
+
+  .reminders {
+    margin-left: 170px;
+  }
+
+  .reminder_img {
+    margin-left: 150px;
+  }
+}
+
+/* @media screen and (max-width: 778px) {
+  .events_dashboard--title {
+    font-size: 45px;
+    top: 100 !important;
+  }
+  .allContainers {
+    grid-template-columns: repeat(7, 110px);
+  }
+} */
+@media screen and (max-width: 428px) {
+  .title_container {
+    height: 135px;
+    margin: -20px;
+  }
+
+  .events_dashboard--title {
+    font-size: 23px;
+    top: 50px !important;
+    height: 20px !important;
+  }
+
+  .nav_img {
+    display: none;
+  }
+
+  .dashboardContent {
+    height: 60px !important;
+  }
+
+  .allContainers {
+    grid-template-columns: repeat(7, 60px);
+    column-gap: 3px;
   }
 
   .dateSideContainer {
-    margin-right: -60px;
+    padding: 3px;
+    height: 40px !important;
+    margin-top: 10px;
+    margin-right: 14px;
   }
 
-  .eventIcon {
-    width: 50px;
+  .dateDetailsContainer {
+    padding: 0px;
+  }
+
+  .eventDate {
+    font-size: 15px !important;
+    margin-left: -80px;
+    padding-left: 50px;
+  }
+
+  .eventIcon,
+  .eventType,
+  .eventCountdown {
+    height: 40px;
+    font-size: 20px;
   }
 
   .eventName {
-    margin-left: 35px;
-    width: 300px;
+    width: 220px;
+  }
+  .eventIcon {
+    width: 40px;
   }
 
-  .reminders_container {
-    position: absolute;
-    margin-left: -250px !important;
+  .eventType {
+    width: 155px;
+    padding-left: 10px;
+    font-size: 16px;
+  }
+
+  .countdownContainer {
+    font-size: 15px !important;
+    padding: 2px;
+    height: 43px;
   }
 
   .eventCountdown {
-    width: 120px;
-    margin-right: 0px !important;
+    width: 100px;
+  }
+
+  .logoandname {
+    height: 30px;
+    left: 0px !important;
+    display: fixed;
+    position: absolute;
+    flex-direction: row;
+    align-items: flex-start !important;
+    margin: auto !important;
+
+    /* left: 10px !important; */
+  }
+
+  .reminders {
+    margin-left: 26px;
+    font-size: 15px;
+  }
+
+  .reminder_img {
+    margin-left: 10px;
+    display: none;
+  }
+
+  .reminders_container {
+    margin-left: 0px;
+    margin-bottom: -30px;
+  }
+
+  .clearall_btn {
+    left: -170px;
+    height: 30px;
+    margin-bottom: 30px;
+    top: 20px;
+    font-size: 15px;
+    width: 100px;
+    background-color: rgb(232, 228, 228) !important;
+    border: none;
+    border-radius: 35px;
+  }
+
+  .addevent_btn {
+    position: fixed;
+    right: -25px;
+    top: 115px;
+    font-size: 15px;
+    height: 30px;
+    width: 110px;
   }
 }

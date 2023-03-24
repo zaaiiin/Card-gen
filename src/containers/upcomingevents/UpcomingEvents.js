@@ -297,7 +297,11 @@ const UpcomingEvents = () => {
         <div className="homepage_header">
           <div className="homepage_header--image">
             <Link to="/">
-              <img src={logoandname} alt="logoandname" />
+              <img
+                src={logoandname}
+                className="logoandname"
+                alt="logoandname"
+              />
             </Link>
           </div>
         </div>
