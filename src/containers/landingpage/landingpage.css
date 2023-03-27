@@ -114,9 +114,8 @@
 
   .forward--btn {
     margin: auto;
+    margin-right: -10px;
     display: fixed;
-    bottom: -300px;
-    right: 45%;
   }
 
   #confettiwithlogo {
@@ -132,7 +131,7 @@
   }
 
   .animated_text {
-    margin: 10px;
+    margin: 0px;
     font-size: 17px;
     display: fixed;
     width: 100%;
