@@ -115,6 +115,8 @@
   .forward--btn {
     margin: auto;
     display: fixed;
+    bottom: -300px;
+    right: 45%;
   }
 
   #confettiwithlogo {
