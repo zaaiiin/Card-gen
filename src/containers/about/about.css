@@ -107,7 +107,7 @@ h2 {
 }
 
 @media screen and (max-width: 428px) {
-  img {
+  .logoimage {
     margin: 0px;
     height: 25px;
     position: fixed;

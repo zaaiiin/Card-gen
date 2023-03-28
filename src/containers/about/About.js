@@ -11,7 +11,7 @@ const About = () => {
       <div className="homepage_header">
         <div className="homepage_header--image">
           <Link to="/">
-            <img src={logoandname} alt="logoandname" />
+            <img src={logoandname} className="logoimage" alt="logoandname" />
           </Link>
         </div>
       </div>
