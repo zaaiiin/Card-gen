@@ -186,7 +186,7 @@ const Form = () => {
       <div className="homepage_header">
         <div className="homepage_header--image">
           <Link to="/">
-            <img src={logoandname} alt="logoandname" />
+            <img src={logoandname} className="logoimage" alt="logoandname" />
           </Link>
         </div>
       </div>
@@ -271,6 +271,7 @@ const Form = () => {
               name="useremail"
               value={loginFormValues.useremail}
               onChange={handleLoginChange}
+              className="field"
             />
             <p className="errorMsg">{loginFormErrors.useremail}</p>
             <input
@@ -280,6 +281,7 @@ const Form = () => {
               name="userpassword"
               value={loginFormValues.userpassword}
               onChange={handleLoginChange}
+              className="field"
             />
             <p className="errorMsg">{loginFormErrors.userpassword}</p>
           </div>
