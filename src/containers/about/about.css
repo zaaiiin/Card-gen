@@ -42,10 +42,8 @@ h1 {
 
 .container {
   max-width: 1200px;
-
   margin: auto;
   width: 100%;
-
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 10px;
