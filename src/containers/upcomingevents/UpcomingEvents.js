@@ -5,6 +5,7 @@ import notif_icon from "../../assets/notif_icon.png";
 import profile_icon from "../../assets/profile_icon.png";
 import logoandname from "../../assets/logoandname.png";
 import plussign from "../../assets/plussign.png";
+import createbutton from "../../assets/createbutton.png";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import Dashboard from "../dashboard/Dashboard.js";
@@ -297,11 +298,7 @@ const UpcomingEvents = () => {
         <div className="homepage_header">
           <div className="homepage_header--image">
             <Link to="/">
-              <img
-                src={logoandname}
-                className="logoandname"
-                alt="logoandname"
-              />
+              <img src={logoandname} className="logoimage" alt="logoandname" />
             </Link>
           </div>
         </div>
@@ -326,6 +323,10 @@ const UpcomingEvents = () => {
       {/* <div className="addevent_btn--container"> */}
       <button type="button" className="addevent_btn">
         Add event <img src={plussign} alt="addevent" className="addevent_img" />
+      </button>
+
+      <button type="button" className="smalladd_btn">
+        <img src={createbutton} alt="addevent" className="smalladd_img" />
       </button>
       {/* </div> */}
       <button type="button" className="clearall_btn hidden" onClick={clearAll}>

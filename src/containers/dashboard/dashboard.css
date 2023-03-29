@@ -259,13 +259,13 @@ img {
 } */
 @media screen and (max-width: 428px) {
   .title_container {
-    height: 135px;
+    height: 155px;
     margin: -20px;
   }
 
   .events_dashboard--title {
     font-size: 23px;
-    top: 50px !important;
+    top: 60px !important;
     height: 20px !important;
   }
 
@@ -383,5 +383,21 @@ img {
     font-size: 15px;
     height: 30px;
     width: 110px;
+    display: none;
+  }
+
+  .smalladd_btn {
+    display: block !important;
+    background-color: transparent;
+    outline: none;
+    border-color: transparent;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px;
+  }
+
+  .smalladd_img {
+    height: 40px;
   }
 }

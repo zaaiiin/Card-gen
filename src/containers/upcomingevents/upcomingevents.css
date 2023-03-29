@@ -87,6 +87,10 @@
   right: 50px;
 }
 
+.smalladd_btn {
+  display: none !important;
+}
+
 .clearall_btn {
   color: #ec7689;
   border-color: #ec7689 !important;
