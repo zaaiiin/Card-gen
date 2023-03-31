@@ -144,7 +144,7 @@
   position: fixed;
   left: 0;
   right: 0;
-  top: -300px;
+  top: -40px;
   bottom: 780px;
   margin-left: auto;
   margin-right: auto;
@@ -152,7 +152,7 @@
   width: 450px;
   z-index: 10;
   display: flex;
-  padding-top: 200px;
+  padding-top: 0px;
   justify-content: center;
   border-radius: 2rem !important;
 }
@@ -523,4 +523,24 @@ input[name="othereventsbox"] {
   display: flex;
   flex-direction: column;
   position: absolute;
+}
+
+@media screen and (max-width: 428px) {
+  .eventForm {
+    width: 300px !important;
+    height: 340px;
+  }
+
+  #firstName,
+  #lastName {
+    width: 300px;
+    height: 60px;
+    font-size: 16px;
+  }
+
+  #birthdaylabel {
+    font-size: 16px;
+
+    width: 100px;
+  }
 }

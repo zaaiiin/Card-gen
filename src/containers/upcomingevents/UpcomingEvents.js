@@ -325,9 +325,9 @@ const UpcomingEvents = () => {
         Add event <img src={plussign} alt="addevent" className="addevent_img" />
       </button>
 
-      <button type="button" className="smalladd_btn">
+      {/* <button type="button" className="smalladd_btn">
         <img src={createbutton} alt="addevent" className="smalladd_img" />
-      </button>
+      </button> */}
       {/* </div> */}
       <button type="button" className="clearall_btn hidden" onClick={clearAll}>
         Clear all

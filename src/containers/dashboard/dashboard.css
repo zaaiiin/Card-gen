@@ -201,7 +201,7 @@ img {
   height: 100px !important;
 }
 
-@media screen and (max-width: 977px) {
+@media screen and (max-width: 862px) {
   .events_dashboard--title {
     font-size: 45px;
     top: 100px;
@@ -269,10 +269,10 @@ img {
     height: 20px !important;
   }
 
-  .nav_img {
+  .nav_btn {
     display: none;
-    position: absolute;
-    right: 100px !important;
+    position: relative;
+    right: 500px !important;
   }
 
   .dashboardContent {
@@ -377,16 +377,16 @@ img {
   }
 
   .addevent_btn {
-    position: fixed;
-    right: 25px;
-    top: 115px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 40px;
     font-size: 15px;
     height: 30px;
     width: 110px;
-    display: none;
   }
 
-  .smalladd_btn {
+  /* .smalladd_btn {
     display: block !important;
     background-color: transparent;
     outline: none;
@@ -399,5 +399,5 @@ img {
 
   .smalladd_img {
     height: 40px;
-  }
+  } */
 }
