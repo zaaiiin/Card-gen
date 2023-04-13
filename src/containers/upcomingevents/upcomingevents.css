@@ -417,7 +417,7 @@ input[type="checkbox"] {
 .dateModalAnniversary,
 .dateModalOtherEvent {
   position: absolute;
-  top: 315px;
+  top: 195px;
   right: -285px;
   background-color: #72d1d6;
   color: white;
