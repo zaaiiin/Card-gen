@@ -176,9 +176,8 @@ img {
 }
 
 .reminders {
-  /* display: flex;
-  flex-direction: column; */
-  position: absolute;
+  position: absolute !important;
+  right: -300px;
   color: rgba(0, 0, 0, 0.263);
   font-size: 17px;
   background-color: transparent;
@@ -187,6 +186,8 @@ img {
 }
 
 .reminder_img {
+  position: absolute !important;
+  right: -193px;
   background: white;
   padding: 0px;
   margin: auto;
@@ -217,6 +218,8 @@ img {
   }
 
   .reminders {
+    position: absolute !important;
+    /* right: -250px; */
     margin-left: 235px;
   }
 
@@ -239,12 +242,16 @@ img {
     margin-left: 1px;
   }
 
-  .reminders {
+  /* .reminders {
     margin-left: 170px;
-  }
+  } */
 
   .reminder_img {
     margin-left: 150px;
+  }
+
+  .clearall_btn {
+    left: 300px;
   }
 }
 
@@ -350,8 +357,11 @@ img {
   }
 
   .reminders {
+    display: fixed;
+    position: absolute;
+    left: -180px;
     margin-left: 45px;
-    font-size: 15px;
+    font-size: 12px;
   }
 
   .reminder_img {
@@ -365,12 +375,12 @@ img {
   }
 
   .clearall_btn {
-    left: -170px;
+    left: 140px;
     height: 30px;
     margin-bottom: 30px;
     top: 20px;
     font-size: 15px;
-    width: 100px;
+    width: 85px;
     background-color: rgb(232, 228, 228) !important;
     border: none;
     border-radius: 35px;
